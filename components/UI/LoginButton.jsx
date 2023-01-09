@@ -21,7 +21,7 @@ export default LoginButton;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontFamily: 'open-sans-regular',
-    fontSize: 32,
+    fontSize: 30,
     marginLeft: 16,
   },
   pressed: {

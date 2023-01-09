@@ -13,7 +13,7 @@ export default Title;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 16,
+    fontSize: 18,
     textAlign: 'center',
     color: 'white',
     fontFamily: 'open-sans-regular',

@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './screens/UserCredentials/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStyles } from './constants/styles';
 import { useFonts } from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+import LoginScreen from './screens/UserCredentials/LoginScreen';
+import SignUpScreen from './screens/UserCredentials/SignUpScreen';
+import WorkOutsScreen from './screens/WorkOutsScreen';
+import RepMaxCalculator from './screens/RepMaxCalculator';
+import ProgressChart from './screens/ProgressChart';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const customFonts = {
   'open-sans-regular': require('./assets/fonts/OpenSans/OpenSans-Regular.ttf'),
@@ -15,10 +23,10 @@ const customFonts = {
 
 export default function App() {
   const [fontsLoaded] = useFonts(customFonts);
+  const [userAuthenticated, setUserAuthenticated] = useState(true);
 
-  return (
-    <>
-      <StatusBar style='auto' />
+  function AuthenticationStack() {
+    return (
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -27,8 +35,79 @@ export default function App() {
           }}
         >
           <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Signup' component={SignUpScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
-  );
+    );
+  }
+
+  function AppNavigation() {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: GlobalStyles.colors.background },
+            headerTintColor: 'white',
+            tabBarStyle: { backgroundColor: GlobalStyles.colors.primary700 },
+            tabBarActiveTintColor: 'white',
+          }}
+        >
+          <Tab.Screen
+            name='Workouts'
+            component={WorkOutsScreen}
+            options={{
+              title: 'Workouts',
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Ionicons
+                    name='barbell-outline'
+                    size={36}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.primary400
+                        : GlobalStyles.colors.primary500
+                    }
+                  />
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name='RepMaxCalculator'
+            component={RepMaxCalculator}
+            options={{
+              title: '1RM Calculator',
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Ionicons
+                    name='barbell-outline'
+                    size={36}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.primary400
+                        : GlobalStyles.colors.primary500
+                    }
+                  />
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name='ProgressChart'
+            component={ProgressChart}
+            options={{ title: 'Progress Chart' }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    );
+  }
+
+  if (fontsLoaded)
+    return (
+      <>
+        <StatusBar style='light' />
+        {!userAuthenticated && <AuthenticationStack />}
+        {userAuthenticated && <AppNavigation />}
+      </>
+    );
 }

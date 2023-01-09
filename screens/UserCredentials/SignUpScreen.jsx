@@ -1,7 +1,8 @@
 import React from 'react';
+import AuthContent from '../../components/AuthContent';
 
 function SignUpScreen() {
-  return <Text>Sign up screen</Text>;
+  return <AuthContent />;
 }
 
 export default SignUpScreen;

@@ -48,7 +48,11 @@ export default function App() {
           screenOptions={{
             headerStyle: { backgroundColor: GlobalStyles.colors.background },
             headerTintColor: 'white',
-            tabBarStyle: { backgroundColor: GlobalStyles.colors.primary700 },
+            tabBarStyle: {
+              backgroundColor: GlobalStyles.colors.primary700,
+              paddingTop: 5,
+              height: 90,
+            },
             tabBarActiveTintColor: 'white',
           }}
         >
@@ -61,7 +65,7 @@ export default function App() {
                 return (
                   <Ionicons
                     name='barbell-outline'
-                    size={36}
+                    size={34}
                     color={
                       focused
                         ? GlobalStyles.colors.primary400
@@ -76,12 +80,12 @@ export default function App() {
             name='RepMaxCalculator'
             component={RepMaxCalculator}
             options={{
-              title: '1RM Calculator',
+              title: 'Max Rep Calculator',
               tabBarIcon: ({ focused }) => {
                 return (
                   <Ionicons
-                    name='barbell-outline'
-                    size={36}
+                    name='calculator-outline'
+                    size={30}
                     color={
                       focused
                         ? GlobalStyles.colors.primary400
@@ -95,7 +99,22 @@ export default function App() {
           <Tab.Screen
             name='ProgressChart'
             component={ProgressChart}
-            options={{ title: 'Progress Chart' }}
+            options={{
+              title: 'Progress Chart',
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Ionicons
+                    name='bar-chart-outline'
+                    size={30}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.primary400
+                        : GlobalStyles.colors.primary500
+                    }
+                  />
+                );
+              },
+            }}
           />
         </Tab.Navigator>
       </NavigationContainer>

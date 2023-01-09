@@ -1,9 +1,9 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
-import LoginButton from './UI/LoginButton';
+import LoginButton from './UI/buttons/LoginButton';
 import Title from './UI/Title';
-import FlatButton from './UI/FlatButton';
+import FlatButton from './UI/buttons/FlatButton';
 import { useNavigation } from '@react-navigation/native';
 
 function AuthContent({ isLogin }) {

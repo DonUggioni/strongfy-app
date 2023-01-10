@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontFamily: 'open-sans-regular',
-    fontSize: 30,
+    fontSize: 26,
     marginLeft: 16,
   },
   pressed: {

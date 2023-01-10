@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontFamily: 'open-sans-semi-bold',
-    fontSize: 16,
+    fontSize: 14,
   },
   flat: {
     borderColor: GlobalStyles.colors.primary500,

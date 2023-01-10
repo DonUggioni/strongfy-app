@@ -2,44 +2,33 @@ import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 
-function Button({ children, type, onPress }) {
+function SelectButton({ children, selected, onPress }) {
   return (
     <Pressable
-      style={({ pressed }) =>
-        pressed
-          ? [styles.container, type === 'flat' && styles.flatPressed]
-          : [styles.container, type === 'full' ? styles.full : styles.flat]
-      }
       onPress={onPress}
+      style={[styles.container, selected === 'selected' && styles.selected]}
     >
       <Text style={styles.text}>{children}</Text>
     </Pressable>
   );
 }
 
-export default Button;
+export default SelectButton;
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: GlobalStyles.borderRadius,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: GlobalStyles.colors.primary500,
-    alignItems: 'center',
   },
   text: {
     color: 'white',
     fontFamily: 'open-sans-semi-bold',
     fontSize: 16,
   },
-  flat: {
-    borderColor: GlobalStyles.colors.primary500,
-  },
-  flatPressed: {
-    backgroundColor: GlobalStyles.colors.primary500,
-  },
-  full: {
+  selected: {
     backgroundColor: GlobalStyles.colors.primary500,
   },
 });

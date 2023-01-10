@@ -8,4 +8,5 @@ export const GlobalStyles = {
     gray500: '#333333',
     background: '#1e1e1e',
   },
+  borderRadius: 5,
 };

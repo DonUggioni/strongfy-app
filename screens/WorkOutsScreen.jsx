@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import NoWorkouts from '../components/NoWorkouts';
+import { GlobalStyles } from '../constants/styles';
 
 const data = [
   {
@@ -19,10 +20,17 @@ function WorkOutsScreen() {
   }
 
   return (
-    <View>
+    <View style={styles.rootContainer}>
       <Text>Workouts screen</Text>
     </View>
   );
 }
 
 export default WorkOutsScreen;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    backgroundColor: GlobalStyles.colors.background,
+  },
+});

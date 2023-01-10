@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthContent from '../../components/AuthContent';
 
-function LoginScreen() {
-  return <AuthContent isLogin={true} />;
+function LoginScreen({ onPress }) {
+  return <AuthContent onPress={onPress} isLogin={true} />;
 }
 
 export default LoginScreen;

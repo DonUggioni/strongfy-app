@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FlatList, Modal, SafeAreaView, StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
 import SelectButton from './UI/buttons/SelectButton';
-import StyledText from './UI/StyledText';
+import StyledText from './UI/text/StyledText';
 
 const trainingData = [
   {
@@ -41,6 +42,7 @@ const daysData = [
 ];
 
 function BlockOptionsModal({ visible, onCancel }) {
+  const navigation = useNavigation();
   const [selectedTrainingData, setSelectedTrainingData] = useState({});
   const [selectedDaysData, setSelectedDaysData] = useState({});
 
@@ -69,6 +71,10 @@ function BlockOptionsModal({ visible, onCancel }) {
         {item.days}
       </SelectButton>
     );
+  }
+
+  function confirmHandler() {
+    navigation.replace('WorkoutSelection');
   }
 
   return (
@@ -103,7 +109,9 @@ function BlockOptionsModal({ visible, onCancel }) {
           </View>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
-              <Button type='full'>Confirm</Button>
+              <Button type='full' onPress={confirmHandler}>
+                Confirm
+              </Button>
             </View>
             <View style={styles.buttonContainer}>
               <Button onPress={onCancel} type='flat'>

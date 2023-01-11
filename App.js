@@ -8,9 +8,11 @@ import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/UserCredentials/LoginScreen';
 import SignUpScreen from './screens/UserCredentials/SignUpScreen';
-import WorkOutsScreen from './screens/WorkOutsScreen';
+import WorkoutsScreen from './screens/WorkoutsScreen';
 import RepMaxCalculator from './screens/RepMaxCalculator';
 import ProgressChart from './screens/ProgressChart';
+import WorkoutSelectionScreen from './screens/WorkoutSelectionScreen';
+import PreviewModal from './components/PreviewModal';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,6 +43,33 @@ export default function App() {
     );
   }
 
+  function TrainingOptionsStack() {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: GlobalStyles.colors.background },
+          headerTintColor: 'white',
+        }}
+      >
+        <Stack.Screen
+          name='WorkoutsScreen'
+          component={WorkoutsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='WorkoutSelection'
+          component={WorkoutSelectionScreen}
+          options={{ headerShown: false, title: 'Workouts' }}
+        />
+        <Stack.Screen
+          name='PreviewModal'
+          component={PreviewModal}
+          options={{ presentation: 'modal', title: false }}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   function AppNavigation() {
     return (
       <NavigationContainer>
@@ -58,7 +87,7 @@ export default function App() {
         >
           <Tab.Screen
             name='Workouts'
-            component={WorkOutsScreen}
+            component={TrainingOptionsStack}
             options={{
               title: 'Workouts',
               tabBarIcon: ({ focused }) => {

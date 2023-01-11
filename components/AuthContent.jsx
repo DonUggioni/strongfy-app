@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import LoginButton from './UI/buttons/LoginButton';
-import Title from './UI/Title';
+import Title from './UI/text/Title';
 import FlatButton from './UI/buttons/FlatButton';
 import { useNavigation } from '@react-navigation/native';
 

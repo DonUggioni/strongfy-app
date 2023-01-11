@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import NoWorkouts from '../components/NoWorkouts';
 import { GlobalStyles } from '../constants/styles';
 
-function WorkOutsScreen() {
-  const [workouts, setWorkouts] = useState(false);
+function WorkoutsScreen() {
+  const [workouts, setWorkouts] = useState([]);
 
-  if (!workouts) {
+  if (workouts.length === 0) {
     return <NoWorkouts />;
   }
 
@@ -17,7 +17,7 @@ function WorkOutsScreen() {
   );
 }
 
-export default WorkOutsScreen;
+export default WorkoutsScreen;
 
 const styles = StyleSheet.create({
   rootContainer: {

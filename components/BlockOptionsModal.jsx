@@ -9,42 +9,49 @@ const trainingData = [
   {
     id: 't1',
     type: 'Hypertrophy',
+    value: 'hypertrophy',
   },
   {
     id: 't2',
     type: 'Strength',
+    value: 'strength',
   },
   {
     id: 't3',
     type: 'Peaking',
+    value: 'peaking',
   },
 ];
 const daysData = [
   {
     id: 'd1',
     days: '3 days',
+    value: 3,
   },
   {
     id: 'd2',
     days: '4 days',
+    value: 4,
   },
   {
     id: 'd3',
     days: '5 days',
+    value: 5,
   },
 ];
 
 function BlockOptionsModal({ visible, onCancel }) {
-  const [selectedTrainingId, setSelectedTrainingId] = useState(null);
-  const [selectedDaysId, setDaysTrainingId] = useState(null);
+  const [selectedTrainingData, setSelectedTrainingData] = useState({});
+  const [selectedDaysData, setSelectedDaysData] = useState({});
 
   function trainingOptions({ item }) {
-    const backgroundColor = item.id === selectedTrainingId ? 'selected' : null;
+    const backgroundColor =
+      item.id === selectedTrainingData.id ? 'selected' : null;
 
     return (
       <SelectButton
         selected={backgroundColor}
-        onPress={() => setSelectedTrainingId(item.id)}
+        onPress={() => setSelectedTrainingData(item)}
       >
         {item.type}
       </SelectButton>
@@ -52,12 +59,12 @@ function BlockOptionsModal({ visible, onCancel }) {
   }
 
   function daysPerWeek({ item }) {
-    const backgroundColor = item.id === selectedDaysId ? 'selected' : null;
+    const backgroundColor = item.id === selectedDaysData.id ? 'selected' : null;
 
     return (
       <SelectButton
         selected={backgroundColor}
-        onPress={() => setDaysTrainingId(item.id)}
+        onPress={() => setSelectedDaysData(item)}
       >
         {item.days}
       </SelectButton>

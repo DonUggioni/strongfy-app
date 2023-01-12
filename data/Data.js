@@ -1,10 +1,10 @@
 export const WORKOUT_DATA = [
   {
     type: 'hypertrophy',
-    title: 'Workout 1',
+    title: 'Hypertrophy 1',
     daysPerWeek: 5,
     workoutNumber: 1,
-    id: 'hw1',
+    id: Math.random(),
     week: 1,
     workouts: [
       {
@@ -12,83 +12,159 @@ export const WORKOUT_DATA = [
           {
             day: 'Day 1',
             isComplete: false,
+            id: Math.random(),
+            data: [
+              {
+                name: 'Squat',
+                sets: 1,
+                rpe: 8,
+                backdownSets: 4,
+                reps: 10,
+              },
+              {
+                name: 'Leg Press',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'Leg Extensions',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'Leg Curls',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'RDL',
+                sets: 4,
+                reps: 10,
+                weight: 0,
+              },
+            ],
           },
+        ],
+      },
+      {
+        workout: [
           {
-            name: 'Squat',
-            sets: 1,
-            rpe: 8,
-            backdownSets: 4,
-            reps: 10,
-          },
-          {
-            name: 'Leg Press',
-            sets: 4,
-            reps: '10 - 12',
-            weigth: 0,
-          },
-          {
-            name: 'Leg Extensions',
-            sets: 4,
-            reps: '10 - 12',
-            weight: 0,
-          },
-          {
-            name: 'Leg Curls',
-            sets: 4,
-            reps: '10 - 12',
-            weight: 0,
-          },
-          {
-            name: 'RDL',
-            sets: 4,
-            reps: 10,
-            weight: 0,
+            day: 'Day 2',
+            isComplete: false,
+            id: Math.random(),
+            data: [
+              {
+                name: 'Leg Press',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'Leg Extensions',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'Leg Curls',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'RDL',
+                sets: 4,
+                reps: 10,
+                weight: 0,
+              },
+            ],
           },
         ],
       },
     ],
   },
   {
-    type: 'strength',
-    title: 'Workout 2',
+    type: 'hypertrophy',
+    title: 'Hypertrophy 2',
     daysPerWeek: 5,
-    workoutNumber: 1,
-    id: 'sw1',
+    workoutNumber: 2,
+    id: Math.random(),
     week: 1,
-    workout: [
+    workouts: [
       {
-        dayOne: [
+        workout: [
           {
-            mainExercise: {
-              name: 'Squat',
-              sets: 1,
-              rpe: 8,
-              backdownSets: 4,
-              reps: 6,
-            },
-            secondaryExercises: [
+            day: 'Day 1',
+            isComplete: false,
+            id: Math.random(),
+            data: [
+              {
+                name: 'Bench Press',
+                sets: 1,
+                rpe: 8,
+                backdownSets: 4,
+                reps: 10,
+              },
               {
                 name: 'Leg Press',
                 sets: 4,
-                reps: '8-10',
-                weigth: 0,
+                reps: '10 - 12',
+                weight: 0,
               },
               {
                 name: 'Leg Extensions',
                 sets: 4,
-                reps: '8-10',
+                reps: '10 - 12',
                 weight: 0,
               },
               {
                 name: 'Leg Curls',
                 sets: 4,
-                reps: '8-10',
+                reps: '10 - 12',
                 weight: 0,
               },
               {
                 name: 'RDL',
                 sets: 4,
-                reps: 8,
+                reps: 10,
+                weight: 0,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        workout: [
+          {
+            day: 'Day 2',
+            isComplete: false,
+            id: Math.random(),
+            data: [
+              {
+                name: 'Leg Press',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'Leg Extensions',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'Leg Curls',
+                sets: 4,
+                reps: '10 - 12',
+                weight: 0,
+              },
+              {
+                name: 'RDL',
+                sets: 4,
+                reps: 10,
                 weight: 0,
               },
             ],

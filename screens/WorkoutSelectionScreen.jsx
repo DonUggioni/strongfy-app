@@ -8,11 +8,9 @@ function WorkoutSelectionScreen({ navigation }) {
   const filteredWorkouts = WORKOUT_DATA.filter(
     (item) => item.type === 'hypertrophy'
   );
-  console.log(
-    filteredWorkouts
-      .flatMap((item) => item.workouts)
-      .flatMap((item) => item.workout)
-  );
+  filteredWorkouts
+    .flatMap((item) => item.workouts)
+    .flatMap((item) => item.workout);
 
   function previewHandler(item) {
     navigation.navigate('PreviewModal');

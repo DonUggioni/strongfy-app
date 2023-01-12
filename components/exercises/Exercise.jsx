@@ -4,7 +4,7 @@ import { GlobalStyles } from '../../constants/styles';
 import StyledText from '../UI/text/StyledText';
 import Title from '../UI/text/Title';
 
-function Exercise({ exerciseName, sets, reps, rpe, weight }) {
+function Exercise({ exerciseName, sets, reps, rpe, weight, id }) {
   const isPrimary =
     exerciseName === 'Bench Press' ||
     exerciseName === 'Squat' ||

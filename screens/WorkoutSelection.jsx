@@ -1,22 +1,36 @@
-import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Button, FlatList, StyleSheet, View } from 'react-native';
 import SelectWorkout from '../components/SelectWorkout';
+import FlatButton from '../components/UI/buttons/FlatButton';
 import { GlobalStyles } from '../constants/styles';
 import { WORKOUT_DATA } from '../data/Data';
 
-function WorkoutSelectionScreen({ navigation }) {
+function WorkoutSelection({ navigation }) {
   const filteredWorkouts = WORKOUT_DATA.filter(
-    (item) => item.type === 'hypertrophy'
+    (item) => item.type === 'strength'
   );
   filteredWorkouts
     .flatMap((item) => item.workouts)
     .flatMap((item) => item.workout);
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <FlatButton
+          style={styles.headerButton}
+          onPress={() => navigation.replace('WorkoutsScreen')}
+        >
+          Cancel
+        </FlatButton>
+      ),
+    });
+  }, []);
+
   function previewHandler(item) {
     navigation.navigate('PreviewModal');
   }
 
-  function selectHandler() {
+  function selectWorkoutHandler() {
     navigation.replace('WorkoutsScreen');
   }
 
@@ -27,7 +41,7 @@ function WorkoutSelectionScreen({ navigation }) {
         renderItem={({ item }) => (
           <SelectWorkout
             name={item.title}
-            onSelect={selectHandler}
+            onSelect={selectWorkoutHandler}
             onShowPreview={() => previewHandler(item)}
           />
         )}
@@ -37,11 +51,17 @@ function WorkoutSelectionScreen({ navigation }) {
   );
 }
 
-export default WorkoutSelectionScreen;
+export default WorkoutSelection;
 
 const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: GlobalStyles.colors.background,
     flex: 1,
+  },
+  headerButton: {
+    textDecorationLine: 'none',
+    marginRight: 24,
+    fontSize: 16,
+    fontFamily: 'open-sans-semi-bold',
   },
 });

@@ -11,7 +11,7 @@ import SignUpScreen from './screens/UserCredentials/SignUpScreen';
 import WorkoutsScreen from './screens/WorkoutsScreen';
 import RepMaxCalculator from './screens/RepMaxCalculator';
 import ProgressChart from './screens/ProgressChart';
-import WorkoutSelectionScreen from './screens/WorkoutSelectionScreen';
+import WorkoutSelection from './screens/WorkoutSelection';
 import PreviewModal from './components/PreviewModal';
 
 const Stack = createStackNavigator();
@@ -34,6 +34,9 @@ export default function App() {
           screenOptions={{
             headerStyle: { backgroundColor: GlobalStyles.colors.background },
             headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'open-sans-semi-bold',
+            },
           }}
         >
           <Stack.Screen name='Login' component={LoginScreen} />
@@ -49,17 +52,22 @@ export default function App() {
         screenOptions={{
           headerStyle: { backgroundColor: GlobalStyles.colors.background },
           headerTintColor: 'white',
+          headerTitleStyle: {
+            fontFamily: 'open-sans-semi-bold',
+          },
         }}
       >
         <Stack.Screen
           name='WorkoutsScreen'
           component={WorkoutsScreen}
-          options={{ headerShown: false }}
+          options={{ title: 'Workouts' }}
         />
         <Stack.Screen
           name='WorkoutSelection'
-          component={WorkoutSelectionScreen}
-          options={{ headerShown: false, title: 'Workouts' }}
+          component={WorkoutSelection}
+          options={{
+            title: 'Select a workout',
+          }}
         />
         <Stack.Screen
           name='PreviewModal'
@@ -82,6 +90,10 @@ export default function App() {
               paddingTop: 5,
               height: 90,
             },
+            headerTitleStyle: {
+              fontFamily: 'open-sans-semi-bold',
+            },
+
             tabBarActiveTintColor: 'white',
           }}
         >
@@ -103,6 +115,7 @@ export default function App() {
                   />
                 );
               },
+              headerShown: false,
             }}
           />
           <Tab.Screen

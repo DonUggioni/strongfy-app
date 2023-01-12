@@ -71,5 +71,8 @@ const styles = StyleSheet.create({
   workoutDay: {
     textAlign: 'left',
     fontFamily: 'open-sans-semi-bold',
+    marginTop: 12,
+    paddingLeft: 4,
+    color: GlobalStyles.colors.accent500,
   },
 });

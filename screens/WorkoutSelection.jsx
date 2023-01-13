@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import SelectWorkout from '../components/SelectWorkout';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { GlobalStyles } from '../constants/styles';
-import { WORKOUT_DATA } from '../data/Data';
+import useAppContext from '../store/AppContext';
 
 function WorkoutSelection({ navigation }) {
-  const filteredWorkouts = WORKOUT_DATA.filter(
-    (item) => item.type === 'strength'
-  );
-  filteredWorkouts
-    .flatMap((item) => item.workouts)
-    .flatMap((item) => item.workout);
+  const { filteredWorkouts, previewWorkoutHandler } = useAppContext();
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,21 +22,23 @@ function WorkoutSelection({ navigation }) {
   }, []);
 
   function previewHandler(item) {
+    previewWorkoutHandler(item.id);
     navigation.navigate('PreviewModal');
   }
 
-  function selectWorkoutHandler() {
+  function selectWorkoutHandler(item) {
     navigation.replace('WorkoutsScreen');
+    console.log(item.id);
   }
 
   return (
     <View style={styles.rootContainer}>
       <FlatList
-        data={WORKOUT_DATA}
+        data={filteredWorkouts}
         renderItem={({ item }) => (
           <SelectWorkout
             name={item.title}
-            onSelect={selectWorkoutHandler}
+            onSelect={() => selectWorkoutHandler(item)}
             onShowPreview={() => previewHandler(item)}
           />
         )}

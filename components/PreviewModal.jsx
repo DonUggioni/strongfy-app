@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
 import Title from './UI/text/Title';
-import { WORKOUT_DATA } from '../data/Data';
+import useAppContext from '../store/AppContext';
 
 function PreviewModal() {
-  const [workoutPreviewData, setWorkoutPreviewData] = useState({});
-  const filteredWorkouts = WORKOUT_DATA.filter(
-    (item) => item.type === 'hypertrophy'
-  );
+  const { workoutPreviewData } = useAppContext();
 
-  const workout = filteredWorkouts
+  const workout = workoutPreviewData
     .flatMap((item) => item.workouts)
     .flatMap((item) => item.workout);
 

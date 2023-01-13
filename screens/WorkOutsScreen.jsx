@@ -4,17 +4,20 @@ import NoWorkouts from '../components/NoWorkouts';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { GlobalStyles } from '../constants/styles';
 import { Ionicons } from '@expo/vector-icons';
+import useAppContext from '../store/AppContext';
 
 function WorkoutsScreen({ navigation }) {
+  const { trainingPhaseModalHandler } = useAppContext();
   const [workouts, setWorkouts] = useState([]);
+
+  function addButtonHandler() {
+    trainingPhaseModalHandler();
+  }
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <FlatButton
-          style={styles.headerButton}
-          onPress={() => navigation.replace('WorkoutsScreen')}
-        >
+        <FlatButton style={styles.headerButton} onPress={addButtonHandler}>
           <Ionicons name='add-outline' size={34} color='white' />
         </FlatButton>
       ),

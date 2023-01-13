@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import BlockOptionsModal from './BlockOptionsModal';
 import Button from './UI/buttons/Button';
 import StyledText from './UI/text/StyledText';
+import useAppContext from '../store/AppContext';
 
 function NoWorkouts() {
-  const [modalIsVisible, setModalIsVisible] = useState(false);
-
-  function modalHandler() {
-    setModalIsVisible(() => !modalIsVisible);
-  }
+  const { trainingPhaseModalHandler, modalIsVisible } = useAppContext();
   return (
     <>
       <View style={styles.rootContainer}>
         <StyledText>No workouts have been created yet!</StyledText>
-        <Button type={'full'} onPress={modalHandler}>
+        <Button type={'full'} onPress={trainingPhaseModalHandler}>
           Create a workout
         </Button>
       </View>
-      <BlockOptionsModal onCancel={modalHandler} visible={modalIsVisible} />
+      <BlockOptionsModal
+        onCancel={trainingPhaseModalHandler}
+        visible={modalIsVisible}
+      />
     </>
   );
 }

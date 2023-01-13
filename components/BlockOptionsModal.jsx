@@ -5,6 +5,7 @@ import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
 import SelectButton from './UI/buttons/SelectButton';
 import StyledText from './UI/text/StyledText';
+import useAppContext from '../store/AppContext';
 
 const trainingData = [
   {
@@ -42,6 +43,7 @@ const daysData = [
 ];
 
 function BlockOptionsModal({ visible, onCancel }) {
+  const { trainingPhaseModalHandler, filterWorkouts } = useAppContext();
   const navigation = useNavigation();
   const [selectedTrainingData, setSelectedTrainingData] = useState({});
   const [selectedDaysData, setSelectedDaysData] = useState({});
@@ -74,6 +76,8 @@ function BlockOptionsModal({ visible, onCancel }) {
   }
 
   function confirmHandler() {
+    trainingPhaseModalHandler();
+    filterWorkouts(selectedDaysData.value, selectedTrainingData.value);
     navigation.replace('WorkoutSelection');
   }
 

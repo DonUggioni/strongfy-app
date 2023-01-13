@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AppContextProvider } from './store/AppContext';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -62,6 +63,7 @@ export default function App() {
           component={WorkoutsScreen}
           options={{ title: 'Workouts' }}
         />
+
         <Stack.Screen
           name='WorkoutSelection'
           component={WorkoutSelection}
@@ -167,8 +169,10 @@ export default function App() {
     return (
       <>
         <StatusBar style='light' />
-        {!userAuthenticated && <AuthenticationStack />}
-        {userAuthenticated && <AppNavigation />}
+        <AppContextProvider>
+          {!userAuthenticated && <AuthenticationStack />}
+          {userAuthenticated && <AppNavigation />}
+        </AppContextProvider>
       </>
     );
 }

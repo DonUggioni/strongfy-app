@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FlatList, Modal, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
 import SelectButton from './UI/buttons/SelectButton';
 import StyledText from './UI/text/StyledText';
 import useAppContext from '../store/AppContext';
+import { useNavigation } from '@react-navigation/native';
 
 const trainingData = [
   {
@@ -42,11 +42,11 @@ const daysData = [
   },
 ];
 
-function BlockOptionsModal({ visible, onCancel }) {
-  const { trainingPhaseModalHandler, filterWorkouts } = useAppContext();
-  const navigation = useNavigation();
+function BlockOptions() {
+  const { filterWorkouts } = useAppContext();
   const [selectedTrainingData, setSelectedTrainingData] = useState({});
   const [selectedDaysData, setSelectedDaysData] = useState({});
+  const navigation = useNavigation();
 
   function trainingOptions({ item }) {
     const backgroundColor =
@@ -76,60 +76,60 @@ function BlockOptionsModal({ visible, onCancel }) {
   }
 
   function confirmHandler() {
-    trainingPhaseModalHandler();
     filterWorkouts(selectedDaysData.value, selectedTrainingData.value);
     navigation.replace('WorkoutSelection');
   }
 
   return (
-    <Modal animationType='slide' visible={visible}>
-      <SafeAreaView style={styles.rootContainer}>
-        <View style={styles.innerContainer}>
-          <View style={styles.optionsContainer}>
-            <StyledText>What's the training phase?</StyledText>
-            <FlatList
-              data={trainingData}
-              keyExtractor={(item) => item.id}
-              renderItem={trainingOptions}
-              horizontal={true}
-              contentContainerStyle={{
-                justifyContent: 'space-between',
-                flex: 1,
-              }}
-            />
+    <SafeAreaView style={styles.rootContainer}>
+      <View style={styles.innerContainer}>
+        <View style={styles.optionsContainer}>
+          <StyledText>What's the training phase?</StyledText>
+          <FlatList
+            data={trainingData}
+            keyExtractor={(item) => item.id}
+            renderItem={trainingOptions}
+            horizontal={true}
+            contentContainerStyle={{
+              justifyContent: 'space-between',
+              flex: 1,
+            }}
+          />
+        </View>
+        <View style={styles.optionsContainer}>
+          <StyledText>How many days a week?</StyledText>
+          <FlatList
+            data={daysData}
+            keyExtractor={(item) => item.id}
+            renderItem={daysPerWeek}
+            horizontal={true}
+            contentContainerStyle={{
+              justifyContent: 'space-between',
+              flex: 1,
+            }}
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <Button type='full' onPress={confirmHandler}>
+              Confirm
+            </Button>
           </View>
-          <View style={styles.optionsContainer}>
-            <StyledText>How many days a week?</StyledText>
-            <FlatList
-              data={daysData}
-              keyExtractor={(item) => item.id}
-              renderItem={daysPerWeek}
-              horizontal={true}
-              contentContainerStyle={{
-                justifyContent: 'space-between',
-                flex: 1,
-              }}
-            />
-          </View>
-          <View style={styles.buttonsContainer}>
-            <View style={styles.buttonContainer}>
-              <Button type='full' onPress={confirmHandler}>
-                Confirm
-              </Button>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button onPress={onCancel} type='flat'>
-                Cancel
-              </Button>
-            </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={() => navigation.goBack('WorkoutsScreen')}
+              type='flat'
+            >
+              Cancel
+            </Button>
           </View>
         </View>
-      </SafeAreaView>
-    </Modal>
+      </View>
+    </SafeAreaView>
   );
 }
 
-export default BlockOptionsModal;
+export default BlockOptions;
 
 const styles = StyleSheet.create({
   rootContainer: {

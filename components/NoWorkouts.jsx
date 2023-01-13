@@ -1,25 +1,27 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
-import BlockOptionsModal from './BlockOptionsModal';
 import Button from './UI/buttons/Button';
 import StyledText from './UI/text/StyledText';
-import useAppContext from '../store/AppContext';
+import { useNavigation } from '@react-navigation/native';
 
 function NoWorkouts() {
-  const { trainingPhaseModalHandler, modalIsVisible } = useAppContext();
+  const navigation = useNavigation();
+
+  // function cancelHandler() {
+  //   navigation.replace('WorkoutsScreen');
+  // }
   return (
     <>
       <View style={styles.rootContainer}>
         <StyledText>No workouts have been created yet!</StyledText>
-        <Button type={'full'} onPress={trainingPhaseModalHandler}>
+        <Button
+          type={'full'}
+          onPress={() => navigation.navigate('SelectPhase')}
+        >
           Create a workout
         </Button>
       </View>
-      <BlockOptionsModal
-        onCancel={trainingPhaseModalHandler}
-        visible={modalIsVisible}
-      />
     </>
   );
 }

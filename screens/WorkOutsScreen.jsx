@@ -4,14 +4,13 @@ import NoWorkouts from '../components/NoWorkouts';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { GlobalStyles } from '../constants/styles';
 import { Ionicons } from '@expo/vector-icons';
-import useAppContext from '../store/AppContext';
+import Button from '../components/UI/buttons/Button';
 
 function WorkoutsScreen({ navigation }) {
-  const { trainingPhaseModalHandler } = useAppContext();
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState(['kk']);
 
   function addButtonHandler() {
-    trainingPhaseModalHandler();
+    navigation.navigate('SelectPhase');
   }
 
   useEffect(() => {
@@ -24,6 +23,10 @@ function WorkoutsScreen({ navigation }) {
     });
   }, []);
 
+  function navigate() {
+    navigation.navigate('SelectWeek');
+  }
+
   if (workouts.length === 0) {
     return <NoWorkouts />;
   }
@@ -31,6 +34,9 @@ function WorkoutsScreen({ navigation }) {
   return (
     <View style={styles.rootContainer}>
       <Text>Workouts screen</Text>
+      <Button type='full' onPress={navigate}>
+        Press me
+      </Button>
     </View>
   );
 }

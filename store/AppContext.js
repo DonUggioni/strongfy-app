@@ -4,13 +4,8 @@ import { WORKOUT_DATA } from '../data/Data';
 const AppContext = createContext(WORKOUT_DATA);
 
 export function AppContextProvider({ children }) {
-  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [filteredWorkouts, setFilteredWorkouts] = useState(null);
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
-
-  function trainingPhaseModalHandler() {
-    setModalIsVisible(() => !modalIsVisible);
-  }
 
   function filterWorkouts(numOfDays, typeOfTraining) {
     const filtered = WORKOUT_DATA.filter(
@@ -25,8 +20,6 @@ export function AppContextProvider({ children }) {
   }
 
   const values = {
-    modalIsVisible,
-    trainingPhaseModalHandler,
     filteredWorkouts,
     filterWorkouts,
     previewWorkoutHandler,

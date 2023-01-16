@@ -5,11 +5,16 @@ import Selector from './selector/Selector';
 import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 
-function SelectDay({ onPress }) {
-  const { currentWorkout } = useAppContext();
+function SelectDay({ navigation }) {
+  const { currentWorkout, setWorkoutOfTheDay } = useAppContext();
   const days = currentWorkout
     ?.flatMap((item) => item.workouts)
     .flatMap((item) => item.workout);
+
+  function selectDayHandler(id) {
+    setWorkoutOfTheDay(days.filter((item) => item.id === id));
+    navigation.navigate('WorkoutOfTheDay');
+  }
 
   return (
     <View style={styles.rootContainer}>
@@ -24,7 +29,7 @@ function SelectDay({ onPress }) {
               iconName='chevron-forward-outline'
               iconSize={30}
               iconColor='white'
-              onPress={onPress}
+              onPress={() => selectDayHandler(item.id)}
             >
               {item.day}
             </Selector>

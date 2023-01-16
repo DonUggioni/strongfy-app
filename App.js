@@ -16,6 +16,7 @@ import WorkoutSelection from './screens/WorkoutSelection';
 import PreviewModal from './components/PreviewModal';
 import BlockOptions from './components/BlockOptions';
 import SelectDay from './components/SelectDay';
+import WorkoutOfTheDay from './components/WorkoutOfTheDay';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,8 +66,17 @@ export default function App() {
           component={WorkoutsScreen}
           options={{ title: 'Workouts' }}
         />
-        <Stack.Screen name='SelectPhase' component={BlockOptions} />
-        <Stack.Screen name='SelectDay' component={SelectDay} />
+        <Stack.Screen
+          name='SelectPhase'
+          component={BlockOptions}
+          options={{ title: 'Training Phase' }}
+        />
+        <Stack.Screen
+          name='SelectDay'
+          component={SelectDay}
+          options={{ title: 'Select Day' }}
+        />
+        <Stack.Screen name='WorkoutOfTheDay' component={WorkoutOfTheDay} />
 
         <Stack.Screen
           name='WorkoutSelection'

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import NoWorkouts from '../components/NoWorkouts';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { GlobalStyles } from '../constants/styles';
 import { Ionicons } from '@expo/vector-icons';
-import Button from '../components/UI/buttons/Button';
+import SelectWeek from '../components/SelectWeek';
+import useAppContext from '../store/AppContext';
 
 function WorkoutsScreen({ navigation }) {
-  const [workouts, setWorkouts] = useState(['kk']);
+  const { currentWorkout } = useAppContext();
 
   function addButtonHandler() {
     navigation.navigate('SelectPhase');
@@ -23,20 +24,23 @@ function WorkoutsScreen({ navigation }) {
     });
   }, []);
 
-  function navigate() {
-    navigation.navigate('SelectWeek');
+  function selectDayHandler(item) {
+    navigation.navigate('SelectDay');
   }
 
-  if (workouts.length === 0) {
+  if (currentWorkout.length === 0) {
     return <NoWorkouts />;
   }
 
   return (
     <View style={styles.rootContainer}>
-      <Text>Workouts screen</Text>
-      <Button type='full' onPress={navigate}>
-        Press me
-      </Button>
+      {currentWorkout.map((item, index) => (
+        <SelectWeek
+          week={`Week ${item.week}`}
+          key={index}
+          onPress={(item) => selectDayHandler(item)}
+        />
+      ))}
     </View>
   );
 }

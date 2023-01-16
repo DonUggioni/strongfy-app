@@ -7,7 +7,7 @@ import Title from './UI/text/Title';
 import useAppContext from '../store/AppContext';
 
 function PreviewModal() {
-  const { workoutPreviewData } = useAppContext();
+  const { workoutPreviewData, workoutPreviewTitle } = useAppContext();
 
   const workout = workoutPreviewData
     .flatMap((item) => item.workouts)
@@ -20,7 +20,7 @@ function PreviewModal() {
   return (
     <View style={styles.rootContainer}>
       <View style={styles.headerContainer}>
-        <Title style={styles.header}>Workout 1</Title>
+        <Title style={styles.header}>{workoutPreviewTitle}</Title>
         <Button type='full'>Select</Button>
       </View>
       <SectionList

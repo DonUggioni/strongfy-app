@@ -8,9 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 function NoWorkouts() {
   const navigation = useNavigation();
 
-  // function cancelHandler() {
-  //   navigation.replace('WorkoutsScreen');
-  // }
   return (
     <>
       <View style={styles.rootContainer}>

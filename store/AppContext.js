@@ -6,6 +6,8 @@ const AppContext = createContext(WORKOUT_DATA);
 export function AppContextProvider({ children }) {
   const [filteredWorkouts, setFilteredWorkouts] = useState(null);
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
+  const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
+  const [currentWorkout, setCurrentWorkout] = useState([]);
 
   function filterWorkouts(numOfDays, typeOfTraining) {
     const filtered = WORKOUT_DATA.filter(
@@ -24,6 +26,10 @@ export function AppContextProvider({ children }) {
     filterWorkouts,
     previewWorkoutHandler,
     workoutPreviewData,
+    workoutPreviewTitle,
+    setWorkoutPreviewTitle,
+    currentWorkout,
+    setCurrentWorkout,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

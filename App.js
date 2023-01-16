@@ -14,8 +14,8 @@ import RepMaxCalculator from './screens/RepMaxCalculator';
 import ProgressChart from './screens/ProgressChart';
 import WorkoutSelection from './screens/WorkoutSelection';
 import PreviewModal from './components/PreviewModal';
-import SelectWeek from './components/SelectWeek';
 import BlockOptions from './components/BlockOptions';
+import SelectDay from './components/SelectDay';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,8 +66,7 @@ export default function App() {
           options={{ title: 'Workouts' }}
         />
         <Stack.Screen name='SelectPhase' component={BlockOptions} />
-
-        <Stack.Screen name='SelectWeek' component={SelectWeek} />
+        <Stack.Screen name='SelectDay' component={SelectDay} />
 
         <Stack.Screen
           name='WorkoutSelection'

@@ -11,6 +11,8 @@ export const WORKOUT_DATA = [
         workout: [
           {
             day: 'Day 1',
+            id: Math.random(),
+
             isComplete: false,
             id: Math.random(),
             data: [

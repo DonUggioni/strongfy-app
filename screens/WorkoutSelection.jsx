@@ -6,7 +6,12 @@ import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 
 function WorkoutSelection({ navigation }) {
-  const { filteredWorkouts, previewWorkoutHandler } = useAppContext();
+  const {
+    filteredWorkouts,
+    previewWorkoutHandler,
+    setWorkoutPreviewTitle,
+    setCurrentWorkout,
+  } = useAppContext();
 
   useEffect(() => {
     navigation.setOptions({
@@ -23,12 +28,13 @@ function WorkoutSelection({ navigation }) {
 
   function previewHandler(item) {
     previewWorkoutHandler(item.id);
+    setWorkoutPreviewTitle(item.title);
     navigation.navigate('PreviewModal');
   }
 
   function selectWorkoutHandler(item) {
-    navigation.replace('WorkoutsScreen');
-    console.log(item.id);
+    setCurrentWorkout([item]);
+    navigation.navigate('WorkoutsScreen');
   }
 
   return (

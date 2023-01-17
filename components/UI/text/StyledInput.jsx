@@ -2,19 +2,12 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 
-function StyledInput({
-  onChangeText,
-  value,
-  placeHolder,
-  keyboardType,
-  onEndEditing,
-}) {
+function StyledInput({ onChangeText, value, keyboardType, onEndEditing }) {
   return (
     <TextInput
       style={styles.input}
       onChangeText={onChangeText}
       value={value}
-      placeHolder={placeHolder}
       placeholderTextColor={GlobalStyles.colors.gray500}
       keyboardType={keyboardType}
       autoComplete='off'

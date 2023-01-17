@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: GlobalStyles.borderRadius,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: GlobalStyles.colors.primary500,
   },
   text: {
     color: 'white',
     fontFamily: 'open-sans-semi-bold',
-    fontSize: 14,
+    fontSize: 16,
   },
   selected: {
     backgroundColor: GlobalStyles.colors.primary500,

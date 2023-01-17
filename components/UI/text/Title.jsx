@@ -17,5 +17,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontFamily: 'open-sans-regular',
+    letterSpacing: 0.5,
   },
 });

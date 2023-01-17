@@ -1,5 +1,6 @@
 export const WORKOUT_DATA = [
   {
+    style: 'powerlifting',
     type: 'hypertrophy',
     title: 'Hypertrophy 1',
     daysPerWeek: 5,
@@ -11,8 +12,6 @@ export const WORKOUT_DATA = [
         workout: [
           {
             day: 'Day 1',
-            id: Math.random(),
-
             isComplete: false,
             id: Math.random(),
             data: [

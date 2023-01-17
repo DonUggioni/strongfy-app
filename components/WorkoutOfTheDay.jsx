@@ -1,8 +1,78 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
+import { GlobalStyles } from '../constants/styles';
+import Title from './UI/text/Title';
+import useAppContext from '../store/AppContext';
+import Exercise from './exercises/Exercise';
+import Button from './UI/buttons/Button';
 
-function WorkoutOfTheDay() {
-  return <Text>Workout of the day</Text>;
+function WorkoutOfTheDay({ navigation }) {
+  const { workoutOfTheDay } = useAppContext();
+  const [workoutIsComplete, setWorkoutIsComplete] = useState(isComplete);
+
+  const workout = workoutOfTheDay.flatMap((item) => item.data);
+  const [day] = workoutOfTheDay.flatMap((item) => item.day);
+  const [isComplete] = workoutOfTheDay.flatMap((item) => item.isComplete);
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: day,
+    });
+  });
+
+  return (
+    <View style={styles.rootContainer}>
+      {/* <View style={styles.titleContainer}>
+        <Title style={styles.title}>{day}</Title>
+      </View> */}
+      <View style={styles.listContainer}>
+        <FlatList
+          data={workout}
+          keyExtractor={(item, index) => index}
+          renderItem={({ item }) => (
+            <Exercise
+              exerciseName={item.name}
+              sets={item.sets}
+              reps={item.reps}
+              rpe={item.rpe}
+              weight={item.weight}
+            />
+          )}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button type={'full'}>Done!</Button>
+      </View>
+    </View>
+  );
 }
 
 export default WorkoutOfTheDay;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    backgroundColor: GlobalStyles.colors.background,
+    flex: 1,
+    // justifyContent: 'space-between',
+  },
+  titleContainer: {
+    paddingVertical: 24,
+    paddingHorizontal: 20,
+    borderBottomWidth: 2,
+    borderColor: GlobalStyles.colors.gray500,
+  },
+  title: {
+    textAlign: 'left',
+    fontSize: 24,
+    fontFamily: 'open-sans-semi-bold',
+  },
+  buttonContainer: {
+    width: '30%',
+    alignSelf: 'flex-end',
+    marginTop: 30,
+    marginRight: 20,
+  },
+  listContainer: {
+    maxHeight: '85%',
+  },
+});

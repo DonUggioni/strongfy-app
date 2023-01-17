@@ -6,22 +6,32 @@ import Button from './UI/buttons/Button';
 import Title from './UI/text/Title';
 import useAppContext from '../store/AppContext';
 
-function PreviewModal() {
-  const { workoutPreviewData, workoutPreviewTitle } = useAppContext();
+function PreviewModal({ navigation }) {
+  const { workoutPreviewData, workoutPreviewTitle, setCurrentWorkout } =
+    useAppContext();
 
   const workout = workoutPreviewData
     .flatMap((item) => item.workouts)
     .flatMap((item) => item.workout);
 
+  const selectWorkout = workoutPreviewData.flatMap((item) => item);
+
   function DayOfWeek({ day }) {
     return <Title style={styles.workoutDay}>{day}</Title>;
+  }
+
+  function selectHandler() {
+    setCurrentWorkout(selectWorkout);
+    navigation.navigate('WorkoutsScreen');
   }
 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <Title style={styles.header}>{workoutPreviewTitle}</Title>
-        <Button type='full'>Select</Button>
+        <Button type='full' onPress={selectHandler}>
+          Select
+        </Button>
       </View>
       <SectionList
         sections={workout}

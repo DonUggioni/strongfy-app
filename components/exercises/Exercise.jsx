@@ -6,7 +6,7 @@ import Title from '../UI/text/Title';
 import StyledInput from '../UI/text/StyledInput';
 
 function Exercise({ exerciseName, sets, reps, rpe, value }) {
-  const [backdownWeightCalc, setBackdownWeightCalc] = useState(0);
+  const [backdownWeightCalc, setBackdownWeightCalc] = useState(null);
   const [backdownWeight, setBackdownWeight] = useState(0);
 
   const isPrimary =
@@ -15,7 +15,12 @@ function Exercise({ exerciseName, sets, reps, rpe, value }) {
     exerciseName === 'Deadlift';
 
   function calcBackdown(num) {
-    const backdown = num - 30;
+    const minPerc = (8 / num) * 100;
+    const maxPerc = (15 / num) * 100;
+    const backdown = {
+      min: num - minPerc.toFixed(2),
+      max: num - maxPerc.toFixed(2),
+    };
     setBackdownWeightCalc(backdown);
   }
 
@@ -36,9 +41,12 @@ function Exercise({ exerciseName, sets, reps, rpe, value }) {
       </View>
       <View style={styles.setsContainer}>
         <Title style={styles.title}>Backdown Sets - </Title>
-        <StyledText>
-          {sets} x {reps} @ {backdownWeightCalc}kg
-        </StyledText>
+        {backdownWeightCalc && (
+          <StyledText>
+            {sets} x {reps} @{' '}
+            {`${backdownWeightCalc.max} - ${backdownWeightCalc.min}`}kg
+          </StyledText>
+        )}
       </View>
     </View>
   );
@@ -50,7 +58,7 @@ function Exercise({ exerciseName, sets, reps, rpe, value }) {
         <StyledText>
           {sets} x {reps} @
         </StyledText>
-        <StyledInput keyboardType={'decil-pad'} value={value} />
+        <StyledInput keyboardType={'decimal-pad'} value={value} />
         <StyledText>kg</StyledText>
       </View>
     </View>

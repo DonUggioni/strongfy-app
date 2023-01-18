@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 import StyledText from '../UI/text/StyledText';
 import Title from '../UI/text/Title';
 import StyledInput from '../UI/text/StyledInput';
+import useAppContext from '../../store/AppContext';
 
-function Exercise({ exerciseName, sets, reps, rpe, value }) {
-  const [backdownWeightCalc, setBackdownWeightCalc] = useState(null);
-  const [backdownWeight, setBackdownWeight] = useState(0);
-
+function Exercise({
+  exerciseName,
+  sets,
+  reps,
+  rpe,
+  value,
+  onChangeText,
+  onBlur,
+  weight,
+}) {
+  const { backdownWeightCalc } = useAppContext();
   const isPrimary =
     exerciseName === 'Bench Press' ||
     exerciseName === 'Squat' ||
     exerciseName === 'Deadlift';
-
-  function calcBackdown(num) {
-    const minPerc = (8 / num) * 100;
-    const maxPerc = (15 / num) * 100;
-    const backdown = {
-      min: num - minPerc.toFixed(2),
-      max: num - maxPerc.toFixed(2),
-    };
-    setBackdownWeightCalc(backdown);
-  }
 
   const primaryExercise = (
     <View style={styles.innerContainer}>
@@ -31,13 +29,15 @@ function Exercise({ exerciseName, sets, reps, rpe, value }) {
         <StyledText>
           {sets} x {reps} @ {rpe}RPE
         </StyledText>
-        <StyledInput
-          keyboardType={'decimal-pad'}
-          onChangeText={(text) => setBackdownWeight(Number(text))}
-          onEndEditing={() => calcBackdown(backdownWeight)}
-          value={value}
-        />
-        <StyledText>kg</StyledText>
+        {!weight && (
+          <StyledInput
+            keyboardType={'decimal-pad'}
+            onChangeText={onChangeText}
+            onBlur={onBlur}
+            value={value}
+          />
+        )}
+        <StyledText style={styles.weightText}> - {weight}kg</StyledText>
       </View>
       <View style={styles.setsContainer}>
         <Title style={styles.title}>Backdown Sets - </Title>
@@ -58,8 +58,15 @@ function Exercise({ exerciseName, sets, reps, rpe, value }) {
         <StyledText>
           {sets} x {reps} @
         </StyledText>
-        <StyledInput keyboardType={'decimal-pad'} value={value} />
-        <StyledText>kg</StyledText>
+        {!weight && (
+          <StyledInput
+            keyboardType={'decimal-pad'}
+            value={value}
+            onChangeText={onChangeText}
+            onBlur={onBlur}
+          />
+        )}
+        <StyledText style={styles.weightText}> - {weight}kg</StyledText>
       </View>
     </View>
   );
@@ -89,5 +96,8 @@ const styles = StyleSheet.create({
   setsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  weightText: {
+    color: GlobalStyles.colors.accent500,
   },
 });

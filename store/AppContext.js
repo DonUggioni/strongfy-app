@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { WORKOUT_DATA } from '../data/Data';
-
+import { useImmer } from 'use-immer';
 const AppContext = createContext(WORKOUT_DATA);
 
 export function AppContextProvider({ children }) {
@@ -8,7 +8,8 @@ export function AppContextProvider({ children }) {
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
   const [currentWorkout, setCurrentWorkout] = useState([]);
-  const [workoutOfTheDay, setWorkoutOfTheDay] = useState([]);
+  const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer();
+  const [backdownWeightCalc, setBackdownWeightCalc] = useState('');
 
   function filterWorkouts(numOfDays, typeOfTraining) {
     const filtered = WORKOUT_DATA.filter(
@@ -22,6 +23,24 @@ export function AppContextProvider({ children }) {
     setWorkoutPreviewData(filtered);
   }
 
+  function calcBackdown(num, exerciseName) {
+    if (
+      exerciseName === 'Squat' ||
+      exerciseName === 'Bench' ||
+      exerciseName === 'Deadlift'
+    ) {
+      const minPerc = (8 / num) * 100;
+      const maxPerc = (15 / num) * 100;
+      const backdown = {
+        min: num - minPerc.toFixed(1),
+        max: num - maxPerc.toFixed(1),
+      };
+      setBackdownWeightCalc(backdown);
+    }
+  }
+
+  function updateWorkoutData() {}
+
   const values = {
     filteredWorkouts,
     filterWorkouts,
@@ -33,6 +52,8 @@ export function AppContextProvider({ children }) {
     setCurrentWorkout,
     workoutOfTheDay,
     setWorkoutOfTheDay,
+    calcBackdown,
+    backdownWeightCalc,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

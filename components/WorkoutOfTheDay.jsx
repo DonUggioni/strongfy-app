@@ -7,18 +7,35 @@ import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
 
 function WorkoutOfTheDay({ navigation }) {
-  const { workoutOfTheDay } = useAppContext();
-  const [workoutIsComplete, setWorkoutIsComplete] = useState(isComplete);
+  const { workoutOfTheDay, setWorkoutOfTheDay, calcBackdown } = useAppContext();
+  const [weight, setWeight] = useState(null);
 
-  const workout = workoutOfTheDay.flatMap((item) => item.data);
-  const [day] = workoutOfTheDay.flatMap((item) => item.day);
-  const [isComplete] = workoutOfTheDay.flatMap((item) => item.isComplete);
+  const workout = workoutOfTheDay?.flatMap((item) => item.data);
+  const [day] = workoutOfTheDay?.flatMap((item) => item.day);
 
   useEffect(() => {
     navigation.setOptions({
       title: day,
     });
-  });
+  }, []);
+
+  function workoutDoneHandler() {
+    setWorkoutOfTheDay((draft) => {
+      draft[0].isComplete = true;
+    });
+  }
+
+  function updateWeight(currentExercise) {
+    const index = workout.findIndex(
+      (item) => item.name === currentExercise.name
+    );
+
+    calcBackdown(weight, currentExercise.name);
+
+    setWorkoutOfTheDay((draft) => {
+      draft[0].data[index].weight = weight;
+    });
+  }
 
   return (
     <View style={styles.rootContainer}>
@@ -35,13 +52,18 @@ function WorkoutOfTheDay({ navigation }) {
               sets={item.sets}
               reps={item.reps}
               rpe={item.rpe}
+              // value={item.weight}
               weight={item.weight}
+              onBlur={() => updateWeight(item)}
+              onChangeText={(text) => setWeight(text)}
             />
           )}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button type={'full'}>Done!</Button>
+        <Button type={'full'} onPress={workoutDoneHandler}>
+          Done!
+        </Button>
       </View>
     </View>
   );

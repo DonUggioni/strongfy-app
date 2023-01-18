@@ -2,16 +2,15 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 
-function StyledInput({ onChangeText, value, keyboardType, onEndEditing }) {
+function StyledInput({ onChangeText, value, keyboardType, onBlur }) {
   return (
     <TextInput
       style={styles.input}
       onChangeText={onChangeText}
       value={value}
-      placeholderTextColor={GlobalStyles.colors.gray500}
       keyboardType={keyboardType}
       autoComplete='off'
-      onEndEditing={onEndEditing}
+      onBlur={onBlur}
     />
   );
 }

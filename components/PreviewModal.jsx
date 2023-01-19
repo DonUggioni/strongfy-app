@@ -38,7 +38,8 @@ function PreviewModal({ navigation }) {
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => (
           <Exercise
-            exerciseName={item.name}
+            exerciseName={item.exercise}
+            title={item.title}
             sets={item.sets}
             reps={item.reps}
             rpe={item.rpe}

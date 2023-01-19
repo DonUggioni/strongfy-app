@@ -7,7 +7,12 @@ import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
 
 function WorkoutOfTheDay({ navigation }) {
-  const { workoutOfTheDay, setWorkoutOfTheDay, calcBackdown } = useAppContext();
+  const {
+    workoutOfTheDay,
+    setWorkoutOfTheDay,
+    calcBackdown,
+    backdownWeightCalc,
+  } = useAppContext();
   const [weight, setWeight] = useState(null);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
@@ -19,6 +24,16 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }, []);
 
+  // useEffect(() => {
+  //   const index = workout.findIndex(
+  //     (item) => item.exercise === currentExercise.exercise
+  //   );
+
+  //   setWorkoutOfTheDay((draft) => {
+  //     draft[0].data[index].backdownWeight = backdownWeightCalc;
+  //   });
+  // }, [backdownWeightCalc]);
+
   function workoutDoneHandler() {
     setWorkoutOfTheDay((draft) => {
       draft[0].isComplete = true;
@@ -27,10 +42,9 @@ function WorkoutOfTheDay({ navigation }) {
 
   function updateWeight(currentExercise) {
     const index = workout.findIndex(
-      (item) => item.name === currentExercise.name
+      (item) => item.exercise === currentExercise.exercise
     );
-
-    calcBackdown(weight, currentExercise.name);
+    calcBackdown(+weight, currentExercise.exercise);
 
     setWorkoutOfTheDay((draft) => {
       draft[0].data[index].weight = weight;
@@ -48,7 +62,8 @@ function WorkoutOfTheDay({ navigation }) {
           keyExtractor={(item, index) => index}
           renderItem={({ item }) => (
             <Exercise
-              exerciseName={item.name}
+              exerciseName={item.exercise}
+              title={item.title}
               sets={item.sets}
               reps={item.reps}
               rpe={item.rpe}

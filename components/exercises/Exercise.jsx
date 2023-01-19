@@ -8,6 +8,7 @@ import useAppContext from '../../store/AppContext';
 
 function Exercise({
   exerciseName,
+  title,
   sets,
   reps,
   rpe,
@@ -18,14 +19,14 @@ function Exercise({
 }) {
   const { backdownWeightCalc } = useAppContext();
   const isPrimary =
-    exerciseName === 'Bench Press' ||
-    exerciseName === 'Squat' ||
-    exerciseName === 'Deadlift';
+    exerciseName === 'bench press' ||
+    exerciseName === 'squat' ||
+    exerciseName === 'deadlift';
 
   const primaryExercise = (
     <View style={styles.innerContainer}>
       <View style={styles.setsContainer}>
-        <Title style={styles.title}>{exerciseName} - </Title>
+        <Title style={styles.title}>{title} - </Title>
         <StyledText>
           {sets} x {reps} @ {rpe}RPE
         </StyledText>
@@ -44,7 +45,7 @@ function Exercise({
         {backdownWeightCalc && (
           <StyledText>
             {sets} x {reps} @{' '}
-            {`${backdownWeightCalc.max} - ${backdownWeightCalc.min}`}kg
+            {`${backdownWeightCalc.min} - ${backdownWeightCalc.max}`}kg
           </StyledText>
         )}
       </View>
@@ -54,7 +55,7 @@ function Exercise({
   const secondaryExercise = (
     <View style={styles.innerContainer}>
       <View style={styles.setsContainer}>
-        <Title style={styles.title}>{exerciseName} - </Title>
+        <Title style={styles.title}>{title} - </Title>
         <StyledText>
           {sets} x {reps} @
         </StyledText>

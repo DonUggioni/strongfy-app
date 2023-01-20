@@ -12,6 +12,7 @@ function WorkoutOfTheDay({ navigation }) {
     setWorkoutOfTheDay,
     calcBackdown,
     backdownWeightCalc,
+    generateNextWeek,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
@@ -24,20 +25,11 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //   const index = workout.findIndex(
-  //     (item) => item.exercise === currentExercise.exercise
-  //   );
-
-  //   setWorkoutOfTheDay((draft) => {
-  //     draft[0].data[index].backdownWeight = backdownWeightCalc;
-  //   });
-  // }, [backdownWeightCalc]);
-
   function workoutDoneHandler() {
     setWorkoutOfTheDay((draft) => {
       draft[0].isComplete = true;
     });
+    generateNextWeek();
   }
 
   function updateWeight(currentExercise) {

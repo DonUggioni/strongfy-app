@@ -11,6 +11,10 @@ import { getTrainingData } from '../utils/fetchData';
 function WorkoutsScreen({ navigation }) {
   const { currentWorkout, setTrainingData } = useAppContext();
 
+  const weekNumber = currentWorkout.flatMap((item) => item.workouts);
+
+  console.log(weekNumber);
+
   async function addButtonHandler() {
     try {
       const data = await getTrainingData();
@@ -32,6 +36,7 @@ function WorkoutsScreen({ navigation }) {
   }, []);
 
   function selectDayHandler(item) {
+    console.log([item.id]);
     navigation.navigate('SelectDay');
   }
 
@@ -41,7 +46,7 @@ function WorkoutsScreen({ navigation }) {
 
   return (
     <View style={styles.rootContainer}>
-      {currentWorkout.map((item, index) => (
+      {weekNumber.map((item, index) => (
         <SelectWeek
           week={`Week ${item.week}`}
           key={index}

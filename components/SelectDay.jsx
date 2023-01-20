@@ -10,16 +10,17 @@ function SelectDay({ navigation }) {
   const days = currentWorkout
     ?.flatMap((item) => item.workouts)
     .flatMap((item) => item.workout);
+  const [weekNumber] = currentWorkout.flatMap((item) => item.workouts);
 
-  function selectDayHandler(id) {
-    setWorkoutOfTheDay(days.filter((item) => item.id === id));
+  function selectDayHandler(workout) {
+    setWorkoutOfTheDay(days.filter((item) => item.id === workout.id));
     navigation.navigate('WorkoutOfTheDay');
   }
 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.titleContainer}>
-        <Title style={styles.title}>Week 1</Title>
+        <Title style={styles.title}>Week {weekNumber.week}</Title>
       </View>
       {days.map((item, index) => {
         return (
@@ -29,7 +30,7 @@ function SelectDay({ navigation }) {
               iconName='chevron-forward-outline'
               iconSize={30}
               iconColor='white'
-              onPress={() => selectDayHandler(item.id)}
+              onPress={() => selectDayHandler(item)}
             >
               {item.day}
             </Selector>

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
-import { WORKOUT_DATA } from '../data/Data';
+import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
-const AppContext = createContext(WORKOUT_DATA);
+const AppContext = createContext(WORKOUT_DATA_MODEL);
 
 export function AppContextProvider({ children }) {
   const [trainingData, setTrainingData] = useImmer(null);
@@ -11,19 +11,25 @@ export function AppContextProvider({ children }) {
   const [currentWorkout, setCurrentWorkout] = useState([]);
   const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer();
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
-    const filtered = trainingData.training.filter(
+    const filtered = trainingData.filter(
       (item) => item.type === typeOfTraining && item.daysPerWeek === numOfDays
     );
     setFilteredWorkouts(filtered);
   }
 
+  // Function being used in WorkoutSelection, to preview entire training week
   function previewWorkoutHandler(id) {
-    const filtered = filteredWorkouts.filter((item) => item.id === id);
+    const filtered = filteredWorkouts
+      .flatMap((item) => item.workouts)
+      .filter((item) => item.id === id);
     setWorkoutPreviewData(filtered);
   }
 
+  // Function being used in "WorkoutOfTheDay" to calculate backdownsets weight
   function calcBackdown(num, exerciseName) {
     if (
       exerciseName === 'squat' ||
@@ -55,6 +61,8 @@ export function AppContextProvider({ children }) {
     backdownWeightCalc,
     trainingData,
     setTrainingData,
+    isLoading,
+    setIsLoading,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

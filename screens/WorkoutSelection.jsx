@@ -26,8 +26,12 @@ function WorkoutSelection({ navigation }) {
     });
   }, []);
 
+  const id = filteredWorkouts
+    .flatMap((item) => item.workouts)
+    .flatMap((item) => item.id);
+
   function previewHandler(item) {
-    previewWorkoutHandler(item.id);
+    previewWorkoutHandler(id[0]);
     setWorkoutPreviewTitle(item.title);
     navigation.navigate('PreviewModal');
   }

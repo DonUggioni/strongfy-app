@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, Modal, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
 import SelectButton from './UI/buttons/SelectButton';
@@ -7,7 +7,7 @@ import StyledText from './UI/text/StyledText';
 import useAppContext from '../store/AppContext';
 import { useNavigation } from '@react-navigation/native';
 
-const trainingData = [
+const styleData = [
   {
     id: 't1',
     type: 'Hypertrophy',
@@ -86,7 +86,7 @@ function BlockOptions() {
         <View style={styles.optionsContainer}>
           <StyledText>What's the training phase?</StyledText>
           <FlatList
-            data={trainingData}
+            data={styleData}
             keyExtractor={(item) => item.id}
             renderItem={trainingOptions}
             horizontal={true}

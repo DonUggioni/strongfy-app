@@ -10,18 +10,18 @@ function PreviewModal({ navigation }) {
   const { workoutPreviewData, workoutPreviewTitle, setCurrentWorkout } =
     useAppContext();
 
-  const workout = workoutPreviewData
-    .flatMap((item) => item.workouts)
-    .flatMap((item) => item.workout);
+  const workout = workoutPreviewData.flatMap((item) => item.workout);
 
-  const selectWorkout = workoutPreviewData.flatMap((item) => item);
+  // console.log(workoutPreviewData);
+
+  // const selectWorkout = workoutPreviewData.flatMap((item) => item.workouts);
 
   function DayOfWeek({ day }) {
     return <Title style={styles.workoutDay}>{day}</Title>;
   }
 
   function selectHandler() {
-    setCurrentWorkout(selectWorkout);
+    setCurrentWorkout(workoutPreviewData);
     navigation.navigate('WorkoutsScreen');
   }
 
@@ -29,7 +29,7 @@ function PreviewModal({ navigation }) {
     <View style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <Title style={styles.header}>{workoutPreviewTitle}</Title>
-        <Button type='full' onPress={selectHandler}>
+        <Button type='full' onPress={() => selectHandler()}>
           Select
         </Button>
       </View>

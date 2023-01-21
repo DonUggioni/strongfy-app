@@ -6,10 +6,9 @@ import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 
 function SelectDay({ navigation }) {
-  const { currentWorkout, setWorkoutOfTheDay } = useAppContext();
-  const days = currentWorkout
-    ?.flatMap((item) => item.workouts)
-    .flatMap((item) => item.workout);
+  const { currentWorkout, setWorkoutOfTheDay, workoutOfTheWeek } =
+    useAppContext();
+  const days = workoutOfTheWeek.flatMap((item) => item.workout);
   const [weekNumber] = currentWorkout.flatMap((item) => item.workouts);
 
   function selectDayHandler(workout) {

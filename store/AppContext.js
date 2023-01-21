@@ -9,9 +9,12 @@ export function AppContextProvider({ children }) {
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
   const [currentWorkout, setCurrentWorkout] = useState([]);
-  const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer();
+  const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer(null);
+  const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log(filteredWorkouts);
 
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -48,6 +51,7 @@ export function AppContextProvider({ children }) {
 
   const values = {
     filteredWorkouts,
+    setFilteredWorkouts,
     filterWorkouts,
     previewWorkoutHandler,
     workoutPreviewData,
@@ -63,6 +67,8 @@ export function AppContextProvider({ children }) {
     setTrainingData,
     isLoading,
     setIsLoading,
+    workoutOfTheWeek,
+    setWorkoutOfTheWeek,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

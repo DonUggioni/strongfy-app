@@ -12,10 +12,6 @@ function PreviewModal({ navigation }) {
 
   const workout = workoutPreviewData.flatMap((item) => item.workout);
 
-  // console.log(workoutPreviewData);
-
-  // const selectWorkout = workoutPreviewData.flatMap((item) => item.workouts);
-
   function DayOfWeek({ day }) {
     return <Title style={styles.workoutDay}>{day}</Title>;
   }

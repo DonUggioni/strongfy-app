@@ -6,6 +6,9 @@ import SelectButton from './UI/buttons/SelectButton';
 import StyledText from './UI/text/StyledText';
 import useAppContext from '../store/AppContext';
 import { useNavigation } from '@react-navigation/native';
+import LoadingScreen from './LoadingScreen';
+import ErrorScreen from './ErrorScreen';
+import { getTrainingData } from '../utils/fetchData';
 
 const styleData = [
   {
@@ -28,22 +31,28 @@ const daysData = [
   {
     id: 'd1',
     days: '3 days',
-    value: 3,
+    value: '3days',
   },
   {
     id: 'd2',
     days: '4 days',
-    value: 4,
+    value: '4days',
   },
   {
     id: 'd3',
     days: '5 days',
-    value: 5,
+    value: '5days',
   },
 ];
 
 function BlockOptions() {
-  const { filterWorkouts } = useAppContext();
+  const {
+    filterWorkouts,
+    setTrainingData,
+    setIsLoading,
+    isLoading,
+    setFilteredWorkouts,
+  } = useAppContext();
   const [selectedTrainingData, setSelectedTrainingData] = useState({});
   const [selectedDaysData, setSelectedDaysData] = useState({});
   const navigation = useNavigation();
@@ -75,9 +84,27 @@ function BlockOptions() {
     );
   }
 
-  function confirmHandler() {
-    filterWorkouts(selectedDaysData.value, selectedTrainingData.value);
-    navigation.replace('WorkoutSelection');
+  async function confirmHandler() {
+    try {
+      setIsLoading(true);
+      const data = await getTrainingData(
+        selectedTrainingData.value,
+        selectedDaysData.value
+      );
+      setFilteredWorkouts(data);
+      setIsLoading(false);
+      navigation.replace('WorkoutSelection');
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      return (
+        <ErrorScreen message={'Something went wrong. Please try again.'} />
+      );
+    }
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
   }
 
   return (

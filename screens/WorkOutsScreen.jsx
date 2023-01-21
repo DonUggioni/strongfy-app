@@ -9,11 +9,10 @@ import useAppContext from '../store/AppContext';
 import { getTrainingData } from '../utils/fetchData';
 
 function WorkoutsScreen({ navigation }) {
-  const { currentWorkout, setTrainingData } = useAppContext();
+  const { currentWorkout, setTrainingData, setWorkoutOfTheWeek } =
+    useAppContext();
 
   const weekNumber = currentWorkout.flatMap((item) => item.workouts);
-
-  console.log(weekNumber);
 
   async function addButtonHandler() {
     try {
@@ -35,8 +34,8 @@ function WorkoutsScreen({ navigation }) {
     });
   }, []);
 
-  function selectDayHandler(item) {
-    console.log([item.id]);
+  function selectDayHandler(id) {
+    setWorkoutOfTheWeek(weekNumber.filter((item) => item.id === id));
     navigation.navigate('SelectDay');
   }
 
@@ -50,7 +49,7 @@ function WorkoutsScreen({ navigation }) {
         <SelectWeek
           week={`Week ${item.week}`}
           key={index}
-          onPress={(item) => selectDayHandler(item)}
+          onPress={() => selectDayHandler(item.id)}
         />
       ))}
     </View>

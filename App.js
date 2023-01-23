@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { AppContextProvider } from './store/AppContext';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,6 +17,8 @@ import BlockOptions from './components/BlockOptions';
 import SelectDay from './components/SelectDay';
 import WorkoutOfTheDay from './components/WorkoutOfTheDay';
 
+import useAppContext from './store/AppContext';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -27,9 +28,9 @@ const customFonts = {
   'open-sans-bold': require('./assets/fonts/OpenSans/OpenSans-Bold.ttf'),
 };
 
-export default function App() {
+function RootApp() {
+  const { userIsAuthenticated } = useAppContext();
   const [fontsLoaded] = useFonts(customFonts);
-  const [userAuthenticated, setUserAuthenticated] = useState(true);
 
   function AuthenticationStack() {
     return (
@@ -179,14 +180,22 @@ export default function App() {
     );
   }
 
-  if (fontsLoaded)
-    return (
-      <>
-        <StatusBar style='light' />
-        <AppContextProvider>
-          {!userAuthenticated && <AuthenticationStack />}
-          {userAuthenticated && <AppNavigation />}
-        </AppContextProvider>
-      </>
-    );
+  if (fontsLoaded && !userIsAuthenticated) {
+    return <AuthenticationStack />;
+  }
+
+  if (fontsLoaded && userIsAuthenticated) {
+    return <AppNavigation />;
+  }
+}
+
+export default function App() {
+  return (
+    <>
+      <StatusBar style='light' />
+      <AppContextProvider>
+        <RootApp />
+      </AppContextProvider>
+    </>
+  );
 }

@@ -6,7 +6,6 @@ import { GlobalStyles } from '../constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import SelectWeek from '../components/SelectWeek';
 import useAppContext from '../store/AppContext';
-import { getTrainingData } from '../utils/fetchData';
 
 function WorkoutsScreen({ navigation }) {
   const { currentWorkout, setWorkoutOfTheWeek, filteredWorkouts } =

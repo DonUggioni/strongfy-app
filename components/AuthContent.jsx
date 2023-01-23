@@ -6,7 +6,7 @@ import Title from './UI/text/Title';
 import FlatButton from './UI/buttons/FlatButton';
 import { useNavigation } from '@react-navigation/native';
 
-function AuthContent({ isLogin, onPress }) {
+function AuthContent({ isLogin, googleLogin, appleLogin }) {
   const navigation = useNavigation();
 
   function switchAuthModeHandler() {
@@ -29,10 +29,12 @@ function AuthContent({ isLogin, onPress }) {
         <Title style={styles.title}>
           {isLogin ? 'Login With' : 'Signup With'}
         </Title>
-        <LoginButton icon='logo-google' onPress={onPress}>
+        <LoginButton icon='logo-google' onPress={googleLogin}>
           Google
         </LoginButton>
-        <LoginButton icon='logo-apple'>Apple</LoginButton>
+        <LoginButton icon='logo-apple' onPress={appleLogin}>
+          Apple
+        </LoginButton>
         <FlatButton onPress={switchAuthModeHandler}>
           {isLogin ? 'No account yet?' : 'Already have an account?'}
         </FlatButton>

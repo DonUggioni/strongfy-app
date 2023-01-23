@@ -12,6 +12,7 @@ export function AppContextProvider({ children }) {
   const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [userIsAuthenticated, setUserIsAuthenticated] = useState(false);
 
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -64,6 +65,8 @@ export function AppContextProvider({ children }) {
     setIsLoading,
     workoutOfTheWeek,
     setWorkoutOfTheWeek,
+    userIsAuthenticated,
+    setUserIsAuthenticated,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

@@ -12,12 +12,12 @@ function WorkoutOfTheDay({ navigation }) {
     setWorkoutOfTheDay,
     calcBackdown,
     backdownWeightCalc,
-    generateNextWeek,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
+  console.log(workout);
 
   useEffect(() => {
     navigation.setOptions({
@@ -29,7 +29,6 @@ function WorkoutOfTheDay({ navigation }) {
     setWorkoutOfTheDay((draft) => {
       draft[0].isComplete = true;
     });
-    generateNextWeek();
   }
 
   function updateWeight(currentExercise) {
@@ -40,6 +39,8 @@ function WorkoutOfTheDay({ navigation }) {
 
     setWorkoutOfTheDay((draft) => {
       draft[0].data[index].weight = weight;
+      draft[0].data[index].backdownWeight = backdownWeightCalc;
+      console.log(draft[0].data[index]);
     });
   }
 

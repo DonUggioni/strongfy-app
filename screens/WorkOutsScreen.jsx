@@ -9,18 +9,12 @@ import useAppContext from '../store/AppContext';
 import { getTrainingData } from '../utils/fetchData';
 
 function WorkoutsScreen({ navigation }) {
-  const { currentWorkout, setTrainingData, setWorkoutOfTheWeek } =
+  const { currentWorkout, setWorkoutOfTheWeek, filteredWorkouts } =
     useAppContext();
 
   const weekNumber = currentWorkout.flatMap((item) => item.workouts);
 
   async function addButtonHandler() {
-    try {
-      const data = await getTrainingData();
-      setTrainingData(data.data);
-    } catch (error) {
-      console.log(error);
-    }
     navigation.navigate('SelectPhase');
   }
 

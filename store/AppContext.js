@@ -4,7 +4,6 @@ import { useImmer } from 'use-immer';
 const AppContext = createContext(WORKOUT_DATA_MODEL);
 
 export function AppContextProvider({ children }) {
-  const [trainingData, setTrainingData] = useImmer(null);
   const [filteredWorkouts, setFilteredWorkouts] = useState(null);
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
@@ -13,8 +12,6 @@ export function AppContextProvider({ children }) {
   const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log(filteredWorkouts);
 
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -63,8 +60,6 @@ export function AppContextProvider({ children }) {
     setWorkoutOfTheDay,
     calcBackdown,
     backdownWeightCalc,
-    trainingData,
-    setTrainingData,
     isLoading,
     setIsLoading,
     workoutOfTheWeek,

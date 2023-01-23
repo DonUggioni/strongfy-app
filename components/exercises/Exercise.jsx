@@ -19,14 +19,14 @@ function Exercise({
 }) {
   const { backdownWeightCalc } = useAppContext();
   const isPrimary =
-    exerciseName === 'bench press' ||
+    exerciseName === 'bench' ||
     exerciseName === 'squat' ||
     exerciseName === 'deadlift';
 
   const primaryExercise = (
     <View style={styles.innerContainer}>
+      <Title style={styles.title}>{title} - </Title>
       <View style={styles.setsContainer}>
-        <Title style={styles.title}>{title} - </Title>
         <StyledText>
           {sets} x {reps} @ {rpe}RPE
         </StyledText>
@@ -40,22 +40,24 @@ function Exercise({
         )}
         <StyledText style={styles.weightText}> - {weight}kg</StyledText>
       </View>
-      <View style={styles.setsContainer}>
-        <Title style={styles.title}>Backdown Sets - </Title>
-        {backdownWeightCalc && (
-          <StyledText>
-            {sets} x {reps} @{' '}
-            {`${backdownWeightCalc.min} - ${backdownWeightCalc.max}`}kg
-          </StyledText>
-        )}
-      </View>
+      {backdownWeightCalc && (
+        <>
+          <Title style={styles.title}>Backdown Sets - </Title>
+          <View style={styles.setsContainer}>
+            <StyledText>
+              {sets} x {reps} @{' '}
+              {`${backdownWeightCalc.min} - ${backdownWeightCalc.max}`}kg
+            </StyledText>
+          </View>
+        </>
+      )}
     </View>
   );
 
   const secondaryExercise = (
     <View style={styles.innerContainer}>
+      <Title style={styles.title}>{title} - </Title>
       <View style={styles.setsContainer}>
-        <Title style={styles.title}>{title} - </Title>
         <StyledText>
           {sets} x {reps} @
         </StyledText>

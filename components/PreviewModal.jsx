@@ -7,17 +7,22 @@ import Title from './UI/text/Title';
 import useAppContext from '../store/AppContext';
 
 function PreviewModal({ navigation }) {
-  const { workoutPreviewData, workoutPreviewTitle, setCurrentWorkout } =
-    useAppContext();
+  const {
+    workoutPreviewData,
+    workoutPreviewTitle,
+    setCurrentWorkout,
+    filteredWorkouts,
+  } = useAppContext();
 
   const workout = workoutPreviewData.flatMap((item) => item.workout);
+  const [relatedId] = workoutPreviewData.flatMap((item) => item.relatesTo);
 
   function DayOfWeek({ day }) {
     return <Title style={styles.workoutDay}>{day}</Title>;
   }
 
   function selectHandler() {
-    setCurrentWorkout(workoutPreviewData);
+    setCurrentWorkout(filteredWorkouts.filter((item) => item.id === relatedId));
     navigation.navigate('WorkoutsScreen');
   }
 

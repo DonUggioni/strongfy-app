@@ -1,4 +1,5 @@
 import React from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import AuthContent from '../../components/AuthContent';
 // import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import { auth } from '../../firebase/firebaseConfig';

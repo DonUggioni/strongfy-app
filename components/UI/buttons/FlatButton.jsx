@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     letterSpacing: 0.5,
     textAlign: 'center',
-    marginVertical: 10,
+    marginVertical: 16,
   },
   pressed: {
     opacity: 0.8,

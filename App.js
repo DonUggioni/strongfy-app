@@ -42,6 +42,7 @@ function RootApp() {
             headerTitleStyle: {
               fontFamily: 'open-sans-semi-bold',
             },
+            headerShown: false,
           }}
         >
           <Stack.Screen name='Login' component={LoginScreen} />

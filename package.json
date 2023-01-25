@@ -9,13 +9,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-firebase/app": "^16.5.2",
     "@react-navigation/bottom-tabs": "^6.5.2",
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/stack": "^6.3.10",
     "axios": "^1.2.3",
     "expo": "~47.0.9",
-    "expo-dev-client": "~2.0.1",
     "expo-font": "~11.0.1",
     "expo-status-bar": "~1.4.2",
     "immer": "^9.0.18",

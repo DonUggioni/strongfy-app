@@ -1,30 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthContent from '../../components/AuthContent';
-// import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-// import { auth } from '../../firebase/firebaseConfig';
-
-// const googleProvider = GoogleAuthProvider(auth);
+import { auth } from '../../firebase/firebaseConfig';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import useAppContext from '../../store/AppContext';
 
 function LoginScreen() {
-  function googleLoginHandler() {
-    console.log('google login');
-    // try {
-    //   const result = await signInWithPopup(auth, googleProvider);
-    //   console.log(result);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
-  }
+  const { setUserIsAuthenticated } = useAppContext();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  function appleLoginHandler() {
-    console.log('apple login');
+  useEffect(() => {
+    async function getCurrentUser() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUserIsAuthenticated(user);
+        }
+      });
+    }
+    getCurrentUser();
+  }, []);
+
+  async function loginHandler() {
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      if (user) {
+        setUserIsAuthenticated(user);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   return (
     <AuthContent
-      googleLogin={googleLoginHandler}
-      appleLogin={appleLoginHandler}
       isLogin={true}
+      onChangeEmail={(text) => setEmail(text)}
+      onChangePassword={(text) => setPassword(text)}
+      onSubmit={loginHandler}
     />
   );
 }

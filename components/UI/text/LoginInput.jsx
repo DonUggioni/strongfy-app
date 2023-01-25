@@ -38,12 +38,13 @@ function LoginInput({
           autoComplete='off'
           inputMode={inputMode}
           autoCapitalize='none'
-          autoCorrect='false'
+          autoCorrect={false}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
+          textContentType='oneTimeCode'
         />
       </View>
     </>
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-regular',
     paddingVertical: 10,
     paddingHorizontal: 12,
-    width: '100%',
+    width: '80%',
   },
   label: {
     marginVertical: 6,

@@ -2,14 +2,24 @@ import React, { useState } from 'react';
 import AuthContent from '../../components/AuthContent';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebaseConfig';
+import useAppContext from '../../store/AppContext';
 
 function SignUpScreen() {
+  const { setUserIsAuthenticated } = useAppContext();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  function signupHandler() {
-    console.log(username, email, password, confirmPassword);
+
+  async function signupHandler() {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      if (user) {
+        setUserIsAuthenticated(user);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   return (

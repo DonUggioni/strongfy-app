@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/UserCredentials/LoginScreen';
 import SignUpScreen from './screens/UserCredentials/SignUpScreen';
+import HomeScreen from './screens/HomeScreen';
 import WorkoutsScreen from './screens/WorkoutsScreen';
 import RepMaxCalculator from './screens/RepMaxCalculator';
 import ProgressChart from './screens/ProgressChart';
@@ -115,6 +116,26 @@ function RootApp() {
             tabBarActiveTintColor: 'white',
           }}
         >
+          <Tab.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{
+              title: 'Home',
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Ionicons
+                    name='home-outline'
+                    size={34}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.primary400
+                        : GlobalStyles.colors.primary500
+                    }
+                  />
+                );
+              },
+            }}
+          />
           <Tab.Screen
             name='Workouts'
             component={TrainingOptionsStack}

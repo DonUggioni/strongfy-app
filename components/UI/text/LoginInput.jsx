@@ -2,8 +2,19 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 import StyledText from './StyledText';
+import { Ionicons } from '@expo/vector-icons';
 
-function LoginInput({ onChangeText, placeHolder, inputMode, label, style }) {
+function LoginInput({
+  onChangeText,
+  placeHolder,
+  inputMode,
+  label,
+  style,
+  iconSize,
+  iconName,
+  secureTextEntry,
+  keyboardType,
+}) {
   const [isFocus, setIsFocus] = useState(false);
   return (
     <>
@@ -15,6 +26,11 @@ function LoginInput({ onChangeText, placeHolder, inputMode, label, style }) {
             : [styles.inputContainer, style]
         }
       >
+        <Ionicons
+          name={iconName}
+          size={iconSize}
+          color={GlobalStyles.colors.gray300}
+        />
         <TextInput
           style={styles.input}
           placeholder={placeHolder}
@@ -26,6 +42,8 @@ function LoginInput({ onChangeText, placeHolder, inputMode, label, style }) {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
         />
       </View>
     </>
@@ -40,6 +58,9 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: GlobalStyles.borderRadius,
     marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
   },
   inputFocus: {
     borderColor: GlobalStyles.colors.primary400,
@@ -50,6 +71,7 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-regular',
     paddingVertical: 10,
     paddingHorizontal: 12,
+    width: '100%',
   },
   label: {
     marginVertical: 6,

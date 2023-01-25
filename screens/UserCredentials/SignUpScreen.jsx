@@ -1,29 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthContent from '../../components/AuthContent';
-// import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-// import { auth } from '../../firebase/firebaseConfig';
-
-// const googleProvider = new GoogleAuthProvider();
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase/firebaseConfig';
 
 function SignUpScreen() {
-  function googleSignupHandler() {
-    console.log('google signup');
-    // try {
-    //   const result = await signInWithPopup(auth, googleProvider);
-    //   console.log(result);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
-  }
-
-  function appleSignupHandler() {
-    console.log('apple signup');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  function signupHandler() {
+    console.log(username, email, password, confirmPassword);
   }
 
   return (
     <AuthContent
-      googleLogin={googleSignupHandler}
-      appleLogin={appleSignupHandler}
+      onSubmit={signupHandler}
+      onChangeUsername={(text) => setUsername(text)}
+      onChangeEmail={(text) => setEmail(text)}
+      onChangePassword={(text) => setPassword(text)}
+      onChangeConfirmPassword={(text) => setConfirmPassword(text)}
     />
   );
 }

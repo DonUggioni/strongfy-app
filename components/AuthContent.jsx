@@ -1,14 +1,11 @@
 import React from 'react';
 import {
   Image,
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
@@ -18,7 +15,14 @@ import { useNavigation } from '@react-navigation/native';
 import LoginInput from './UI/text/LoginInput';
 import Button from './UI/buttons/Button';
 
-function AuthContent({ isLogin, onChangeText, onSubmit }) {
+function AuthContent({
+  isLogin,
+  onChangeEmail,
+  onChangePassword,
+  onChangeConfirmPassword,
+  onChangeUsername,
+  onSubmit,
+}) {
   const navigation = useNavigation();
 
   function switchAuthModeHandler() {
@@ -35,14 +39,20 @@ function AuthContent({ isLogin, onChangeText, onSubmit }) {
         placeHolder={'email@mail.com'}
         label={'Email'}
         inputMode={'email'}
-        onChangeText={onChangeText}
+        onChangeText={onChangeEmail}
+        iconName={'mail-outline'}
+        iconSize={24}
+        keyboardType={'email-address'}
       />
       <LoginInput
         placeHolder={'Password'}
         label={'Password'}
-        inputMode={'text'}
-        onChangeText={onChangeText}
+        inputMode={'password'}
+        onChangeText={onChangePassword}
         style={{ marginBottom: 18 }}
+        iconName={'lock-closed-outline'}
+        iconSize={24}
+        secureTextEntry={true}
       />
     </>
   );
@@ -53,26 +63,37 @@ function AuthContent({ isLogin, onChangeText, onSubmit }) {
         placeHolder={'Choose a Username'}
         label={'Username'}
         inputMode={'text'}
-        onChangeText={onChangeText}
+        onChangeText={onChangeUsername}
+        iconName={'person-outline'}
+        iconSize={24}
       />
       <LoginInput
         placeHolder={'email@mail.com'}
         label={'Email'}
         inputMode={'email'}
-        onChangeText={onChangeText}
+        onChangeText={onChangeEmail}
+        keyboardType={'email-address'}
+        iconName={'mail-outline'}
+        iconSize={24}
       />
       <LoginInput
         placeHolder={'Password'}
         label={'Password'}
         inputMode={'text'}
-        onChangeText={onChangeText}
+        onChangeText={onChangePassword}
+        secureTextEntry={true}
+        iconName={'lock-closed-outline'}
+        iconSize={24}
       />
       <LoginInput
         placeHolder={'Confirm Password'}
         label={'Confirm Password'}
         inputMode={'text'}
-        onChangeText={onChangeText}
+        onChangeText={onChangeConfirmPassword}
         style={{ marginBottom: 18 }}
+        secureTextEntry={true}
+        iconName={'lock-closed-outline'}
+        iconSize={24}
       />
     </>
   );

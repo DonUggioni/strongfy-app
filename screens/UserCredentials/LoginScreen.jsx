@@ -3,11 +3,15 @@ import AuthContent from '../../components/AuthContent';
 import { auth } from '../../firebase/firebaseConfig';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import useAppContext from '../../store/AppContext';
+import { Alert } from 'react-native';
 
 function LoginScreen() {
-  const { setUserIsAuthenticated } = useAppContext();
+  const { setUserIsAuthenticated, setIsLoading, isLoading } = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const emailIsValid = email.includes('@') || email.length > 0;
+  const passwordIsValid = password.length > 5;
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -21,13 +25,23 @@ function LoginScreen() {
   }, []);
 
   async function loginHandler() {
-    try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      if (user) {
-        setUserIsAuthenticated(user);
+    if (emailIsValid && passwordIsValid) {
+      try {
+        const user = await signInWithEmailAndPassword(auth, email, password);
+        const userData = user.user;
+        if (userData) {
+          setUserIsAuthenticated(userData);
+        }
+      } catch (error) {
+        console.log(error.message);
+        Alert.alert('Oops!', `Something went wrong. ${error.message}`);
       }
-    } catch (error) {
-      console.log(error.message);
+    }
+    if (!emailIsValid || !passwordIsValid) {
+      Alert.alert(
+        'Login info is incorrect',
+        'Please check login info and try again.'
+      );
     }
   }
 

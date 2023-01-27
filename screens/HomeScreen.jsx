@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect } from 'react';
 import StyledText from '../components/UI/text/StyledText';
 import { GlobalStyles } from '../constants/styles';
@@ -8,9 +8,8 @@ import { signOut } from 'firebase/auth';
 import useAppContext from '../store/AppContext';
 
 function HomeScreen({ navigation }) {
-  const { setUserIsAuthenticated, userIsAuthenticated } = useAppContext();
+  const { setUserIsAuthenticated } = useAppContext();
 
-  console.log(userIsAuthenticated);
   async function signOutHandler() {
     try {
       await signOut(auth);

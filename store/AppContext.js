@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from 'react';
 import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
-const AppContext = createContext(WORKOUT_DATA_MODEL);
+const AppContext = createContext(null);
 
 export function AppContextProvider({ children }) {
-  const [filteredWorkouts, setFilteredWorkouts] = useState(null);
+  const [filteredWorkouts, setFilteredWorkouts] = useState([]);
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
   const [currentWorkout, setCurrentWorkout] = useState([]);
@@ -12,7 +12,7 @@ export function AppContextProvider({ children }) {
   const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [userIsAuthenticated, setUserIsAuthenticated] = useState(false);
+  const [userIsAuthenticated, setUserIsAuthenticated] = useState(null);
 
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {

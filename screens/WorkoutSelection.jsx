@@ -4,6 +4,8 @@ import SelectWorkout from '../components/SelectWorkout';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase/firebaseConfig';
 
 function WorkoutSelection({ navigation }) {
   const {
@@ -11,7 +13,17 @@ function WorkoutSelection({ navigation }) {
     previewWorkoutHandler,
     setWorkoutPreviewTitle,
     setCurrentWorkout,
+    currentWorkout,
+    userIsAuthenticated,
   } = useAppContext();
+
+  // useEffect(() => {
+  //   const docRef = doc(db, 'users', userIsAuthenticated.uid);
+  //   async function addCurrentWorkoutToDataBase() {
+  //     await setDoc(docRef, 'CurrentWorkout', currentWorkout, { merge: true });
+  //   }
+  //   addCurrentWorkoutToDataBase();
+  // }, [currentWorkout]);
 
   useEffect(() => {
     navigation.setOptions({

@@ -8,15 +8,14 @@ import { useNavigation } from '@react-navigation/native';
 function NoWorkouts() {
   const navigation = useNavigation();
 
-  async function createWorkoutHandler() {
-    navigation.navigate('SelectPhase');
-  }
-
   return (
     <>
       <View style={styles.rootContainer}>
         <StyledText>No workouts have been created yet!</StyledText>
-        <Button type={'full'} onPress={createWorkoutHandler}>
+        <Button
+          type={'full'}
+          onPress={() => navigation.navigate('SelectPhase')}
+        >
           Create a workout
         </Button>
       </View>

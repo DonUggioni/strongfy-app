@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
@@ -45,17 +45,11 @@ const daysData = [
   },
 ];
 
-function BlockOptions() {
-  const {
-    filterWorkouts,
-    setTrainingData,
-    setIsLoading,
-    isLoading,
-    setFilteredWorkouts,
-  } = useAppContext();
+function BlockOptions({ navigation }) {
+  // const navigation = useNavigation();
+  const { setIsLoading, isLoading, setFilteredWorkouts } = useAppContext();
   const [selectedTrainingData, setSelectedTrainingData] = useState({});
   const [selectedDaysData, setSelectedDaysData] = useState({});
-  const navigation = useNavigation();
 
   function trainingOptions({ item }) {
     const backgroundColor =
@@ -85,15 +79,18 @@ function BlockOptions() {
   }
 
   async function confirmHandler() {
+    if (!selectedDaysData.value || !selectedTrainingData.value) return;
     try {
       setIsLoading(true);
       const data = await getTrainingData(
         selectedTrainingData.value,
         selectedDaysData.value
       );
-      setFilteredWorkouts(data);
-      setIsLoading(false);
-      navigation.replace('WorkoutSelection');
+      if (data) {
+        setFilteredWorkouts(data);
+        setIsLoading(false);
+        navigation.replace('WorkoutSelection');
+      }
     } catch (error) {
       console.log(error);
       setIsLoading(false);

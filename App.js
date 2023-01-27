@@ -75,19 +75,19 @@ function RootApp() {
           options={{ title: 'Training Phase' }}
         />
         <Stack.Screen
-          name='SelectDay'
-          component={SelectDay}
-          options={{ title: 'Select Day' }}
-        />
-        <Stack.Screen name='WorkoutOfTheDay' component={WorkoutOfTheDay} />
-
-        <Stack.Screen
           name='WorkoutSelection'
           component={WorkoutSelection}
           options={{
             title: 'Select a workout',
           }}
         />
+        <Stack.Screen
+          name='SelectDay'
+          component={SelectDay}
+          options={{ title: 'Select Day' }}
+        />
+        <Stack.Screen name='WorkoutOfTheDay' component={WorkoutOfTheDay} />
+
         <Stack.Screen
           name='PreviewModal'
           component={PreviewModal}

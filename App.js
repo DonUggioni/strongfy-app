@@ -199,8 +199,8 @@ function RootApp() {
 
   return (
     <NavigationContainer>
-      {!userIsAuthenticated && <AppNavigation />}
-      {userIsAuthenticated && <AuthenticationStack />}
+      {!userIsAuthenticated && <AuthenticationStack />}
+      {userIsAuthenticated && <AppNavigation />}
     </NavigationContainer>
   );
 }

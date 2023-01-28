@@ -1,7 +1,17 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
-import { setDoc, serverTimestamp } from 'firebase/firestore';
+import {
+  setDoc,
+  serverTimestamp,
+  getDocs,
+  query,
+  orderBy,
+  collection,
+  limit,
+} from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { db, auth } from '../firebase/firebaseConfig';
 const AppContext = createContext(null);
 
 export function AppContextProvider({ children }) {
@@ -15,6 +25,8 @@ export function AppContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [userIsAuthenticated, setUserIsAuthenticated] = useState(null);
 
+  console.log(currentWorkout);
+  ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
     const filtered = trainingData.filter(
@@ -22,7 +34,7 @@ export function AppContextProvider({ children }) {
     );
     setFilteredWorkouts(filtered);
   }
-
+  ///////////////////////////////////////////////////////////
   // Function being used in WorkoutSelection, to preview entire training week
   function previewWorkoutHandler(id) {
     const filtered = filteredWorkouts
@@ -30,12 +42,7 @@ export function AppContextProvider({ children }) {
       .filter((item) => item.id === id);
     setWorkoutPreviewData(filtered);
   }
-
-  // Being used in WorkoutSelection and PreviewModal to add workout to data base
-  async function addCurrentWorkoutToDataBase(ref, workout) {
-    await setDoc(ref, { workout, id: serverTimestamp() }, { merge: true });
-  }
-
+  ///////////////////////////////////////////////////////////
   // Function being used in "WorkoutOfTheDay" to calculate backdownsets weight
   function calcBackdown(num, exerciseName) {
     if (
@@ -52,6 +59,45 @@ export function AppContextProvider({ children }) {
       setBackdownWeightCalc(backdown);
     }
   }
+
+  ///////////////////////////////////////////////////////////
+  // Being used in WorkoutSelection and PreviewModal to add workout to data base
+  async function addCurrentWorkoutToDataBase(ref, workout) {
+    await setDoc(ref, { workout, id: serverTimestamp() }, { merge: true });
+  }
+
+  ///////////////////////////////////////////////////////////
+  // Get user current workout plan if available
+  async function getUserCurrentWorkout(uid) {
+    setCurrentWorkout([]);
+    const dataQuery = query(
+      collection(db, 'users', uid, 'CurrentWorkout'),
+      orderBy('id', 'desc'),
+      limit(1)
+    );
+    try {
+      const querySnapshot = await getDocs(dataQuery);
+      querySnapshot.forEach((doc) => {
+        setCurrentWorkout([doc.data().workout]);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  ///////////////////////////////////////////////////////////
+  // Gets current user data and persists on reload
+  async function getCurrentUser() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserIsAuthenticated(user);
+      }
+    });
+  }
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [userIsAuthenticated]);
 
   const values = {
     filteredWorkouts,
@@ -74,6 +120,8 @@ export function AppContextProvider({ children }) {
     userIsAuthenticated,
     setUserIsAuthenticated,
     addCurrentWorkoutToDataBase,
+    getUserCurrentWorkout,
+    getCurrentUser,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

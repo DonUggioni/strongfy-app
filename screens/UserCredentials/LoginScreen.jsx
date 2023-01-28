@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import AuthContent from '../../components/AuthContent';
-import { auth } from '../../firebase/firebaseConfig';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import useAppContext from '../../store/AppContext';
+import React, { useState } from 'react';
 import { Alert } from 'react-native';
+import { auth } from '../../firebase/firebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import AuthContent from '../../components/AuthContent';
 import LoadingScreen from '../../components/LoadingScreen';
+import useAppContext from '../../store/AppContext';
 
 function LoginScreen() {
-  const { setUserIsAuthenticated, setIsLoading, isLoading } = useAppContext();
+  const {
+    setUserIsAuthenticated,
+    setIsLoading,
+    isLoading,
+    getUserCurrentWorkout,
+  } = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const emailIsValid = email.includes('@') || email.length > 0;
   const passwordIsValid = password.length > 5;
-
-  useEffect(() => {
-    async function getCurrentUser() {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setUserIsAuthenticated(user);
-        }
-      });
-    }
-    getCurrentUser();
-  }, []);
 
   async function loginHandler() {
     if (emailIsValid && passwordIsValid) {
@@ -33,6 +27,7 @@ function LoginScreen() {
         const userData = user.user;
         if (userData) {
           setUserIsAuthenticated(userData);
+          getUserCurrentWorkout(userData.uid);
           setIsLoading(false);
         }
       } catch (error) {

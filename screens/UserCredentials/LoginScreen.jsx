@@ -4,6 +4,7 @@ import { auth } from '../../firebase/firebaseConfig';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import useAppContext from '../../store/AppContext';
 import { Alert } from 'react-native';
+import LoadingScreen from '../../components/LoadingScreen';
 
 function LoginScreen() {
   const { setUserIsAuthenticated, setIsLoading, isLoading } = useAppContext();
@@ -26,11 +27,13 @@ function LoginScreen() {
 
   async function loginHandler() {
     if (emailIsValid && passwordIsValid) {
+      setIsLoading(true);
       try {
         const user = await signInWithEmailAndPassword(auth, email, password);
         const userData = user.user;
         if (userData) {
           setUserIsAuthenticated(userData);
+          setIsLoading(false);
         }
       } catch (error) {
         console.log(error.message);
@@ -43,6 +46,10 @@ function LoginScreen() {
         'Please check login info and try again.'
       );
     }
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
   }
 
   return (

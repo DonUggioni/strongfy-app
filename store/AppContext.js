@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
+import { setDoc, serverTimestamp } from 'firebase/firestore';
 const AppContext = createContext(null);
 
 export function AppContextProvider({ children }) {
@@ -28,6 +29,11 @@ export function AppContextProvider({ children }) {
       .flatMap((item) => item.workouts)
       .filter((item) => item.id === id);
     setWorkoutPreviewData(filtered);
+  }
+
+  // Being used in WorkoutSelection and PreviewModal to add workout to data base
+  async function addCurrentWorkoutToDataBase(ref, workout) {
+    await setDoc(ref, { workout, id: serverTimestamp() }, { merge: true });
   }
 
   // Function being used in "WorkoutOfTheDay" to calculate backdownsets weight
@@ -67,6 +73,7 @@ export function AppContextProvider({ children }) {
     setWorkoutOfTheWeek,
     userIsAuthenticated,
     setUserIsAuthenticated,
+    addCurrentWorkoutToDataBase,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

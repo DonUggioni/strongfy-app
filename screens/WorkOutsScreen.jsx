@@ -10,7 +10,7 @@ import useAppContext from '../store/AppContext';
 function WorkoutsScreen({ navigation }) {
   const { currentWorkout, setWorkoutOfTheWeek } = useAppContext();
 
-  const weekNumber = currentWorkout.flatMap((item) => item.workouts);
+  const weekNumber = currentWorkout?.flatMap((item) => item.workouts);
 
   function addButtonHandler() {
     navigation.navigate('SelectPhase');
@@ -37,7 +37,7 @@ function WorkoutsScreen({ navigation }) {
 
   return (
     <View style={styles.rootContainer}>
-      {weekNumber.map((item, index) => (
+      {weekNumber?.map((item, index) => (
         <SelectWeek
           week={`Week ${item.week}`}
           key={index}

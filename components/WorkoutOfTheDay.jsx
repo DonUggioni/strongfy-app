@@ -12,12 +12,18 @@ function WorkoutOfTheDay({ navigation }) {
     setWorkoutOfTheDay,
     calcBackdown,
     backdownWeightCalc,
+    updateWorkoutDataInFirestore,
+    setCurrentWorkout,
+    currentWorkout,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
-  console.log(workout);
+  const currentDayIndex = currentWorkout
+    ?.flatMap((item) => item.workouts)
+    .flatMap((item) => item.workout)
+    .findIndex((item) => item.day === day);
 
   useEffect(() => {
     navigation.setOptions({
@@ -26,9 +32,10 @@ function WorkoutOfTheDay({ navigation }) {
   }, []);
 
   function workoutDoneHandler() {
-    setWorkoutOfTheDay((draft) => {
-      draft[0].isComplete = true;
+    setCurrentWorkout((draft) => {
+      draft[0].workouts[0].workout[currentDayIndex].isComplete = true;
     });
+    updateWorkoutDataInFirestore();
   }
 
   function updateWeight(currentExercise) {
@@ -37,10 +44,8 @@ function WorkoutOfTheDay({ navigation }) {
     );
     calcBackdown(+weight, currentExercise.exercise);
 
-    setWorkoutOfTheDay((draft) => {
-      draft[0].data[index].weight = weight;
-      draft[0].data[index].backdownWeight = backdownWeightCalc;
-      console.log(draft[0].data[index]);
+    setCurrentWorkout((draft) => {
+      draft[0].workouts[0].workout[currentDayIndex].data[index].weight = weight;
     });
   }
 
@@ -62,7 +67,7 @@ function WorkoutOfTheDay({ navigation }) {
               rpe={item.rpe}
               // value={item.weight}
               weight={item.weight}
-              onBlur={() => updateWeight(item)}
+              onBlur={(index) => updateWeight(item, index)}
               onChangeText={(text) => setWeight(text)}
             />
           )}

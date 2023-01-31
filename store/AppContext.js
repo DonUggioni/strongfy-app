@@ -3,29 +3,33 @@ import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
 import {
   setDoc,
+  doc,
   serverTimestamp,
   getDocs,
+  updateDoc,
   query,
   orderBy,
   collection,
   limit,
+  onSnapshot,
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase/firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const AppContext = createContext(null);
 
 export function AppContextProvider({ children }) {
   const [filteredWorkouts, setFilteredWorkouts] = useState([]);
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
-  const [currentWorkout, setCurrentWorkout] = useState([]);
+  const [currentWorkout, setCurrentWorkout] = useImmer([]);
   const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer(null);
   const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [userIsAuthenticated, setUserIsAuthenticated] = useState(null);
+  const [currentWorkoutId, setCurrentWorkoutId] = useState('');
 
-  console.log(currentWorkout);
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -61,9 +65,16 @@ export function AppContextProvider({ children }) {
   }
 
   ///////////////////////////////////////////////////////////
+  // Get DB SnapShot
+
+  ///////////////////////////////////////////////////////////
   // Being used in WorkoutSelection and PreviewModal to add workout to data base
   async function addCurrentWorkoutToDataBase(ref, workout) {
-    await setDoc(ref, { workout, id: serverTimestamp() }, { merge: true });
+    await setDoc(
+      ref,
+      { ...workout, timeStamp: serverTimestamp() },
+      { merge: true }
+    );
   }
 
   ///////////////////////////////////////////////////////////
@@ -78,7 +89,8 @@ export function AppContextProvider({ children }) {
     try {
       const querySnapshot = await getDocs(dataQuery);
       querySnapshot.forEach((doc) => {
-        setCurrentWorkout([doc.data().workout]);
+        setCurrentWorkoutId(doc.id);
+        setCurrentWorkout([doc.data()]);
       });
     } catch (error) {
       console.log(error.message);
@@ -96,8 +108,37 @@ export function AppContextProvider({ children }) {
   }
 
   useEffect(() => {
+    async function getUserId() {
+      try {
+        const id = await AsyncStorage.getItem('@user_uid');
+        if (id !== null) {
+          getUserCurrentWorkout(id);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getUserId();
     getCurrentUser();
   }, [userIsAuthenticated]);
+
+  ///////////////////////////////////////////////////////////
+  // Update data on DB
+  async function updateWorkoutDataInFirestore() {
+    const dataQuery = doc(
+      db,
+      'users',
+      userIsAuthenticated.uid,
+      'CurrentWorkout',
+      currentWorkoutId
+    );
+
+    try {
+      await setDoc(dataQuery, ...currentWorkout);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   const values = {
     filteredWorkouts,
@@ -122,6 +163,7 @@ export function AppContextProvider({ children }) {
     addCurrentWorkoutToDataBase,
     getUserCurrentWorkout,
     getCurrentUser,
+    updateWorkoutDataInFirestore,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

@@ -6,6 +6,7 @@ import FlatButton from '../components/UI/buttons/FlatButton';
 import { auth } from '../firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
 import useAppContext from '../store/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen({ navigation }) {
   const { setUserIsAuthenticated, setCurrentWorkout } = useAppContext();
@@ -14,6 +15,7 @@ function HomeScreen({ navigation }) {
     setCurrentWorkout([]);
     try {
       await signOut(auth);
+      await AsyncStorage.removeItem('@user_uid');
       setUserIsAuthenticated(null);
     } catch (error) {
       console.log(error.message);

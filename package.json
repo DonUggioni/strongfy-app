@@ -14,7 +14,7 @@
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/stack": "^6.3.10",
     "axios": "^1.2.3",
-    "expo": "~47.0.9",
+    "expo": "^47.0.0",
     "expo-font": "~11.0.1",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.16.0",
@@ -22,9 +22,9 @@
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-dotenv": "^3.4.7",
-    "use-immer": "^0.8.1",
+    "react-native-safe-area-context": "4.4.1",
     "react-native-screens": "~3.18.0",
-    "react-native-safe-area-context": "4.4.1"
+    "use-immer": "^0.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
-import Title from './UI/text/Title';
 import useAppContext from '../store/AppContext';
 import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
@@ -9,9 +8,7 @@ import Button from './UI/buttons/Button';
 function WorkoutOfTheDay({ navigation }) {
   const {
     workoutOfTheDay,
-    setWorkoutOfTheDay,
     calcBackdown,
-    backdownWeightCalc,
     updateWorkoutDataInFirestore,
     setCurrentWorkout,
     currentWorkout,
@@ -36,6 +33,7 @@ function WorkoutOfTheDay({ navigation }) {
       draft[0].workouts[0].workout[currentDayIndex].isComplete = true;
     });
     updateWorkoutDataInFirestore();
+    navigation.navigate('WorkoutsScreen');
   }
 
   function updateWeight(currentExercise) {
@@ -46,14 +44,13 @@ function WorkoutOfTheDay({ navigation }) {
 
     setCurrentWorkout((draft) => {
       draft[0].workouts[0].workout[currentDayIndex].data[index].weight = weight;
+      draft[0].workouts[0].workout[currentDayIndex].data[index].backdownWeight =
+        weight;
     });
   }
 
   return (
     <View style={styles.rootContainer}>
-      {/* <View style={styles.titleContainer}>
-        <Title style={styles.title}>{day}</Title>
-      </View> */}
       <View style={styles.listContainer}>
         <FlatList
           data={workout}
@@ -88,7 +85,6 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: GlobalStyles.colors.background,
     flex: 1,
-    // justifyContent: 'space-between',
   },
   titleContainer: {
     paddingVertical: 24,

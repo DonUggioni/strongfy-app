@@ -8,9 +8,10 @@ import { signOut } from 'firebase/auth';
 import useAppContext from '../store/AppContext';
 
 function HomeScreen({ navigation }) {
-  const { setUserIsAuthenticated } = useAppContext();
+  const { setUserIsAuthenticated, setCurrentWorkout } = useAppContext();
 
   async function signOutHandler() {
+    setCurrentWorkout([]);
     try {
       await signOut(auth);
       setUserIsAuthenticated(null);

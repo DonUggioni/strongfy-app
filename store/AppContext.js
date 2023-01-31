@@ -19,11 +19,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const AppContext = createContext(null);
 
 export function AppContextProvider({ children }) {
+  const [currentWorkout, setCurrentWorkout] = useImmer([]);
+  const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer(null);
   const [filteredWorkouts, setFilteredWorkouts] = useState([]);
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
-  const [currentWorkout, setCurrentWorkout] = useImmer([]);
-  const [workoutOfTheDay, setWorkoutOfTheDay] = useImmer(null);
   const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
   const [backdownWeightCalc, setBackdownWeightCalc] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -80,17 +80,17 @@ export function AppContextProvider({ children }) {
   ///////////////////////////////////////////////////////////
   // Get user current workout plan if available
   async function getUserCurrentWorkout(uid) {
-    setCurrentWorkout([]);
     const dataQuery = query(
       collection(db, 'users', uid, 'CurrentWorkout'),
       orderBy('id', 'desc'),
       limit(1)
     );
+    setCurrentWorkout([]);
     try {
       const querySnapshot = await getDocs(dataQuery);
       querySnapshot.forEach((doc) => {
-        setCurrentWorkoutId(doc.id);
         setCurrentWorkout([doc.data()]);
+        setCurrentWorkoutId(doc.id);
       });
     } catch (error) {
       console.log(error.message);

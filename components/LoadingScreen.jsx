@@ -19,7 +19,6 @@ export default LoadingScreen;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

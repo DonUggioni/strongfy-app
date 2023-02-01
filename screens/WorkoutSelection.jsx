@@ -15,6 +15,7 @@ function WorkoutSelection({ navigation }) {
     setCurrentWorkout,
     userIsAuthenticated,
     addCurrentWorkoutToDataBase,
+    getCurrentWorkoutId,
   } = useAppContext();
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function WorkoutSelection({ navigation }) {
 
     setCurrentWorkout([item]);
     addCurrentWorkoutToDataBase(currentWorkoutRef, item);
+    getCurrentWorkoutId();
     navigation.navigate('WorkoutsScreen');
   }
 
@@ -71,7 +73,6 @@ export default WorkoutSelection;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     flex: 1,
   },
   headerButton: {

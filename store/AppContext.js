@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
 import {
@@ -65,9 +71,6 @@ export function AppContextProvider({ children }) {
   }
 
   ///////////////////////////////////////////////////////////
-  // Get DB SnapShot
-
-  ///////////////////////////////////////////////////////////
   // Being used in WorkoutSelection and PreviewModal to add workout to data base
   async function addCurrentWorkoutToDataBase(ref, workout) {
     await setDoc(
@@ -98,11 +101,32 @@ export function AppContextProvider({ children }) {
   }
 
   ///////////////////////////////////////////////////////////
+  // Get current workout id
+  async function getCurrentWorkoutId() {
+    const dataQuery = query(
+      collection(db, 'users', userIsAuthenticated?.uid, 'CurrentWorkout'),
+      orderBy('id', 'desc'),
+      limit(1)
+    );
+    try {
+      const querySnapshot = await getDocs(dataQuery);
+      querySnapshot.forEach((doc) => {
+        setCurrentWorkoutId(doc.id);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  ///////////////////////////////////////////////////////////
   // Gets current user data and persists on reload
   async function getCurrentUser() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserIsAuthenticated(user);
+        // getCurrentWorkoutId();
+        // setTimeout(() => {
+        // }, 2000);
       }
     });
   }
@@ -164,6 +188,7 @@ export function AppContextProvider({ children }) {
     getUserCurrentWorkout,
     getCurrentUser,
     updateWorkoutDataInFirestore,
+    getCurrentWorkoutId,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

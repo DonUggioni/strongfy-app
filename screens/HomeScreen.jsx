@@ -33,7 +33,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.rootContainer}>
-      <StyledText>This is the home screen</StyledText>
+      <StyledText>Building something great!</StyledText>
     </View>
   );
 }
@@ -42,8 +42,9 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerButton: {
     textDecorationLine: 'none',

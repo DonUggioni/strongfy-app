@@ -12,6 +12,7 @@ function WorkoutOfTheDay({ navigation }) {
     updateWorkoutDataInFirestore,
     setCurrentWorkout,
     currentWorkout,
+    currentWorkoutId,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
@@ -83,7 +84,6 @@ export default WorkoutOfTheDay;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     flex: 1,
   },
   titleContainer: {

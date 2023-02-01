@@ -2,14 +2,14 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import StyledText from './UI/text/StyledText';
 import StyledInput from './UI/text/StyledInput';
-import Button from './UI/buttons/Button';
+import Title from './UI/text/Title';
 
-function RepMaxCalculatorInputs({ onChangeWeight, onChangeReps, onPress }) {
+function RepMaxCalculatorInputs({ onChangeWeight, onChangeReps }) {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <View style={styles.inputContainer}>
-          <StyledText>Weight</StyledText>
+          <StyledText style={styles.text}>Weight</StyledText>
           <StyledInput
             style={styles.inputStyle}
             onChangeText={onChangeWeight}
@@ -17,7 +17,7 @@ function RepMaxCalculatorInputs({ onChangeWeight, onChangeReps, onPress }) {
           />
         </View>
         <View style={styles.inputContainer}>
-          <StyledText>Reps</StyledText>
+          <StyledText style={styles.text}>Reps</StyledText>
           <StyledInput
             style={styles.inputStyle}
             onChangeText={onChangeReps}
@@ -25,9 +25,7 @@ function RepMaxCalculatorInputs({ onChangeWeight, onChangeReps, onPress }) {
           />
         </View>
       </View>
-      <Button type={'full'} onPress={onPress}>
-        Calculate
-      </Button>
+      <Title style={styles.title}>Your estimated max reps</Title>
     </View>
   );
 }
@@ -50,5 +48,13 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     width: 120,
+  },
+  title: {
+    fontFamily: 'open-sans-semi-bold',
+    fontSize: 26,
+  },
+  text: {
+    textAlign: 'center',
+    marginLeft: 10,
   },
 });

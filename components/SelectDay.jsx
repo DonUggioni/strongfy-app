@@ -9,7 +9,7 @@ function SelectDay({ navigation }) {
   const { currentWorkout, setWorkoutOfTheDay, workoutOfTheWeek } =
     useAppContext();
   const days = workoutOfTheWeek.flatMap((item) => item.workout);
-  const [weekNumber] = currentWorkout.flatMap((item) => item.workouts);
+  const [weekNumber] = currentWorkout?.flatMap((item) => item.workouts);
 
   function selectDayHandler(workout) {
     setWorkoutOfTheDay(days.filter((item) => item.id === workout.id));
@@ -44,7 +44,6 @@ export default SelectDay;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     flex: 1,
   },
   titleContainer: {

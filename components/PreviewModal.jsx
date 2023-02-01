@@ -5,6 +5,8 @@ import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
 import Title from './UI/text/Title';
 import useAppContext from '../store/AppContext';
+import { db } from '../firebase/firebaseConfig';
+import { collection, doc } from 'firebase/firestore';
 
 function PreviewModal({ navigation }) {
   const {
@@ -12,6 +14,9 @@ function PreviewModal({ navigation }) {
     workoutPreviewTitle,
     setCurrentWorkout,
     filteredWorkouts,
+    userIsAuthenticated,
+    addCurrentWorkoutToDataBase,
+    getCurrentWorkoutId,
   } = useAppContext();
 
   const workout = workoutPreviewData.flatMap((item) => item.workout);
@@ -22,7 +27,16 @@ function PreviewModal({ navigation }) {
   }
 
   function selectHandler() {
+    const currentWorkoutRef = doc(
+      collection(db, 'users', userIsAuthenticated.uid, 'CurrentWorkout')
+    );
+
     setCurrentWorkout(filteredWorkouts.filter((item) => item.id === relatedId));
+    addCurrentWorkoutToDataBase(
+      currentWorkoutRef,
+      ...filteredWorkouts.filter((item) => item.id === relatedId)
+    );
+    getCurrentWorkoutId();
     navigation.navigate('WorkoutsScreen');
   }
 
@@ -59,7 +73,6 @@ export default PreviewModal;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.background,
   },
   headerContainer: {
     padding: 16,

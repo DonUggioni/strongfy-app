@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
 import SelectButton from './UI/buttons/SelectButton';
 import StyledText from './UI/text/StyledText';
 import useAppContext from '../store/AppContext';
-import { useNavigation } from '@react-navigation/native';
 import LoadingScreen from './LoadingScreen';
 import ErrorScreen from './ErrorScreen';
 import { getTrainingData } from '../utils/fetchData';
@@ -159,7 +157,6 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: GlobalStyles.colors.background,
   },
   innerContainer: {
     padding: 28,

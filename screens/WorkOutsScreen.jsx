@@ -53,7 +53,6 @@ export default WorkoutsScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.background,
   },
   headerButton: {
     textDecorationLine: 'none',

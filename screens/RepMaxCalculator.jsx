@@ -4,20 +4,9 @@ import RepMaxCalculatorInputs from '../components/RepMaxCalculatorInputs';
 import RepMaxOutput from '../components/RepMaxOutput';
 import { GlobalStyles } from '../constants/styles';
 
-const outputData = [
-  { repNumber: 1, weight: null },
-  { repNumber: 2, weight: null },
-  { repNumber: 3, weight: null },
-  { repNumber: 4, weight: null },
-  { repNumber: 5, weight: null },
-  { repNumber: 6, weight: null },
-  { repNumber: 7, weight: null },
-  { repNumber: 8, weight: null },
-  { repNumber: 9, weight: null },
-  { repNumber: 10, weight: null },
+const repMaxPercentages = [
+  100, 94.15, 91.7, 89.5, 87.5, 85.7, 84, 82.6, 81, 80,
 ];
-
-const repMaxPercentages = [100, 94, 91, 88, 86, 83, 81, 79, 77, 75];
 
 function RepMaxCalculator() {
   const [weight, setWeight] = useState(null);
@@ -25,18 +14,16 @@ function RepMaxCalculator() {
 
   function calcRepMax(weight, reps, perc) {
     const totalWeight = weight * (1 + reps / 30);
-    const percentage = totalWeight / perc;
-    const max = totalWeight - percentage;
-    return percentage.toFixed(2);
+    const percentage = (totalWeight / perc) * 100;
+    const max = percentage - totalWeight;
+    return (totalWeight - max).toFixed(1);
   }
 
-  function submitHandler() {}
   return (
     <View style={styles.rootContainer}>
       <RepMaxCalculatorInputs
         onChangeWeight={(text) => setWeight(text)}
         onChangeReps={(text) => setReps(text)}
-        onPress={submitHandler}
       />
       <ScrollView>
         {repMaxPercentages.map((item, index) => {
@@ -44,7 +31,7 @@ function RepMaxCalculator() {
             <RepMaxOutput
               reps={index + 1}
               weight={calcRepMax(weight, reps, item)}
-              key={item + index}
+              key={index}
             />
           );
         })}
@@ -58,6 +45,5 @@ export default RepMaxCalculator;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.background,
   },
 });

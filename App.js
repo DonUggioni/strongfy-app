@@ -1,6 +1,6 @@
 import { AppContextProvider } from './store/AppContext';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStyles } from './constants/styles';
@@ -33,7 +33,11 @@ function AuthenticationStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: GlobalStyles.colors.background },
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.background,
+          elevation: 0,
+          shadowColor: GlobalStyles.colors.gray300,
+        },
         headerTintColor: 'white',
         headerTitleStyle: {
           fontFamily: 'open-sans-semi-bold',
@@ -51,7 +55,12 @@ function TrainingOptionsStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: GlobalStyles.colors.background },
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.background,
+          elevation: 0,
+          shadowColor: GlobalStyles.colors.gray300,
+        },
+
         headerTintColor: 'white',
         headerTitleStyle: {
           fontFamily: 'open-sans-semi-bold',
@@ -95,12 +104,17 @@ function AppNavigation() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: GlobalStyles.colors.background },
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.background,
+          elevation: 0,
+          shadowColor: GlobalStyles.colors.gray300,
+        },
         headerTintColor: 'white',
         tabBarStyle: {
           backgroundColor: GlobalStyles.colors.primary700,
           paddingTop: 5,
           height: 90,
+          borderTopWidth: 0,
         },
         headerTitleStyle: {
           fontFamily: 'open-sans-semi-bold',
@@ -197,8 +211,16 @@ function AppNavigation() {
 function RootApp() {
   const { userIsAuthenticated } = useAppContext();
 
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: GlobalStyles.colors.background,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       {!userIsAuthenticated && <AuthenticationStack />}
       {userIsAuthenticated && <AppNavigation />}
     </NavigationContainer>

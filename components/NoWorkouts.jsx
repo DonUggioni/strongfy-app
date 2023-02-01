@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { GlobalStyles } from '../constants/styles';
 import Button from './UI/buttons/Button';
 import StyledText from './UI/text/StyledText';
 import { useNavigation } from '@react-navigation/native';
@@ -30,6 +29,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: GlobalStyles.colors.background,
   },
 });

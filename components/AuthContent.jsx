@@ -131,7 +131,6 @@ export default AuthContent;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     flex: 1,
     paddingTop: 20,
   },

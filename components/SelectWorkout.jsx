@@ -30,7 +30,6 @@ export default SelectWorkout;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: GlobalStyles.colors.background,
     padding: 28,
     borderBottomWidth: 1,
     borderBottomColor: GlobalStyles.colors.gray500,

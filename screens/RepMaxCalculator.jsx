@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import RepMaxCalculatorInputs from '../components/RepMaxCalculatorInputs';
 import RepMaxOutput from '../components/RepMaxOutput';
-import { GlobalStyles } from '../constants/styles';
 
 const repMaxPercentages = [
   100, 94.15, 91.7, 89.5, 87.5, 85.7, 84, 82.6, 81, 80,

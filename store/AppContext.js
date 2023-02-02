@@ -12,12 +12,10 @@ import {
   doc,
   serverTimestamp,
   getDocs,
-  updateDoc,
   query,
   orderBy,
   collection,
   limit,
-  onSnapshot,
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase/firebaseConfig';
@@ -31,10 +29,11 @@ export function AppContextProvider({ children }) {
   const [workoutPreviewData, setWorkoutPreviewData] = useState(null);
   const [workoutPreviewTitle, setWorkoutPreviewTitle] = useState('');
   const [workoutOfTheWeek, setWorkoutOfTheWeek] = useState(null);
-  const [backdownWeightCalc, setBackdownWeightCalc] = useState();
+  const [backdownWeightCalc, setBackdownWeightCalc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userIsAuthenticated, setUserIsAuthenticated] = useState(null);
   const [currentWorkoutId, setCurrentWorkoutId] = useState('');
+  const [currentWeekIndex, setCurrentWeekIndex] = useState(null);
 
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
@@ -124,9 +123,6 @@ export function AppContextProvider({ children }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserIsAuthenticated(user);
-        // getCurrentWorkoutId();
-        // setTimeout(() => {
-        // }, 2000);
       }
     });
   }
@@ -152,11 +148,10 @@ export function AppContextProvider({ children }) {
     const dataQuery = doc(
       db,
       'users',
-      userIsAuthenticated.uid,
+      userIsAuthenticated?.uid,
       'CurrentWorkout',
       currentWorkoutId
     );
-
     try {
       await setDoc(dataQuery, ...currentWorkout);
     } catch (error) {
@@ -178,6 +173,7 @@ export function AppContextProvider({ children }) {
     setWorkoutOfTheDay,
     calcBackdown,
     backdownWeightCalc,
+    setBackdownWeightCalc,
     isLoading,
     setIsLoading,
     workoutOfTheWeek,
@@ -189,6 +185,8 @@ export function AppContextProvider({ children }) {
     getCurrentUser,
     updateWorkoutDataInFirestore,
     getCurrentWorkoutId,
+    currentWeekIndex,
+    setCurrentWeekIndex,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

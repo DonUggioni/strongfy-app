@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import NoWorkouts from '../components/NoWorkouts';
 import FlatButton from '../components/UI/buttons/FlatButton';
-import { GlobalStyles } from '../constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import SelectWeek from '../components/SelectWeek';
 import useAppContext from '../store/AppContext';
 
 function WorkoutsScreen({ navigation }) {
-  const { currentWorkout, setWorkoutOfTheWeek } = useAppContext();
+  const { currentWorkout, setWorkoutOfTheWeek, setCurrentWeekIndex } =
+    useAppContext();
 
   const weekNumber = currentWorkout?.flatMap((item) => item.workouts);
 
@@ -26,8 +26,9 @@ function WorkoutsScreen({ navigation }) {
     });
   }, []);
 
-  function selectDayHandler(id) {
-    setWorkoutOfTheWeek(weekNumber.filter((item) => item.id === id));
+  function selectDayHandler(id, index) {
+    setWorkoutOfTheWeek(weekNumber.filter((item) => item.id === id.id));
+    setCurrentWeekIndex(index);
     navigation.navigate('SelectDay');
   }
 
@@ -41,7 +42,7 @@ function WorkoutsScreen({ navigation }) {
         <SelectWeek
           week={`Week ${item.week}`}
           key={index}
-          onPress={() => selectDayHandler(item.id)}
+          onPress={() => selectDayHandler(item, index)}
         />
       ))}
     </View>

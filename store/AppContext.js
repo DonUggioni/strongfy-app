@@ -9,6 +9,7 @@ import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
 import {
   setDoc,
+  addDoc,
   doc,
   serverTimestamp,
   getDocs,
@@ -16,6 +17,7 @@ import {
   orderBy,
   collection,
   limit,
+  onSnapshot,
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase/firebaseConfig';
@@ -34,7 +36,28 @@ export function AppContextProvider({ children }) {
   const [userIsAuthenticated, setUserIsAuthenticated] = useState(null);
   const [currentWorkoutId, setCurrentWorkoutId] = useState('');
   const [currentWeekIndex, setCurrentWeekIndex] = useState(null);
+  const [repMaxTrackerValues, setRepMaxTrackerValues] = useState({
+    squat: [
+      {
+        value: 0,
+        date: '',
+      },
+    ],
 
+    bench: [
+      {
+        value: 0,
+        date: '',
+      },
+    ],
+
+    deadlift: [
+      {
+        value: 0,
+        date: '',
+      },
+    ],
+  });
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -159,6 +182,32 @@ export function AppContextProvider({ children }) {
     }
   }
 
+  ///////////////////////////////////////////////////////////
+  // Update 1RM values do DB to be displayed in chart
+  async function update1RMTrackerValues(exercise, weight, reps) {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const formattedDate = `${month}/${day}/${year}`;
+    const docRef = collection(db, 'users', userIsAuthenticated.uid, exercise);
+    // calculate 1rm
+    const repMaxCalc = weight * (1 + reps / 30);
+    //update to respective array in DB
+    try {
+      await addDoc(docRef, {
+        value: repMaxCalc.toFixed(1),
+        date: formattedDate,
+        id: serverTimestamp(),
+      });
+      console.log('Updated');
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  // console.log(repMaxTrackerValues.bench);
+
   const values = {
     filteredWorkouts,
     setFilteredWorkouts,
@@ -187,6 +236,7 @@ export function AppContextProvider({ children }) {
     getCurrentWorkoutId,
     currentWeekIndex,
     setCurrentWeekIndex,
+    update1RMTrackerValues,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

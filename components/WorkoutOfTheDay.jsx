@@ -13,8 +13,8 @@ function WorkoutOfTheDay({ navigation }) {
     setCurrentWorkout,
     currentWorkout,
     backdownWeightCalc,
-    setBackdownWeightCalc,
     currentWeekIndex,
+    update1RMTrackerValues,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
@@ -46,6 +46,23 @@ function WorkoutOfTheDay({ navigation }) {
     const exerciseIndex = workout.findIndex(
       (item) => item.exercise === currentExercise.exercise
     );
+
+    const squat =
+      currentExercise.exercise === 'squat' && currentExercise.rpe === 10;
+    const bench =
+      currentExercise.exercise === 'bench' && currentExercise.rpe === 10;
+    const deadLift =
+      currentExercise.exercise === 'deadLift' && currentExercise.rpe === 10;
+
+    console.log(squat);
+
+    if (squat || bench || deadLift) {
+      update1RMTrackerValues(
+        currentExercise.exercise,
+        weight,
+        currentExercise.reps
+      );
+    }
 
     calcBackdown(+weight, currentExercise.exercise);
 

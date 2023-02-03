@@ -54,8 +54,6 @@ function WorkoutOfTheDay({ navigation }) {
     const deadLift =
       currentExercise.exercise === 'deadLift' && currentExercise.rpe === 10;
 
-    console.log(squat);
-
     if (squat || bench || deadLift) {
       update1RMTrackerValues(
         currentExercise.exercise,

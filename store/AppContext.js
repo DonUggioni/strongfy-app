@@ -1,15 +1,8 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
 import {
   setDoc,
-  addDoc,
   doc,
   serverTimestamp,
   getDocs,
@@ -17,7 +10,7 @@ import {
   orderBy,
   collection,
   limit,
-  onSnapshot,
+  getDoc,
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase/firebaseConfig';
@@ -43,14 +36,12 @@ export function AppContextProvider({ children }) {
         date: '',
       },
     ],
-
     bench: [
       {
         value: 0,
         date: '',
       },
     ],
-
     deadlift: [
       {
         value: 0,
@@ -58,6 +49,7 @@ export function AppContextProvider({ children }) {
       },
     ],
   });
+
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -190,15 +182,65 @@ export function AppContextProvider({ children }) {
     const day = date.getDate();
     const year = date.getFullYear();
     const formattedDate = `${month}/${day}/${year}`;
-    const docRef = collection(db, 'users', userIsAuthenticated.uid, exercise);
-    // calculate 1rm
+    const docRef = doc(
+      db,
+      'users',
+      userIsAuthenticated.uid,
+      'RepMaxTrackerValues',
+      'data'
+    );
+
     const repMaxCalc = weight * (1 + reps / 30);
-    //update to respective array in DB
+
+    switch (exercise) {
+      case 'squat':
+        setRepMaxTrackerValues({
+          ...repMaxTrackerValues,
+
+          squat: [
+            ...repMaxTrackerValues?.squat,
+            {
+              value: +repMaxCalc.toFixed(1),
+              date: formattedDate,
+            },
+          ],
+        });
+        break;
+      case 'bench':
+        setRepMaxTrackerValues({
+          ...repMaxTrackerValues,
+
+          bench: [
+            ...repMaxTrackerValues?.bench,
+            {
+              value: +repMaxCalc.toFixed(1),
+              date: formattedDate,
+            },
+          ],
+        });
+        break;
+      case 'deadlift':
+        setRepMaxTrackerValues({
+          ...repMaxTrackerValues,
+
+          deadlift: [
+            ...repMaxTrackerValues?.deadlift,
+            {
+              value: +repMaxCalc.toFixed(1),
+              date: formattedDate,
+            },
+          ],
+        });
+        break;
+
+      default:
+        exercise;
+        break;
+    }
+    console.log(repMaxTrackerValues);
     try {
-      await addDoc(docRef, {
-        value: repMaxCalc.toFixed(1),
-        date: formattedDate,
-        id: serverTimestamp(),
+      await setDoc(docRef, {
+        ...repMaxTrackerValues,
       });
       console.log('Updated');
     } catch (error) {
@@ -206,7 +248,23 @@ export function AppContextProvider({ children }) {
     }
   }
 
-  // console.log(repMaxTrackerValues.bench);
+  ///////////////////////////////////////////////////////////
+  // Get 1RM values from DB to display in chart
+  async function getRepMaxValuesFromDB() {
+    const id = await AsyncStorage.getItem('@user_uid');
+    const docRef = doc(db, 'users', id, 'RepMaxTrackerValues', 'data');
+
+    try {
+      const repMaxData = await getDoc(docRef);
+      if (repMaxData.data() === 'undefined') {
+        setRepMaxTrackerValues(null);
+      } else {
+        setRepMaxTrackerValues(repMaxData.data());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   const values = {
     filteredWorkouts,
@@ -237,6 +295,7 @@ export function AppContextProvider({ children }) {
     currentWeekIndex,
     setCurrentWeekIndex,
     update1RMTrackerValues,
+    repMaxTrackerValues,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

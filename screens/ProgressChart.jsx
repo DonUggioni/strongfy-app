@@ -4,20 +4,15 @@ import { LineChart } from 'react-native-gifted-charts';
 import { GlobalStyles } from '../constants/styles';
 import SvgLine from '../components/UI/SvgLine';
 import Title from '../components/UI/text/Title';
+import useAppContext from '../store/AppContext';
 
 function ProgressChart() {
-  const data = [
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 100 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 180 },
-  ];
-  const data2 = [{ value: 30 }, { value: 40 }, { value: 45 }, { value: 50 }];
-  const data3 = [{ value: 25 }, { value: 30 }, { value: 35 }, { value: 50 }];
+  const { repMaxTrackerValues } = useAppContext();
+
+  const data = repMaxTrackerValues?.squat.slice(1);
+  const data2 = repMaxTrackerValues?.bench.slice(1);
+  const data3 = repMaxTrackerValues?.deadlift.slice(1);
+
   return (
     <View style={styles.rootContainer}>
       <Title style={styles.title}>1RM Tracker</Title>

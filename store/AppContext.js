@@ -176,68 +176,69 @@ export function AppContextProvider({ children }) {
 
   ///////////////////////////////////////////////////////////
   // Update 1RM values do DB to be displayed in chart
-  async function update1RMTrackerValues(exercise, weight, reps) {
+  function update1RMTrackerValues(exercise, weight, reps) {
     const date = new Date();
     const month = date.getMonth() + 1;
     const day = date.getDate();
     const year = date.getFullYear();
     const formattedDate = `${month}/${day}/${year}`;
+
+    const repMaxCalc = weight * (1 + reps / 30);
+
+    if (exercise === 'squat') {
+      setRepMaxTrackerValues({
+        ...repMaxTrackerValues,
+
+        squat: [
+          ...repMaxTrackerValues.squat,
+          {
+            value: +repMaxCalc.toFixed(1),
+            date: formattedDate,
+          },
+        ],
+      });
+    }
+
+    if (exercise === 'bench') {
+      setRepMaxTrackerValues({
+        ...repMaxTrackerValues,
+
+        bench: [
+          ...repMaxTrackerValues.bench,
+          {
+            value: +repMaxCalc.toFixed(1),
+            date: formattedDate,
+          },
+        ],
+      });
+    }
+
+    if (exercise === 'deadlift') {
+      setRepMaxTrackerValues({
+        ...repMaxTrackerValues,
+
+        deadlift: [
+          ...repMaxTrackerValues.deadlift,
+          {
+            value: +repMaxCalc.toFixed(1),
+            date: formattedDate,
+          },
+        ],
+      });
+    }
+  }
+
+  ///////////////////////////////////////////////////////////
+  // Get 1RM values from DB to display in chart
+  async function update1RMTrackerValuesToDB() {
     const docRef = doc(
       db,
       'users',
-      userIsAuthenticated.uid,
+      userIsAuthenticated?.uid,
       'RepMaxTrackerValues',
       'data'
     );
 
-    const repMaxCalc = weight * (1 + reps / 30);
-
-    switch (exercise) {
-      case 'squat':
-        setRepMaxTrackerValues({
-          ...repMaxTrackerValues,
-
-          squat: [
-            ...repMaxTrackerValues?.squat,
-            {
-              value: +repMaxCalc.toFixed(1),
-              date: formattedDate,
-            },
-          ],
-        });
-        break;
-      case 'bench':
-        setRepMaxTrackerValues({
-          ...repMaxTrackerValues,
-
-          bench: [
-            ...repMaxTrackerValues?.bench,
-            {
-              value: +repMaxCalc.toFixed(1),
-              date: formattedDate,
-            },
-          ],
-        });
-        break;
-      case 'deadlift':
-        setRepMaxTrackerValues({
-          ...repMaxTrackerValues,
-
-          deadlift: [
-            ...repMaxTrackerValues?.deadlift,
-            {
-              value: +repMaxCalc.toFixed(1),
-              date: formattedDate,
-            },
-          ],
-        });
-        break;
-
-      default:
-        exercise;
-        break;
-    }
-    console.log(repMaxTrackerValues);
     try {
       await setDoc(docRef, {
         ...repMaxTrackerValues,
@@ -250,21 +251,34 @@ export function AppContextProvider({ children }) {
 
   ///////////////////////////////////////////////////////////
   // Get 1RM values from DB to display in chart
-  async function getRepMaxValuesFromDB() {
-    const id = await AsyncStorage.getItem('@user_uid');
-    const docRef = doc(db, 'users', id, 'RepMaxTrackerValues', 'data');
+  useEffect(() => {
+    async function getRepMaxValuesFromDB() {
+      const benchDataArr = repMaxTrackerValues.bench.length <= 1;
+      const squatDataArr = repMaxTrackerValues.squat.length <= 1;
+      const deadliftDataArr = repMaxTrackerValues.deadlift.length <= 1;
 
-    try {
-      const repMaxData = await getDoc(docRef);
-      if (repMaxData.data() === 'undefined') {
-        setRepMaxTrackerValues(null);
-      } else {
-        setRepMaxTrackerValues(repMaxData.data());
+      if (benchDataArr || squatDataArr || deadliftDataArr) return;
+      const docRef = doc(
+        db,
+        'users',
+        userIsAuthenticated?.uid,
+        'RepMaxTrackerValues',
+        'data'
+      );
+
+      try {
+        const repMaxData = await getDoc(docRef);
+        if (repMaxData) {
+          setRepMaxTrackerValues(repMaxData.data());
+        }
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (error) {
-      console.log(error.message);
     }
-  }
+    getRepMaxValuesFromDB();
+  }, [userIsAuthenticated]);
+
+  console.log(repMaxTrackerValues);
 
   const values = {
     filteredWorkouts,
@@ -296,6 +310,7 @@ export function AppContextProvider({ children }) {
     setCurrentWeekIndex,
     update1RMTrackerValues,
     repMaxTrackerValues,
+    update1RMTrackerValuesToDB,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

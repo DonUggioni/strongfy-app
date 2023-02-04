@@ -15,6 +15,7 @@ function WorkoutOfTheDay({ navigation }) {
     backdownWeightCalc,
     currentWeekIndex,
     update1RMTrackerValues,
+    update1RMTrackerValuesToDB,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
@@ -51,15 +52,19 @@ function WorkoutOfTheDay({ navigation }) {
       currentExercise.exercise === 'squat' && currentExercise.rpe === 10;
     const bench =
       currentExercise.exercise === 'bench' && currentExercise.rpe === 10;
-    const deadLift =
-      currentExercise.exercise === 'deadLift' && currentExercise.rpe === 10;
+    const deadlift =
+      currentExercise.exercise === 'deadlift' && currentExercise.rpe === 10;
 
-    if (squat || bench || deadLift) {
+    if (squat || bench || deadlift) {
       update1RMTrackerValues(
         currentExercise.exercise,
-        weight,
+        +weight,
         currentExercise.reps
       );
+
+      setTimeout(() => {
+        update1RMTrackerValuesToDB();
+      }, 1500);
     }
 
     calcBackdown(+weight, currentExercise.exercise);

@@ -13,6 +13,7 @@ function ProgressChart() {
   const data2 = repMaxTrackerValues?.bench.slice(1);
   const data3 = repMaxTrackerValues?.deadlift.slice(1);
 
+  // const data = [{ value: 15 }, { value: 30 }, { value: 26 }, { value: 40 }];
   return (
     <View style={styles.rootContainer}>
       <Title style={styles.title}>1RM Tracker</Title>

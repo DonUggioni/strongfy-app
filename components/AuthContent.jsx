@@ -5,10 +5,8 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
-import { GlobalStyles } from '../constants/styles';
 import Title from './UI/text/Title';
 import FlatButton from './UI/buttons/FlatButton';
 import { useNavigation } from '@react-navigation/native';
@@ -105,10 +103,12 @@ function AuthContent({
     >
       <ScrollView>
         <View style={styles.imageContainer}>
-          <Image
-            source={require('../assets/strongfy_logo_copy.png')}
-            style={styles.image}
-          />
+          {isLogin && (
+            <Image
+              source={require('../assets/strongfy_logo_copy.png')}
+              style={styles.image}
+            />
+          )}
         </View>
         <View style={styles.inputsContainer}>
           <Title style={styles.title}>{isLogin ? 'Login' : 'Signup'}</Title>
@@ -117,7 +117,7 @@ function AuthContent({
           <Button type={'full'} onPress={onSubmit}>
             Submit
           </Button>
-          <FlatButton onPress={switchAuthModeHandler}>
+          <FlatButton style={styles.flatButton} onPress={switchAuthModeHandler}>
             {isLogin ? 'No account yet?' : 'Already have an account?'}
           </FlatButton>
         </View>
@@ -159,5 +159,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     justifyContent: 'space-between',
+  },
+  flatButton: {
+    marginTop: 16,
   },
 });

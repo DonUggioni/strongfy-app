@@ -5,6 +5,7 @@ import { GlobalStyles } from '../constants/styles';
 import SvgLine from '../components/UI/SvgLine';
 import Title from '../components/UI/text/Title';
 import useAppContext from '../store/AppContext';
+import MessageScreen from '../components/MessageScreen';
 
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
@@ -13,7 +14,14 @@ function ProgressChart() {
   const data2 = repMaxTrackerValues?.bench.slice(1);
   const data3 = repMaxTrackerValues?.deadlift.slice(1);
 
-  // const data = [{ value: 15 }, { value: 30 }, { value: 26 }, { value: 40 }];
+  const dataLength = repMaxTrackerValues.squat.length <= 1;
+  const data2Length = repMaxTrackerValues.bench.length <= 1;
+  const data3Length = repMaxTrackerValues.deadlift.length <= 1;
+
+  if (dataLength || data2Length || data3Length) {
+    return <MessageScreen message={'Not enough data yet!'} />;
+  }
+
   return (
     <View style={styles.rootContainer}>
       <Title style={styles.title}>1RM Tracker</Title>

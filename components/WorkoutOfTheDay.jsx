@@ -38,7 +38,7 @@ function WorkoutOfTheDay({ navigation }) {
         currentDayIndex
       ].isComplete = true;
     });
-
+    update1RMTrackerValuesToDB();
     updateWorkoutDataInFirestore();
     navigation.navigate('WorkoutsScreen');
   }
@@ -61,10 +61,6 @@ function WorkoutOfTheDay({ navigation }) {
         +weight,
         currentExercise.reps
       );
-
-      setTimeout(() => {
-        update1RMTrackerValuesToDB();
-      }, 1500);
     }
 
     calcBackdown(+weight, currentExercise.exercise);

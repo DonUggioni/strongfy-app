@@ -3,15 +3,15 @@ import { StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import StyledText from './UI/text/StyledText';
 
-function ErrorScreen({ message }) {
+function MessageScreen({ message }) {
   return (
     <View style={styles.rootContainer}>
-      <StyledText>{message}</StyledText>;
+      <StyledText>{message}</StyledText>
     </View>
   );
 }
 
-export default ErrorScreen;
+export default MessageScreen;
 
 const styles = StyleSheet.create({
   rootContainer: {

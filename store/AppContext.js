@@ -33,19 +33,16 @@ export function AppContextProvider({ children }) {
     squat: [
       {
         value: 0,
-        date: '',
       },
     ],
     bench: [
       {
         value: 0,
-        date: '',
       },
     ],
     deadlift: [
       {
         value: 0,
-        date: '',
       },
     ],
   });
@@ -193,7 +190,6 @@ export function AppContextProvider({ children }) {
           ...repMaxTrackerValues.squat,
           {
             value: +repMaxCalc.toFixed(1),
-            date: formattedDate,
           },
         ],
       });
@@ -207,7 +203,6 @@ export function AppContextProvider({ children }) {
           ...repMaxTrackerValues.bench,
           {
             value: +repMaxCalc.toFixed(1),
-            date: formattedDate,
           },
         ],
       });
@@ -221,7 +216,6 @@ export function AppContextProvider({ children }) {
           ...repMaxTrackerValues.deadlift,
           {
             value: +repMaxCalc.toFixed(1),
-            date: formattedDate,
           },
         ],
       });
@@ -253,32 +247,23 @@ export function AppContextProvider({ children }) {
   // Get 1RM values from DB to display in chart
   useEffect(() => {
     async function getRepMaxValuesFromDB() {
-      const benchDataArr = repMaxTrackerValues.bench.length <= 1;
-      const squatDataArr = repMaxTrackerValues.squat.length <= 1;
-      const deadliftDataArr = repMaxTrackerValues.deadlift.length <= 1;
+      const id = await AsyncStorage.getItem('@user_uid');
 
-      if (benchDataArr || squatDataArr || deadliftDataArr) return;
-      const docRef = doc(
-        db,
-        'users',
-        userIsAuthenticated?.uid,
-        'RepMaxTrackerValues',
-        'data'
-      );
+      const docRef = doc(db, 'users', id, 'RepMaxTrackerValues', 'data');
 
       try {
         const repMaxData = await getDoc(docRef);
-        if (repMaxData) {
+        if (repMaxData.exists()) {
           setRepMaxTrackerValues(repMaxData.data());
+        } else {
+          return;
         }
       } catch (error) {
         console.log(error.message);
       }
     }
     getRepMaxValuesFromDB();
-  }, [userIsAuthenticated]);
-
-  console.log(repMaxTrackerValues);
+  }, []);
 
   const values = {
     filteredWorkouts,

@@ -5,7 +5,7 @@ import SelectButton from './UI/buttons/SelectButton';
 import StyledText from './UI/text/StyledText';
 import useAppContext from '../store/AppContext';
 import LoadingScreen from './LoadingScreen';
-import ErrorScreen from './ErrorScreen';
+import MessageScreen from './MessageScreen';
 import { getTrainingData } from '../utils/fetchData';
 
 const styleData = [
@@ -93,7 +93,7 @@ function BlockOptions({ navigation }) {
       console.log(error);
       setIsLoading(false);
       return (
-        <ErrorScreen message={'Something went wrong. Please try again.'} />
+        <MessageScreen message={'Something went wrong. Please try again.'} />
       );
     }
   }

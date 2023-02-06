@@ -27,6 +27,7 @@ export function AppContextProvider({ children }) {
   const [backdownWeightCalc, setBackdownWeightCalc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userIsAuthenticated, setUserIsAuthenticated] = useState(null);
+  const [userToken, setUserToken] = useState(null);
   const [currentWorkoutId, setCurrentWorkoutId] = useState('');
   const [currentWeekIndex, setCurrentWeekIndex] = useState(null);
   const [repMaxTrackerValues, setRepMaxTrackerValues] = useState({
@@ -135,6 +136,7 @@ export function AppContextProvider({ children }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserIsAuthenticated(user);
+        setUserToken(user.accessToken);
       }
     });
   }
@@ -249,6 +251,8 @@ export function AppContextProvider({ children }) {
     async function getRepMaxValuesFromDB() {
       const id = await AsyncStorage.getItem('@user_uid');
 
+      if (!id) return;
+
       const docRef = doc(db, 'users', id, 'RepMaxTrackerValues', 'data');
 
       try {
@@ -296,6 +300,7 @@ export function AppContextProvider({ children }) {
     update1RMTrackerValues,
     repMaxTrackerValues,
     update1RMTrackerValuesToDB,
+    userToken,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

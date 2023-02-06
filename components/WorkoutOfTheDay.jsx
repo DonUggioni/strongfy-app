@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
@@ -75,7 +76,10 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }
   return (
-    <View style={styles.rootContainer}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.rootContainer}
+    >
       <View style={styles.listContainer}>
         <FlatList
           data={workout}
@@ -100,7 +104,7 @@ function WorkoutOfTheDay({ navigation }) {
           Done!
         </Button>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

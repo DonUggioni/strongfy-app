@@ -44,8 +44,8 @@ const daysData = [
 ];
 
 function BlockOptions({ navigation }) {
-  // const navigation = useNavigation();
-  const { setIsLoading, isLoading, setFilteredWorkouts } = useAppContext();
+  const { setIsLoading, isLoading, setFilteredWorkouts, userToken } =
+    useAppContext();
   const [selectedTrainingData, setSelectedTrainingData] = useState({});
   const [selectedDaysData, setSelectedDaysData] = useState({});
 
@@ -82,12 +82,13 @@ function BlockOptions({ navigation }) {
       setIsLoading(true);
       const data = await getTrainingData(
         selectedTrainingData.value,
-        selectedDaysData.value
+        selectedDaysData.value,
+        userToken
       );
       if (data) {
         setFilteredWorkouts(data);
-        setIsLoading(false);
         navigation.replace('WorkoutSelection');
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);

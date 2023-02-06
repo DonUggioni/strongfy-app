@@ -12,6 +12,8 @@ import FlatButton from './UI/buttons/FlatButton';
 import { useNavigation } from '@react-navigation/native';
 import LoginInput from './UI/text/LoginInput';
 import Button from './UI/buttons/Button';
+import { TouchableWithoutFeedback } from 'react-native';
+import { Keyboard } from 'react-native';
 
 function AuthContent({
   isLogin,
@@ -102,26 +104,31 @@ function AuthContent({
       style={styles.rootContainer}
     >
       <ScrollView>
-        <View style={styles.imageContainer}>
-          {isLogin && (
-            <Image
-              source={require('../assets/strongfy_logo_copy.png')}
-              style={styles.image}
-            />
-          )}
-        </View>
-        <View style={styles.inputsContainer}>
-          <Title style={styles.title}>{isLogin ? 'Login' : 'Signup'}</Title>
-          {isLogin && login}
-          {!isLogin && signUp}
-          <Button type={'full'} onPress={onSubmit}>
-            Submit
-          </Button>
-          <FlatButton style={styles.flatButton} onPress={switchAuthModeHandler}>
-            {isLogin ? 'No account yet?' : 'Already have an account?'}
-          </FlatButton>
-        </View>
-        {/* <Text style={styles.rightsText}>Terms and conditions</Text> */}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.innerContainer}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={require('../assets/strongfy_logo_copy.png')}
+                style={styles.image}
+              />
+            </View>
+            <View style={styles.inputsContainer}>
+              <Title style={styles.title}>{isLogin ? 'Login' : 'Signup'}</Title>
+              {isLogin && login}
+              {!isLogin && signUp}
+              <Button type={'full'} onPress={onSubmit}>
+                Submit
+              </Button>
+              <FlatButton
+                style={styles.flatButton}
+                onPress={switchAuthModeHandler}
+              >
+                {isLogin ? 'No account yet?' : 'Already have an account?'}
+              </FlatButton>
+            </View>
+            {/* <Text style={styles.rightsText}>Terms and conditions</Text> */}
+          </View>
+        </TouchableWithoutFeedback>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -131,11 +138,12 @@ export default AuthContent;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    flex: 1,
     paddingTop: 20,
+    flex: 1,
   },
   innerContainer: {
     flex: 1,
+    justifyContent: 'space-around',
   },
   imageContainer: {
     width: '100%',

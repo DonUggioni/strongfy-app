@@ -8,8 +8,9 @@ import useAppContext from '../store/AppContext';
 function SelectDay({ navigation }) {
   const { currentWorkout, setWorkoutOfTheDay, workoutOfTheWeek } =
     useAppContext();
-  const days = workoutOfTheWeek.flatMap((item) => item.workout);
+  const days = workoutOfTheWeek?.flatMap((item) => item.workout);
   const [weekNumber] = currentWorkout?.flatMap((item) => item.workouts);
+  console.log(weekNumber);
 
   function selectDayHandler(workout) {
     setWorkoutOfTheDay(days.filter((item) => item.id === workout.id));

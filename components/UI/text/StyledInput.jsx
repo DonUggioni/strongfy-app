@@ -9,6 +9,7 @@ function StyledInput({
   onBlur,
   placeholder,
   style,
+  returnKeyType,
 }) {
   return (
     <TextInput
@@ -19,6 +20,7 @@ function StyledInput({
       autoComplete='off'
       onBlur={onBlur}
       placeholder={placeholder}
+      returnKeyType={returnKeyType}
     />
   );
 }

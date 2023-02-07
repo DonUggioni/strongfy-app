@@ -36,6 +36,7 @@ function Exercise({
             onChangeText={onChangeText}
             onBlur={onBlur}
             value={value}
+            returnKeyType={'done'}
           />
         )}
         <StyledText style={styles.weightText}> - {weight}kg</StyledText>
@@ -67,6 +68,7 @@ function Exercise({
             value={value}
             onChangeText={onChangeText}
             onBlur={onBlur}
+            returnKeyType={'done'}
           />
         )}
         <StyledText style={styles.weightText}> - {weight}kg</StyledText>

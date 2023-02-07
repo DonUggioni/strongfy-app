@@ -14,6 +14,7 @@ function RepMaxCalculatorInputs({ onChangeWeight, onChangeReps }) {
             style={styles.inputStyle}
             onChangeText={onChangeWeight}
             keyboardType='decimal-pad'
+            returnKeyType={'done'}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -22,6 +23,7 @@ function RepMaxCalculatorInputs({ onChangeWeight, onChangeReps }) {
             style={styles.inputStyle}
             onChangeText={onChangeReps}
             keyboardType='decimal-pad'
+            returnKeyType={'done'}
           />
         </View>
       </View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
@@ -14,9 +14,11 @@ function WorkoutOfTheDay({ navigation }) {
     setCurrentWorkout,
     currentWorkout,
     backdownWeightCalc,
+    setBackdownWeightCalc,
     currentWeekIndex,
     update1RMTrackerValues,
     update1RMTrackerValuesToDB,
+    updateNumberOfCompletedWorkouts,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
 
@@ -26,6 +28,8 @@ function WorkoutOfTheDay({ navigation }) {
     ?.flatMap((item) => item.workouts)
     .flatMap((item) => item.workout)
     .findIndex((item) => item.day === day);
+
+  const [isComplete] = workoutOfTheDay.map((item) => item.isComplete);
 
   useEffect(() => {
     navigation.setOptions({
@@ -41,6 +45,8 @@ function WorkoutOfTheDay({ navigation }) {
     });
     update1RMTrackerValuesToDB();
     updateWorkoutDataInFirestore();
+    setBackdownWeightCalc(null);
+    updateNumberOfCompletedWorkouts();
     navigation.navigate('WorkoutsScreen');
   }
 
@@ -92,6 +98,7 @@ function WorkoutOfTheDay({ navigation }) {
               reps={item.reps}
               rpe={item.rpe}
               // value={item.weight}
+              backdownWeight={item.backdownWeight}
               weight={item.weight}
               onBlur={() => updateWeight(item)}
               onChangeText={(text) => setWeight(text)}
@@ -99,11 +106,13 @@ function WorkoutOfTheDay({ navigation }) {
           )}
         />
       </View>
-      <View style={styles.buttonContainer}>
-        <Button type={'full'} onPress={workoutDoneHandler}>
-          Done!
-        </Button>
-      </View>
+      {!isComplete && (
+        <View style={styles.buttonContainer}>
+          <Button type={'full'} onPress={workoutDoneHandler}>
+            Done!
+          </Button>
+        </View>
+      )}
     </KeyboardAvoidingView>
   );
 }

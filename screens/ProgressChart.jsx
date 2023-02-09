@@ -18,9 +18,9 @@ function ProgressChart() {
   const data2Length = repMaxTrackerValues.bench.length <= 1;
   const data3Length = repMaxTrackerValues.deadlift.length <= 1;
 
-  // if (dataLength || data2Length || data3Length) {
-  //   return <MessageScreen message={'Not enough data yet!'} />;
-  // }
+  if (dataLength || data2Length || data3Length) {
+    return <MessageScreen message={'Not enough data yet!'} />;
+  }
 
   return (
     <View style={styles.rootContainer}>

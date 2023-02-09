@@ -6,10 +6,18 @@ import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 
 function SelectDay({ navigation }) {
-  const { currentWorkout, setWorkoutOfTheDay, workoutOfTheWeek } =
-    useAppContext();
+  const {
+    currentWorkout,
+    setWorkoutOfTheDay,
+    workoutOfTheWeek,
+    workoutOfTheDay,
+  } = useAppContext();
   const days = workoutOfTheWeek?.flatMap((item) => item.workout);
-  const [weekNumber] = currentWorkout?.flatMap((item) => item.workouts);
+  const [weekNumber] = workoutOfTheWeek?.flatMap((item) => item.week);
+  const isComplete = workoutOfTheDay?.map((item) => item.isComplete);
+
+  const isCompletedStyle = [isComplete] ? styles.isCompleted : null;
+
   console.log(weekNumber);
 
   function selectDayHandler(workout) {
@@ -20,7 +28,7 @@ function SelectDay({ navigation }) {
   return (
     <View style={styles.rootContainer}>
       <View style={styles.titleContainer}>
-        <Title style={styles.title}>Week {weekNumber.week}</Title>
+        <Title style={styles.title}>Week {weekNumber}</Title>
       </View>
       {days.map((item, index) => {
         return (
@@ -31,6 +39,7 @@ function SelectDay({ navigation }) {
               iconSize={30}
               iconColor='white'
               onPress={() => selectDayHandler(item)}
+              styleDone={isCompletedStyle}
             >
               {item.day}
             </Selector>
@@ -67,5 +76,8 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
+  },
+  isCompleted: {
+    opacity: 0.8,
   },
 });

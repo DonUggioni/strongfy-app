@@ -19,6 +19,7 @@ import SelectDay from './components/SelectDay';
 import WorkoutOfTheDay from './components/WorkoutOfTheDay';
 
 import useAppContext from './store/AppContext';
+import { Platform } from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -112,8 +113,9 @@ function AppNavigation() {
         headerTintColor: 'white',
         tabBarStyle: {
           backgroundColor: GlobalStyles.colors.primary700,
-          paddingTop: 5,
-          height: 90,
+          paddingTop: 6,
+          paddingBottom: Platform.OS === 'ios' ? 24 : 6,
+          height: Platform.OS === 'ios' ? 90 : 70,
           borderTopWidth: 0,
         },
         headerTitleStyle: {
@@ -121,6 +123,7 @@ function AppNavigation() {
         },
 
         tabBarActiveTintColor: 'white',
+        tabBarHideOnKeyboard: Platform.OS === 'android' ? true : false,
       }}
     >
       <Tab.Screen

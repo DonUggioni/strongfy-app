@@ -1,14 +1,14 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 
-function SelectButton({ children, selected, onPress }) {
+function SelectButton({ children, selected, onPress, style }) {
   return (
     <Pressable
       onPress={onPress}
       style={[styles.container, selected === 'selected' && styles.selected]}
     >
-      <Text style={styles.text}>{children}</Text>
+      <Text style={[styles.text, style]}>{children}</Text>
     </Pressable>
   );
 }
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontFamily: 'open-sans-semi-bold',
-    fontSize: 16,
+    fontSize: Platform.OS === 'android' ? 14 : 16,
   },
   selected: {
     backgroundColor: GlobalStyles.colors.primary500,

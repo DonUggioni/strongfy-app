@@ -11,6 +11,8 @@ import {
   collection,
   limit,
   getDoc,
+  updateDoc,
+  increment,
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase/firebaseConfig';
@@ -48,6 +50,8 @@ export function AppContextProvider({ children }) {
     ],
   });
 
+  console.log(workoutOfTheWeek);
+
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
   function filterWorkouts(numOfDays, typeOfTraining) {
@@ -72,14 +76,22 @@ export function AppContextProvider({ children }) {
       exerciseName === 'bench' ||
       exerciseName === 'deadlift'
     ) {
-      const minPerc = num / 8;
-      const maxPerc = num / 15;
+      const minPerc = +num / 8;
+      const maxPerc = +num / 15;
       const backdown = {
-        min: num - minPerc.toFixed(1),
-        max: num - maxPerc.toFixed(1),
+        min: +num - minPerc.toFixed(1),
+        max: +num - maxPerc.toFixed(1),
       };
       setBackdownWeightCalc(backdown);
     }
+  }
+
+  ///////////////////////////////////////////////////////////
+  // Update number of workouts done
+  async function updateNumberOfCompletedWorkouts() {
+    const docRef = doc(db, 'users', userIsAuthenticated.uid);
+
+    await updateDoc(docRef, { completedWorkouts: increment(1) });
   }
 
   ///////////////////////////////////////////////////////////
@@ -301,6 +313,7 @@ export function AppContextProvider({ children }) {
     repMaxTrackerValues,
     update1RMTrackerValuesToDB,
     userToken,
+    updateNumberOfCompletedWorkouts,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

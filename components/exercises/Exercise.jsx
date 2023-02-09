@@ -16,8 +16,12 @@ function Exercise({
   onChangeText,
   onBlur,
   weight,
+  backdownWeight,
 }) {
   const { backdownWeightCalc } = useAppContext();
+
+  const backdown = backdownWeight ? backdownWeight : backdownWeightCalc;
+
   const isPrimary =
     exerciseName === 'bench' ||
     exerciseName === 'squat' ||
@@ -41,17 +45,14 @@ function Exercise({
         )}
         <StyledText style={styles.weightText}> - {weight}kg</StyledText>
       </View>
-      {backdownWeightCalc && (
-        <>
-          <Title style={styles.title}>Backdown Sets - </Title>
-          <View style={styles.setsContainer}>
-            <StyledText>
-              {sets} x {reps} @{' '}
-              {`${backdownWeightCalc.min} - ${backdownWeightCalc.max}`}kg
-            </StyledText>
-          </View>
-        </>
-      )}
+
+      <Title style={styles.title}>Backdown Sets - </Title>
+      <View style={styles.setsContainer}>
+        <StyledText>
+          {sets} x {reps} @{' '}
+          {backdown && `${backdown.min || 0}kg - ${backdown.max || 0}kg`}
+        </StyledText>
+      </View>
     </View>
   );
 
@@ -104,5 +105,8 @@ const styles = StyleSheet.create({
   },
   weightText: {
     color: GlobalStyles.colors.accent500,
+  },
+  backdownSetsText: {
+    marginVertical: 6,
   },
 });

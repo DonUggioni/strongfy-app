@@ -32,6 +32,7 @@ export function AppContextProvider({ children }) {
   const [userToken, setUserToken] = useState(null);
   const [currentWorkoutId, setCurrentWorkoutId] = useState('');
   const [currentWeekIndex, setCurrentWeekIndex] = useState(null);
+  const [splashScreen, setSplashScreen] = useState(true);
   const [repMaxTrackerValues, setRepMaxTrackerValues] = useState({
     squat: [
       {
@@ -50,7 +51,9 @@ export function AppContextProvider({ children }) {
     ],
   });
 
-  console.log(workoutOfTheWeek);
+  setTimeout(() => {
+    setSplashScreen(false);
+  }, 3500);
 
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
@@ -314,6 +317,7 @@ export function AppContextProvider({ children }) {
     update1RMTrackerValuesToDB,
     userToken,
     updateNumberOfCompletedWorkouts,
+    splashScreen,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

@@ -17,6 +17,7 @@ import PreviewModal from './components/PreviewModal';
 import BlockOptions from './components/BlockOptions';
 import SelectDay from './components/SelectDay';
 import WorkoutOfTheDay from './components/WorkoutOfTheDay';
+import SplashScreen from './components/SplashScreen';
 
 import useAppContext from './store/AppContext';
 import { Platform } from 'react-native';
@@ -212,7 +213,7 @@ function AppNavigation() {
 }
 
 function RootApp() {
-  const { userIsAuthenticated } = useAppContext();
+  const { userIsAuthenticated, splashScreen } = useAppContext();
 
   const MyTheme = {
     ...DefaultTheme,
@@ -221,6 +222,10 @@ function RootApp() {
       background: GlobalStyles.colors.background,
     },
   };
+
+  if (splashScreen) {
+    return <SplashScreen />;
+  }
 
   return (
     <NavigationContainer theme={MyTheme}>

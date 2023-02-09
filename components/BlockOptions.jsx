@@ -19,11 +19,11 @@ const styleData = [
     type: 'Strength',
     value: 'strength',
   },
-  {
-    id: 't3',
-    type: 'Peaking',
-    value: 'peaking',
-  },
+  // {
+  //   id: 't3',
+  //   type: 'Peaking',
+  //   value: 'peaking',
+  // },
 ];
 const daysData = [
   {
@@ -33,13 +33,13 @@ const daysData = [
   },
   {
     id: 'd2',
-    days: '4 days',
-    value: '4days',
+    days: '5 days',
+    value: '5days',
   },
   {
     id: 'd3',
-    days: '5 days',
-    value: '5days',
+    days: '6 days',
+    value: '6days',
   },
 ];
 
@@ -57,6 +57,7 @@ function BlockOptions({ navigation }) {
       <SelectButton
         selected={backgroundColor}
         onPress={() => setSelectedTrainingData(item)}
+        selectStyle={styles.selectPhaseButton}
       >
         {item.type}
       </SelectButton>
@@ -114,7 +115,6 @@ function BlockOptions({ navigation }) {
             renderItem={trainingOptions}
             horizontal={true}
             contentContainerStyle={{
-              justifyContent: 'space-between',
               flex: 1,
             }}
           />
@@ -170,5 +170,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginBottom: 16,
+  },
+  selectPhaseButton: {
+    marginRight: 24,
   },
 });

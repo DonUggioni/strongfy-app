@@ -10,14 +10,13 @@ function Selector({
   iconColor,
   children,
   onPress,
-  styleDone,
 }) {
   return (
     <Pressable
       style={({ pressed }) =>
         pressed
           ? [styles.innerContainer, styles.pressed]
-          : [styles.innerContainer, styleDone]
+          : styles.innerContainer
       }
       onPress={onPress}
     >

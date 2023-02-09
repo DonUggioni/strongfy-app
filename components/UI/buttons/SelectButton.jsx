@@ -2,11 +2,15 @@ import React from 'react';
 import { Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 
-function SelectButton({ children, selected, onPress, style }) {
+function SelectButton({ children, selected, onPress, style, selectStyle }) {
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.container, selected === 'selected' && styles.selected]}
+      style={[
+        styles.container,
+        selectStyle,
+        selected === 'selected' && styles.selected,
+      ]}
     >
       <Text style={[styles.text, style]}>{children}</Text>
     </Pressable>

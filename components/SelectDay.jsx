@@ -6,19 +6,9 @@ import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 
 function SelectDay({ navigation }) {
-  const {
-    currentWorkout,
-    setWorkoutOfTheDay,
-    workoutOfTheWeek,
-    workoutOfTheDay,
-  } = useAppContext();
+  const { setWorkoutOfTheDay, workoutOfTheWeek } = useAppContext();
   const days = workoutOfTheWeek?.flatMap((item) => item.workout);
   const [weekNumber] = workoutOfTheWeek?.flatMap((item) => item.week);
-  const isComplete = workoutOfTheDay?.map((item) => item.isComplete);
-
-  const isCompletedStyle = [isComplete] ? styles.isCompleted : null;
-
-  console.log(weekNumber);
 
   function selectDayHandler(workout) {
     setWorkoutOfTheDay(days.filter((item) => item.id === workout.id));
@@ -39,7 +29,6 @@ function SelectDay({ navigation }) {
               iconSize={30}
               iconColor='white'
               onPress={() => selectDayHandler(item)}
-              styleDone={isCompletedStyle}
             >
               {item.day}
             </Selector>

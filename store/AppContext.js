@@ -51,6 +51,8 @@ export function AppContextProvider({ children }) {
     ],
   });
 
+  ///////////////////////////////////////////////////////////
+  // Sets splash screen state to false
   setTimeout(() => {
     setSplashScreen(false);
   }, 3500);

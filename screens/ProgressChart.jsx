@@ -10,13 +10,14 @@ import MessageScreen from '../components/MessageScreen';
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
 
-  const data = repMaxTrackerValues?.squat.slice(1);
-  const data2 = repMaxTrackerValues?.bench.slice(1);
-  const data3 = repMaxTrackerValues?.deadlift.slice(1);
+  const data = repMaxTrackerValues.squat.slice(-1);
+  const data2 = repMaxTrackerValues.bench.slice(-1);
+  const data3 = repMaxTrackerValues.deadlift.slice(-1);
 
   const dataLength = repMaxTrackerValues.squat.length <= 1;
   const data2Length = repMaxTrackerValues.bench.length <= 1;
   const data3Length = repMaxTrackerValues.deadlift.length <= 1;
+  const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
 
   if (dataLength || data2Length || data3Length) {
     return <MessageScreen message={'Not enough data yet!'} />;
@@ -36,16 +37,19 @@ function ProgressChart() {
           color3={GlobalStyles.colors.blue500}
           dataPointsColor={GlobalStyles.colors.gray200}
           height={320}
-          width={320}
+          width={300}
           thickness1={2}
           thickness2={2}
           thickness3={2}
           yAxisColor={GlobalStyles.colors.gray200}
           xAxisColor={GlobalStyles.colors.gray200}
           yAxisTextStyle={{ color: 'white' }}
-          initialSpacing={0}
+          initialSpacing={3}
           rulesColor={GlobalStyles.colors.gray300}
           spacing={35}
+          maxValue={maxValue.value + 20}
+          noOfSections={12}
+          yAxisLabelSuffix={'kg'}
         />
       </View>
       <View style={styles.legendContainer}>

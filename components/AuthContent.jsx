@@ -108,7 +108,7 @@ function AuthContent({
           <View style={styles.innerContainer}>
             <View style={styles.imageContainer}>
               <Image
-                source={require('../assets/strongfy_logo_copy.png')}
+                source={require('../assets/nav_logo-min.png')}
                 style={styles.image}
               />
             </View>
@@ -138,25 +138,26 @@ export default AuthContent;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    paddingTop: 20,
     flex: 1,
+    justifyContent: 'center',
   },
   innerContainer: {
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   imageContainer: {
-    width: '100%',
-    alignItems: 'center',
+    // width: '100%',
+    marginTop: '20%',
   },
   image: {
     width: '100%',
+    resizeMode: 'contain',
   },
   title: {
-    marginBottom: 16,
+    marginBottom: 10,
   },
   inputsContainer: {
-    paddingHorizontal: 42,
+    paddingHorizontal: 24,
   },
   rightsText: {
     flex: 1,

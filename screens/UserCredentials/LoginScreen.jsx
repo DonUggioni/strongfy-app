@@ -30,13 +30,16 @@ function LoginScreen() {
         if (userData) {
           setUserIsAuthenticated(userData);
           getUserCurrentWorkout(userData.uid);
-          setIsLoading(false);
         }
       } catch (error) {
         console.log(error.message);
         Alert.alert('Oops!', `Something went wrong. ${error.message}`);
         setIsLoading(false);
       }
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 4000);
     }
     if (!emailIsValid || !passwordIsValid) {
       Alert.alert(

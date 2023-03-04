@@ -59,6 +59,7 @@ function PreviewModal({ navigation }) {
             reps={item.reps}
             rpe={item.rpe}
             weight={item.weight}
+            backdownSets={item.backdownSets}
           />
         )}
         renderSectionHeader={({ section }) => <DayOfWeek day={section.day} />}

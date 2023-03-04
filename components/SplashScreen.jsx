@@ -1,32 +1,27 @@
-import { StyleSheet, Animated, View, Easing } from 'react-native';
-import Lottie from 'lottie-react-native';
-import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GlobalStyles } from '../constants/styles';
+import { useSpring, animated } from '@react-spring/native';
 
 function SplashScreen() {
-  const progress = useRef(new Animated.Value(0)).current;
-
-  const handleLikeAnimation = () => {
-    Animated.timing(progress, {
-      toValue: 1,
-      duration: 4000,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
-  };
-  useEffect(() => {
-    handleLikeAnimation();
-  }, []);
+  const [props, api] = useSpring(
+    () => ({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      config: { duration: 1900 },
+    }),
+    []
+  );
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <View style={{ width: 400, height: 400 }}>
-        <Lottie
-          progress={progress}
-          source={require('../assets/dumbell_animation.json')}
+      <animated.View style={[props, styles.imageContainer]}>
+        <animated.Image
+          source={require('../assets/hero_img-min.png')}
+          style={[styles.image]}
         />
-      </View>
+      </animated.View>
     </SafeAreaView>
   );
 }
@@ -39,5 +34,12 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.background,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  imageContainer: {
+    width: '100%',
+  },
+  image: {
+    resizeMode: 'contain',
+    width: '100%',
   },
 });

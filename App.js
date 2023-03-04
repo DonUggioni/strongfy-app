@@ -227,11 +227,24 @@ function RootApp() {
     return <SplashScreen />;
   }
 
+  function handleScreens() {
+    if (
+      userIsAuthenticated === null ||
+      userIsAuthenticated.emailVerified === false
+    ) {
+      return <AuthenticationStack />;
+    }
+
+    if (
+      userIsAuthenticated !== null &&
+      userIsAuthenticated.emailVerified === true
+    ) {
+      return <AppNavigation />;
+    }
+  }
+
   return (
-    <NavigationContainer theme={MyTheme}>
-      {!userIsAuthenticated && <AuthenticationStack />}
-      {userIsAuthenticated && <AppNavigation />}
-    </NavigationContainer>
+    <NavigationContainer theme={MyTheme}>{handleScreens()}</NavigationContainer>
   );
 }
 

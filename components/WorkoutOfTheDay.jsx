@@ -98,6 +98,7 @@ function WorkoutOfTheDay({ navigation }) {
               reps={item.reps}
               rpe={item.rpe}
               // value={item.weight}
+              backdownSets={item.backdownSets}
               backdownWeight={item.backdownWeight}
               weight={item.weight}
               onBlur={() => updateWeight(item)}

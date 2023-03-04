@@ -30,10 +30,14 @@ function LoginScreen() {
         if (userData) {
           setUserIsAuthenticated(userData);
           getUserCurrentWorkout(userData.uid);
+
+          if (userData.emailVerified === false) {
+            throw new Error('Please verify email address and try again.');
+          }
         }
       } catch (error) {
         console.log(error.message);
-        Alert.alert('Oops!', `Something went wrong. ${error.message}`);
+        Alert.alert('Error!', `${error.message}`);
         setIsLoading(false);
       }
 

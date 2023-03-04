@@ -17,6 +17,7 @@ function Exercise({
   onBlur,
   weight,
   backdownWeight,
+  backdownSets,
 }) {
   const { backdownWeightCalc } = useAppContext();
 
@@ -49,7 +50,7 @@ function Exercise({
       <Title style={styles.title}>Backdown Sets - </Title>
       <View style={styles.setsContainer}>
         <StyledText>
-          {sets} x {reps} @{' '}
+          {backdownSets} x {reps} @{' '}
           {backdown && `${backdown.min || 0}kg - ${backdown.max || 0}kg`}
         </StyledText>
       </View>

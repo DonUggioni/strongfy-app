@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import AuthContent from '../../components/AuthContent';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase/firebaseConfig';
 import useAppContext from '../../store/AppContext';
 import LoadingScreen from '../../components/LoadingScreen';
 import { Alert } from 'react-native';
 
-function SignUpScreen() {
+function SignUpScreen({ navigation }) {
   const { setUserIsAuthenticated, setIsLoading, isLoading } = useAppContext();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -31,6 +34,11 @@ function SignUpScreen() {
           email,
           password
         );
+
+        await sendEmailVerification(auth.currentUser, {
+          url: 'https://monumental-hamster-68270b.netlify.app/login',
+        });
+
         if (user) {
           const userData = user.user;
           setUserIsAuthenticated(userData);
@@ -39,6 +47,11 @@ function SignUpScreen() {
             email: email,
             completedWorkouts: 0,
           });
+          navigation.replace('Login');
+          Alert.alert(
+            'Email sent.',
+            'Please verify your email address before logging in.'
+          );
           setIsLoading(false);
         }
       } catch (error) {

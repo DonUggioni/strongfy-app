@@ -55,7 +55,7 @@ export function AppContextProvider({ children }) {
   // Sets splash screen state to false
   setTimeout(() => {
     setSplashScreen(false);
-  }, 3500);
+  }, 2500);
 
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts

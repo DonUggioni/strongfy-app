@@ -9,6 +9,7 @@ import Button from './UI/buttons/Button';
 function WorkoutOfTheDay({ navigation }) {
   const {
     workoutOfTheDay,
+    workoutOfTheWeek,
     calcBackdown,
     updateWorkoutDataInFirestore,
     setCurrentWorkout,
@@ -28,7 +29,6 @@ function WorkoutOfTheDay({ navigation }) {
     ?.flatMap((item) => item.workouts)
     .flatMap((item) => item.workout)
     .findIndex((item) => item.day === day);
-
   const [isComplete] = workoutOfTheDay.map((item) => item.isComplete);
 
   useEffect(() => {
@@ -36,6 +36,20 @@ function WorkoutOfTheDay({ navigation }) {
       title: day,
     });
   }, []);
+
+  function calcDeloadWeights(weight) {
+    const [weekNumber] = workoutOfTheWeek?.flatMap((item) => item.week);
+
+    if (weekNumber === 3) {
+      const minPerc = +weight / 2;
+      const maxPerc = +weight / 2.5;
+      const backdown = {
+        min: +weight - minPerc.toFixed(1),
+        max: +weight - maxPerc.toFixed(1),
+      };
+      return backdown;
+    }
+  }
 
   function workoutDoneHandler() {
     setCurrentWorkout((draft) => {
@@ -47,6 +61,7 @@ function WorkoutOfTheDay({ navigation }) {
     updateWorkoutDataInFirestore();
     setBackdownWeightCalc(null);
     updateNumberOfCompletedWorkouts();
+
     navigation.navigate('WorkoutsScreen');
   }
 
@@ -71,16 +86,22 @@ function WorkoutOfTheDay({ navigation }) {
     }
 
     calcBackdown(+weight, currentExercise.exercise);
+    // console.log(calcDeloadWeights(weight));
 
     setCurrentWorkout((draft) => {
       draft[0].workouts[currentWeekIndex].workout[currentDayIndex].data[
         exerciseIndex
       ].weight = weight;
+
       draft[0].workouts[currentWeekIndex].workout[
         currentDayIndex
       ].data[0].backdownWeight = backdownWeightCalc;
+
+      draft[0].workouts[3].workout[currentDayIndex].data[exerciseIndex].weight =
+        calcDeloadWeights(weight).min + ' - ' + calcDeloadWeights(weight).max;
     });
   }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -90,7 +111,7 @@ function WorkoutOfTheDay({ navigation }) {
         <FlatList
           data={workout}
           keyExtractor={(item, index) => index}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <Exercise
               exerciseName={item.exercise}
               title={item.title}

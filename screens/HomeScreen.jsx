@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useEffect } from 'react';
 import StyledText from '../components/UI/text/StyledText';
-import { GlobalStyles } from '../constants/styles';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { auth } from '../firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
   headerButton: {
     textDecorationLine: 'none',
     marginRight: 24,
-    marginVertical: 0,
     fontSize: 16,
     fontFamily: 'open-sans-semi-bold',
   },

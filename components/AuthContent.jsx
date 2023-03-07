@@ -47,7 +47,7 @@ function AuthContent({
       <LoginInput
         placeHolder={'Password'}
         label={'Password'}
-        inputMode={'password'}
+        inputMode={'text'}
         onChangeText={onChangePassword}
         style={{ marginBottom: 18 }}
         iconName={'lock-closed-outline'}

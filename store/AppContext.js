@@ -209,6 +209,7 @@ export function AppContextProvider({ children }) {
           ...repMaxTrackerValues.squat,
           {
             value: +repMaxCalc.toFixed(1),
+            date: formattedDate,
           },
         ],
       });
@@ -222,6 +223,7 @@ export function AppContextProvider({ children }) {
           ...repMaxTrackerValues.bench,
           {
             value: +repMaxCalc.toFixed(1),
+            date: formattedDate,
           },
         ],
       });
@@ -235,6 +237,7 @@ export function AppContextProvider({ children }) {
           ...repMaxTrackerValues.deadlift,
           {
             value: +repMaxCalc.toFixed(1),
+            date: formattedDate,
           },
         ],
       });

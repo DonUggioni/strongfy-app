@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ScrollView } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
@@ -30,6 +31,7 @@ function WorkoutOfTheDay({ navigation }) {
     .flatMap((item) => item.workout)
     .findIndex((item) => item.day === day);
   const [isComplete] = workoutOfTheDay.map((item) => item.isComplete);
+  const [weekNumber] = workoutOfTheWeek?.flatMap((item) => item.week);
 
   useEffect(() => {
     navigation.setOptions({
@@ -38,8 +40,6 @@ function WorkoutOfTheDay({ navigation }) {
   }, []);
 
   function calcDeloadWeights(weight) {
-    const [weekNumber] = workoutOfTheWeek?.flatMap((item) => item.week);
-
     if (weekNumber === 3) {
       const minPerc = +weight / 2;
       const maxPerc = +weight / 2.5;
@@ -48,6 +48,8 @@ function WorkoutOfTheDay({ navigation }) {
         max: +weight - maxPerc.toFixed(1),
       };
       return backdown;
+    } else {
+      return 0;
     }
   }
 
@@ -97,45 +99,49 @@ function WorkoutOfTheDay({ navigation }) {
         currentDayIndex
       ].data[0].backdownWeight = backdownWeightCalc;
 
-      draft[0].workouts[3].workout[currentDayIndex].data[exerciseIndex].weight =
-        calcDeloadWeights(weight).min + ' - ' + calcDeloadWeights(weight).max;
+      draft[0].workouts[3].workout[currentDayIndex].data[
+        exerciseIndex
+      ].weight = `${calcDeloadWeights(weight).min} - ${
+        calcDeloadWeights(weight).max
+      }`;
     });
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.rootContainer}
-    >
-      <View style={styles.listContainer}>
-        <FlatList
-          data={workout}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item, index }) => (
-            <Exercise
-              exerciseName={item.exercise}
-              title={item.title}
-              sets={item.sets}
-              reps={item.reps}
-              rpe={item.rpe}
-              // value={item.weight}
-              backdownSets={item.backdownSets}
-              backdownWeight={item.backdownWeight}
-              weight={item.weight}
-              onBlur={() => updateWeight(item)}
-              onChangeText={(text) => setWeight(text)}
-            />
-          )}
-        />
+    <ScrollView>
+      <View style={styles.rootContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <View style={styles.listContainer}>
+            {workout.map((item, index) => {
+              return (
+                <Exercise
+                  key={index}
+                  exerciseName={item.exercise}
+                  title={item.title}
+                  sets={item.sets}
+                  reps={item.reps}
+                  rpe={item.rpe}
+                  backdownSets={item.backdownSets}
+                  backdownWeight={item.backdownWeight}
+                  weight={item.weight}
+                  onBlur={() => updateWeight(item)}
+                  onChangeText={(text) => setWeight(text)}
+                />
+              );
+            })}
+          </View>
+        </KeyboardAvoidingView>
+        {!isComplete && (
+          <View style={styles.buttonContainer}>
+            <Button type={'full'} onPress={workoutDoneHandler}>
+              Done!
+            </Button>
+          </View>
+        )}
       </View>
-      {!isComplete && (
-        <View style={styles.buttonContainer}>
-          <Button type={'full'} onPress={workoutDoneHandler}>
-            Done!
-          </Button>
-        </View>
-      )}
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
@@ -144,6 +150,7 @@ export default WorkoutOfTheDay;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    paddingVertical: 16,
   },
   titleContainer: {
     paddingVertical: 24,
@@ -163,6 +170,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   listContainer: {
-    maxHeight: '85%',
+    maxHeight: '100%',
+    width: '100%',
   },
 });

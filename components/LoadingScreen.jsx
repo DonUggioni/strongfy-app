@@ -7,25 +7,25 @@ import { GlobalStyles } from '../constants/styles';
 function LoadingScreen() {
   const progress = useRef(new Animated.Value(0)).current;
 
-  const handleLikeAnimation = () => {
-    Animated.timing(progress, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
-  };
-  useEffect(() => {
-    handleLikeAnimation();
-  }, []);
+  // const handleLikeAnimation = () => {
+  //   Animated.timing(progress, {
+  //     toValue: 1,
+  //     duration: 1000,
+  //     useNativeDriver: true,
+  //     easing: Easing.linear,
+  //   }).start();
+  // };
+  // useEffect(() => {
+  //   handleLikeAnimation();
+  // }, []);
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <View style={{ width: 400, height: 400 }}>
-        <Lottie
+      <View style={styles.animationContainer}>
+        {/* <Lottie
           progress={progress}
           source={require('../assets/dumbell_animation.json')}
-        />
+        /> */}
       </View>
     </SafeAreaView>
   );
@@ -39,5 +39,9 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.background,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  animationContainer: {
+    width: 400,
+    height: 400,
   },
 });

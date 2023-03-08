@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { WORKOUT_DATA_MODEL } from '../data/Data';
 import { useImmer } from 'use-immer';
 import {
   setDoc,

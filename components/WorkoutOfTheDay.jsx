@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { Keyboard, ScrollView } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 import Exercise from './exercises/Exercise';
@@ -23,6 +23,7 @@ function WorkoutOfTheDay({ navigation }) {
     updateNumberOfCompletedWorkouts,
   } = useAppContext();
   const [weight, setWeight] = useState(null);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
@@ -39,20 +40,41 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }, []);
 
+  // Listens if keyboard is open or closed
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  // Calculates the deload weights based off of the 3rd week weights
   function calcDeloadWeights(weight) {
-    if (weekNumber === 3) {
-      const minPerc = +weight / 2;
-      const maxPerc = +weight / 2.5;
-      const backdown = {
-        min: +weight - minPerc.toFixed(1),
-        max: +weight - maxPerc.toFixed(1),
-      };
-      return backdown;
-    } else {
-      return 0;
-    }
+    if (weekNumber !== 3) return;
+
+    const minPerc = +weight / 2;
+    const maxPerc = +weight / 2.5;
+    const backdown = {
+      min: +weight - minPerc.toFixed(1),
+      max: +weight - maxPerc.toFixed(1),
+    };
+    return backdown;
   }
 
+  // Handles Done button function calls
   function workoutDoneHandler() {
     setCurrentWorkout((draft) => {
       draft[0].workouts[currentWeekIndex].workout[
@@ -88,7 +110,6 @@ function WorkoutOfTheDay({ navigation }) {
     }
 
     calcBackdown(+weight, currentExercise.exercise);
-    // console.log(calcDeloadWeights(weight));
 
     setCurrentWorkout((draft) => {
       draft[0].workouts[currentWeekIndex].workout[currentDayIndex].data[
@@ -107,9 +128,22 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }
 
+  // Handles Done button visibility
+  function buttonVisible() {
+    if (!isComplete && !keyboardVisible) {
+      return (
+        <View style={styles.buttonContainer}>
+          <Button type={'full'} onPress={workoutDoneHandler}>
+            Done!
+          </Button>
+        </View>
+      );
+    }
+  }
+
   return (
-    <ScrollView>
-      <View style={styles.rootContainer}>
+    <View style={styles.rootContainer}>
+      <ScrollView>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
@@ -133,15 +167,9 @@ function WorkoutOfTheDay({ navigation }) {
             })}
           </View>
         </KeyboardAvoidingView>
-        {!isComplete && (
-          <View style={styles.buttonContainer}>
-            <Button type={'full'} onPress={workoutDoneHandler}>
-              Done!
-            </Button>
-          </View>
-        )}
-      </View>
-    </ScrollView>
+        {buttonVisible()}
+      </ScrollView>
+    </View>
   );
 }
 
@@ -170,7 +198,6 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   listContainer: {
-    maxHeight: '100%',
     width: '100%',
   },
 });

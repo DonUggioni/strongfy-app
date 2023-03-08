@@ -21,8 +21,6 @@
     "expo-status-bar": "~1.4.4",
     "firebase": "^9.16.0",
     "immer": "^9.0.18",
-    "lottie-ios": "^3.4.0",
-    "lottie-react-native": "5.1.4",
     "react": "18.2.0",
     "react-native": "0.71.3",
     "react-native-dotenv": "^3.4.7",

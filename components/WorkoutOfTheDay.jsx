@@ -24,7 +24,6 @@ function WorkoutOfTheDay({ navigation }) {
   } = useAppContext();
   const [weight, setWeight] = useState(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [deloadWeight, setDeloadWeight] = useState(null);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
@@ -72,7 +71,6 @@ function WorkoutOfTheDay({ navigation }) {
       min: +weight - minPerc.toFixed(1),
       max: +weight - maxPerc.toFixed(1),
     };
-    // setDeloadWeight(backdown);
 
     setCurrentWorkout((draft) => {
       draft[0].workouts[3].workout[currentDayIndex].data[
@@ -126,10 +124,6 @@ function WorkoutOfTheDay({ navigation }) {
       draft[0].workouts[currentWeekIndex].workout[
         currentDayIndex
       ].data[0].backdownWeight = backdownWeightCalc;
-
-      // draft[0].workouts[3].workout[currentDayIndex].data[
-      //   exerciseIndex
-      // ].weight = `${deloadWeight?.min} - ${deloadWeight?.max}`;
     });
   }
 
@@ -147,34 +141,34 @@ function WorkoutOfTheDay({ navigation }) {
   }
 
   return (
-    <View style={styles.rootContainer}>
-      <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <View style={styles.listContainer}>
-            {workout.map((item, index) => {
-              return (
-                <Exercise
-                  key={index}
-                  exerciseName={item.exercise}
-                  title={item.title}
-                  sets={item.sets}
-                  reps={item.reps}
-                  rpe={item.rpe}
-                  backdownSets={item.backdownSets}
-                  backdownWeight={item.backdownWeight}
-                  weight={item.weight}
-                  onBlur={() => updateWeight(item)}
-                  onChangeText={(text) => setWeight(text)}
-                />
-              );
-            })}
-          </View>
-        </KeyboardAvoidingView>
+    <KeyboardAvoidingView
+      style={styles.rootContainer}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={116}
+    >
+      <ScrollView style={!keyboardVisible ? styles.innerContainer : ''}>
+        <View style={styles.listContainer}>
+          {workout.map((item, index) => {
+            return (
+              <Exercise
+                key={index}
+                exerciseName={item.exercise}
+                title={item.title}
+                sets={item.sets}
+                reps={item.reps}
+                rpe={item.rpe}
+                backdownSets={item.backdownSets}
+                backdownWeight={item.backdownWeight}
+                weight={item.weight}
+                onBlur={() => updateWeight(item)}
+                onChangeText={(text) => setWeight(text)}
+              />
+            );
+          })}
+        </View>
         {buttonVisible()}
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -183,13 +177,9 @@ export default WorkoutOfTheDay;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingVertical: 16,
   },
-  titleContainer: {
-    paddingVertical: 24,
-    paddingHorizontal: 20,
-    borderBottomWidth: 2,
-    borderColor: GlobalStyles.colors.gray500,
+  innerContainer: {
+    marginVertical: 24,
   },
   title: {
     textAlign: 'left',

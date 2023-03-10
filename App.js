@@ -20,7 +20,7 @@ import WorkoutOfTheDay from './components/WorkoutOfTheDay';
 import SplashScreen from './components/SplashScreen';
 
 import useAppContext from './store/AppContext';
-import { Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

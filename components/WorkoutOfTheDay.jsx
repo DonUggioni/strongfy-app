@@ -24,6 +24,7 @@ function WorkoutOfTheDay({ navigation }) {
   } = useAppContext();
   const [weight, setWeight] = useState(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [deloadWeight, setDeloadWeight] = useState(null);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
@@ -62,7 +63,7 @@ function WorkoutOfTheDay({ navigation }) {
   }, []);
 
   // Calculates the deload weights based off of the 3rd week weights
-  function calcDeloadWeights(weight) {
+  function calcDeloadWeights(weight, index) {
     if (weekNumber !== 3) return;
 
     const minPerc = +weight / 2;
@@ -71,7 +72,13 @@ function WorkoutOfTheDay({ navigation }) {
       min: +weight - minPerc.toFixed(1),
       max: +weight - maxPerc.toFixed(1),
     };
-    return backdown;
+    // setDeloadWeight(backdown);
+
+    setCurrentWorkout((draft) => {
+      draft[0].workouts[3].workout[currentDayIndex].data[
+        index
+      ].weight = `${backdown.min} - ${backdown.max}`;
+    });
   }
 
   // Handles Done button function calls
@@ -108,7 +115,7 @@ function WorkoutOfTheDay({ navigation }) {
         currentExercise.reps
       );
     }
-
+    calcDeloadWeights(+weight, exerciseIndex);
     calcBackdown(+weight, currentExercise.exercise);
 
     setCurrentWorkout((draft) => {
@@ -120,11 +127,9 @@ function WorkoutOfTheDay({ navigation }) {
         currentDayIndex
       ].data[0].backdownWeight = backdownWeightCalc;
 
-      draft[0].workouts[3].workout[currentDayIndex].data[
-        exerciseIndex
-      ].weight = `${calcDeloadWeights(weight).min} - ${
-        calcDeloadWeights(weight).max
-      }`;
+      // draft[0].workouts[3].workout[currentDayIndex].data[
+      //   exerciseIndex
+      // ].weight = `${deloadWeight?.min} - ${deloadWeight?.max}`;
     });
   }
 

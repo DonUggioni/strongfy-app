@@ -51,7 +51,7 @@ function Exercise({
       <View style={styles.setsContainer}>
         <StyledText>
           {backdownSets} x {reps} @{' '}
-          {backdown && `${backdown.min || 0}kg - ${backdown.max || 0}kg`}
+          {backdown && `${backdown.min}kg - ${backdown.max}kg`}
         </StyledText>
       </View>
     </View>

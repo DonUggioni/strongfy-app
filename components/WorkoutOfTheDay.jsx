@@ -66,7 +66,7 @@ function WorkoutOfTheDay({ navigation }) {
     if (weekNumber !== 3) return;
 
     const minPerc = +weight / 2;
-    const maxPerc = +weight / 2.5;
+    const maxPerc = +weight / 3;
     const backdown = {
       min: +weight - minPerc.toFixed(1),
       max: +weight - maxPerc.toFixed(1),

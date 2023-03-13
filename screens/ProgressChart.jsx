@@ -10,9 +10,9 @@ import MessageScreen from '../components/MessageScreen';
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
 
-  const data = repMaxTrackerValues.squat.slice(-1);
-  const data2 = repMaxTrackerValues.bench.slice(-1);
-  const data3 = repMaxTrackerValues.deadlift.slice(-1);
+  const data = repMaxTrackerValues.squat.slice(1);
+  const data2 = repMaxTrackerValues.bench.slice(1);
+  const data3 = repMaxTrackerValues.deadlift.slice(1);
 
   const dataLength = repMaxTrackerValues.squat.length <= 1;
   const data2Length = repMaxTrackerValues.bench.length <= 1;

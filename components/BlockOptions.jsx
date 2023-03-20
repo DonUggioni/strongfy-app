@@ -33,13 +33,13 @@ const daysData = [
   },
   {
     id: 'd2',
-    days: '5 days',
-    value: '5days',
+    days: '4 days',
+    value: '4days',
   },
   {
     id: 'd3',
-    days: '6 days',
-    value: '6days',
+    days: '5 days',
+    value: '5days',
   },
 ];
 

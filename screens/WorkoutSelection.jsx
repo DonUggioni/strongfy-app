@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import SelectWorkout from '../components/SelectWorkout';
 import FlatButton from '../components/UI/buttons/FlatButton';
-import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 import { doc, collection } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';

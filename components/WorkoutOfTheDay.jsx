@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Keyboard, ScrollView } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { View, StyleSheet } from 'react-native';
-import { GlobalStyles } from '../constants/styles';
 import useAppContext from '../store/AppContext';
 import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';

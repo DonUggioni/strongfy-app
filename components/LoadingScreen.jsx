@@ -1,5 +1,5 @@
-import { StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import React from 'react';
+import { StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GlobalStyles } from '../constants/styles';
 

@@ -2,9 +2,9 @@
   "expo": {
     "name": "Barbell Hub",
     "slug": "strongfy-app",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/icon_android.png",
+    "icon": "./assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "backgroundColor": "#1e1e1e",
     "splash": {
@@ -21,7 +21,7 @@
     },
     "android": {
       "package": "com.barbell.hub",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1e1e1e"

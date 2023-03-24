@@ -223,9 +223,9 @@ function RootApp() {
     },
   };
 
-  if (splashScreen) {
-    return <SplashScreen />;
-  }
+  // if (splashScreen) {
+  //   return <SplashScreen />;
+  // }
 
   function handleScreens() {
     if (

@@ -4,7 +4,6 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStyles } from './constants/styles';
-import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/UserCredentials/LoginScreen';
 import SignUpScreen from './screens/UserCredentials/SignUpScreen';
@@ -17,10 +16,12 @@ import PreviewModal from './components/PreviewModal';
 import BlockOptions from './components/BlockOptions';
 import SelectDay from './components/SelectDay';
 import WorkoutOfTheDay from './components/WorkoutOfTheDay';
-import SplashScreen from './components/SplashScreen';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
 
 import useAppContext from './store/AppContext';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { Platform, View } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -223,10 +224,6 @@ function RootApp() {
     },
   };
 
-  // if (splashScreen) {
-  //   return <SplashScreen />;
-  // }
-
   function handleScreens() {
     if (
       userIsAuthenticated === null ||
@@ -248,16 +245,41 @@ function RootApp() {
   );
 }
 
-export default function App() {
-  const [fontsLoaded] = useFonts(customFonts);
+SplashScreen.preventAutoHideAsync();
 
-  if (fontsLoaded)
-    return (
-      <>
-        <StatusBar style='light' />
-        <AppContextProvider>
-          <RootApp />
-        </AppContextProvider>
-      </>
-    );
+export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync(customFonts);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <StatusBar style='light' />
+      <AppContextProvider>
+        <RootApp />
+      </AppContextProvider>
+    </View>
+  );
 }

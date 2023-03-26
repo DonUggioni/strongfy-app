@@ -2,11 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 function Title({ children, style }) {
-  return (
-    <View>
-      <Text style={[styles.title, style]}>{children}</Text>
-    </View>
-  );
+  return <Text style={[styles.title, style]}>{children}</Text>;
 }
 
 export default Title;

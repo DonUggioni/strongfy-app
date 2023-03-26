@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
+
 import { GlobalStyles } from '../constants/styles';
 import Title from '../components/UI/text/Title';
 import useAppContext from '../store/AppContext';
@@ -11,9 +11,9 @@ import LegendLine from '../components/UI/LegendLine';
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
 
-  const data = repMaxTrackerValues.squat.slice(1);
-  const data2 = repMaxTrackerValues.bench.slice(1);
-  const data3 = repMaxTrackerValues.deadlift.slice(1);
+  // const data = repMaxTrackerValues.squat.slice(1);
+  // const data2 = repMaxTrackerValues.bench.slice(1);
+  // const data3 = repMaxTrackerValues.deadlift.slice(1);
 
   const dataLength = repMaxTrackerValues.squat.length <= 1;
   const data2Length = repMaxTrackerValues.bench.length <= 1;
@@ -27,37 +27,12 @@ function ProgressChart() {
   return (
     <View style={styles.rootContainer}>
       <Title style={styles.title}>1RM Tracker</Title>
-      <View>
-        <LineChart
-          data={data}
-          data2={data2}
-          data3={data3}
-          curved
-          color1={GlobalStyles.colors.primary500}
-          color2={GlobalStyles.colors.accent500}
-          color3={GlobalStyles.colors.blue500}
-          dataPointsColor={GlobalStyles.colors.gray200}
-          height={320}
-          width={300}
-          thickness1={2}
-          thickness2={2}
-          thickness3={2}
-          yAxisColor={GlobalStyles.colors.gray200}
-          xAxisColor={GlobalStyles.colors.gray200}
-          yAxisTextStyle={{ color: 'white' }}
-          initialSpacing={3}
-          rulesColor={GlobalStyles.colors.gray300}
-          spacing={35}
-          maxValue={maxValue.value + 20}
-          noOfSections={12}
-          yAxisLabelSuffix={'kg'}
-        />
-      </View>
-      <View style={styles.legendContainer}>
+
+      {/* <View style={styles.legendContainer}>
         <LegendLine color={GlobalStyles.colors.primary500}>Squat</LegendLine>
         <LegendLine color={GlobalStyles.colors.accent500}>Bench</LegendLine>
         <LegendLine color={GlobalStyles.colors.blue500}>Deadlift</LegendLine>
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -69,6 +44,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  chartContainer: {
+    height: 320,
+    width: 300,
   },
   title: {
     fontSize: 24,

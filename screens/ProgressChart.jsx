@@ -2,10 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { GlobalStyles } from '../constants/styles';
-import SvgLine from '../components/UI/SvgLine';
 import Title from '../components/UI/text/Title';
 import useAppContext from '../store/AppContext';
 import MessageScreen from '../components/MessageScreen';
+import StyledText from '../components/UI/text/StyledText';
+import LegendLine from '../components/UI/LegendLine';
 
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
@@ -19,9 +20,9 @@ function ProgressChart() {
   const data3Length = repMaxTrackerValues.deadlift.length <= 1;
   const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
 
-  if (dataLength || data2Length || data3Length) {
-    return <MessageScreen message={'Not enough data yet!'} />;
-  }
+  // if (dataLength || data2Length || data3Length) {
+  //   return <MessageScreen message={'Not enough data yet!'} />;
+  // }
 
   return (
     <View style={styles.rootContainer}>
@@ -53,9 +54,9 @@ function ProgressChart() {
         />
       </View>
       <View style={styles.legendContainer}>
-        <SvgLine text='Squat' lineColor={GlobalStyles.colors.primary500} />
-        <SvgLine text='Bench' lineColor={GlobalStyles.colors.accent500} />
-        <SvgLine text='Deadlift' lineColor={GlobalStyles.colors.blue500} />
+        <LegendLine color={GlobalStyles.colors.primary500}>Squat</LegendLine>
+        <LegendLine color={GlobalStyles.colors.accent500}>Bench</LegendLine>
+        <LegendLine color={GlobalStyles.colors.blue500}>Deadlift</LegendLine>
       </View>
     </View>
   );
@@ -78,6 +79,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '100%',
-    marginTop: -25,
+    marginTop: -23,
   },
 });

@@ -17,11 +17,12 @@ import BlockOptions from './components/BlockOptions';
 import SelectDay from './components/SelectDay';
 import WorkoutOfTheDay from './components/WorkoutOfTheDay';
 import * as SplashScreen from 'expo-splash-screen';
-import * as Font from 'expo-font';
+// import * as Font from 'expo-font';
+import { useFonts } from 'expo-font';
 
 import useAppContext from './store/AppContext';
 import { Platform, View } from 'react-native';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -245,37 +246,28 @@ function RootApp() {
   );
 }
 
-SplashScreen.preventAutoHideAsync();
-
 export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
+  const [fontsLoaded] = useFonts(customFonts);
 
   useEffect(() => {
     async function prepare() {
-      try {
-        await Font.loadAsync(customFonts);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true);
-      }
+      await SplashScreen.preventAutoHideAsync();
     }
+
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
+  if (!fontsLoaded) {
+    return undefined;
+  } else {
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+      console.log('hide splash');
+    }, 2000);
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View style={{ flex: 1 }}>
       <StatusBar style='light' />
       <AppContextProvider>
         <RootApp />

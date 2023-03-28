@@ -214,7 +214,7 @@ function AppNavigation() {
 }
 
 function RootApp() {
-  const { userIsAuthenticated, splashScreen } = useAppContext();
+  const { userIsAuthenticated } = useAppContext();
 
   const MyTheme = {
     ...DefaultTheme,

@@ -22,30 +22,32 @@ function ProgressChart() {
   const dataLength = repMaxTrackerValues.squat.length <= 1;
   const data2Length = repMaxTrackerValues.bench.length <= 1;
   const data3Length = repMaxTrackerValues.deadlift.length <= 1;
-  // const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
+  const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
+
+  console.log(data);
 
   if (dataLength || data2Length || data3Length) {
     return <MessageScreen message={'Not enough data yet!'} />;
   }
 
-  const dataTest1 = [
-    { quarter: 1, value: 120 },
-    { quarter: 2, value: 123 },
-    { quarter: 3, value: 127 },
-    { quarter: 4, value: 127 },
-  ];
-  const dataTest2 = [
-    { quarter: 1, value: 100 },
-    { quarter: 2, value: 103 },
-    { quarter: 3, value: 102 },
-    { quarter: 4, value: 105 },
-  ];
-  const dataTest3 = [
-    { quarter: 1, value: 140 },
-    { quarter: 2, value: 145 },
-    { quarter: 3, value: 146 },
-    { quarter: 4, value: 150 },
-  ];
+  // const dataTest1 = [
+  //   { quarter: 1, value: 120 },
+  //   { quarter: 2, value: 123 },
+  //   { quarter: 3, value: 127 },
+  //   { quarter: 4, value: 127 },
+  // ];
+  // const dataTest2 = [
+  //   { quarter: 1, value: 100 },
+  //   { quarter: 2, value: 103 },
+  //   { quarter: 3, value: 102 },
+  //   { quarter: 4, value: 105 },
+  // ];
+  // const dataTest3 = [
+  //   { quarter: 1, value: 140 },
+  //   { quarter: 2, value: 145 },
+  //   { quarter: 3, value: 146 },
+  //   { quarter: 4, value: 150 },
+  // ];
 
   return (
     <View style={styles.rootContainer}>
@@ -55,7 +57,7 @@ function ProgressChart() {
           width={380}
           height={400}
           theme={VictoryTheme.material}
-          domain={{ y: [0, 200] }}
+          domain={{ y: [0, 500] }}
         >
           <VictoryAxis
             dependentAxis
@@ -67,7 +69,6 @@ function ProgressChart() {
               },
               axis: { stroke: GlobalStyles.colors.gray600 },
               ticks: { stroke: GlobalStyles.colors.gray300 },
-              tickLabels: { stroke: 'red', padding: 8 },
             }}
           />
           <VictoryAxis
@@ -85,7 +86,7 @@ function ProgressChart() {
             }}
           />
           <VictoryLine
-            data={dataTest1}
+            data={data}
             y='value'
             interpolation={'monotoneX'}
             style={{
@@ -93,7 +94,7 @@ function ProgressChart() {
             }}
           />
           <VictoryLine
-            data={dataTest2}
+            data={data2}
             y='value'
             interpolation={'monotoneX'}
             style={{
@@ -101,7 +102,7 @@ function ProgressChart() {
             }}
           />
           <VictoryLine
-            data={dataTest3}
+            data={data3}
             y='value'
             interpolation={'monotoneX'}
             style={{

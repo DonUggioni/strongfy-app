@@ -31,7 +31,6 @@ export function AppContextProvider({ children }) {
   const [userToken, setUserToken] = useState(null);
   const [currentWorkoutId, setCurrentWorkoutId] = useState('');
   const [currentWeekIndex, setCurrentWeekIndex] = useState(null);
-  // const [splashScreen, setSplashScreen] = useState(true);
   const [repMaxTrackerValues, setRepMaxTrackerValues] = useState({
     squat: [
       {
@@ -49,12 +48,6 @@ export function AppContextProvider({ children }) {
       },
     ],
   });
-
-  ///////////////////////////////////////////////////////////
-  // Sets splash screen state to false
-  // setTimeout(() => {
-  //   setSplashScreen(false);
-  // }, 2200);
 
   ///////////////////////////////////////////////////////////
   // Function being used in BlockOptions to filter selected workouts
@@ -268,7 +261,8 @@ export function AppContextProvider({ children }) {
   // Get 1RM values from DB to display in chart
   useEffect(() => {
     async function getRepMaxValuesFromDB() {
-      const id = await AsyncStorage.getItem('@user_uid');
+      // const id = await AsyncStorage.getItem('@user_uid');
+      const id = userIsAuthenticated?.uid;
 
       if (!id) return;
 
@@ -286,7 +280,7 @@ export function AppContextProvider({ children }) {
       }
     }
     getRepMaxValuesFromDB();
-  }, []);
+  }, [userIsAuthenticated]);
 
   const values = {
     filteredWorkouts,

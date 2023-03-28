@@ -17,7 +17,6 @@ import BlockOptions from './components/BlockOptions';
 import SelectDay from './components/SelectDay';
 import WorkoutOfTheDay from './components/WorkoutOfTheDay';
 import * as SplashScreen from 'expo-splash-screen';
-// import * as Font from 'expo-font';
 import { useFonts } from 'expo-font';
 
 import useAppContext from './store/AppContext';
@@ -262,16 +261,15 @@ export default function App() {
   } else {
     setTimeout(() => {
       SplashScreen.hideAsync();
-      console.log('hide splash');
     }, 2000);
-  }
 
-  return (
-    <View style={{ flex: 1 }}>
-      <StatusBar style='light' />
-      <AppContextProvider>
-        <RootApp />
-      </AppContextProvider>
-    </View>
-  );
+    return (
+      <>
+        <StatusBar style='light' />
+        <AppContextProvider>
+          <RootApp />
+        </AppContextProvider>
+      </>
+    );
+  }
 }

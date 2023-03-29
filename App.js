@@ -261,14 +261,14 @@ export default function App() {
     setTimeout(() => {
       SplashScreen.hideAsync();
     }, 2000);
-
-    return (
-      <>
-        <StatusBar style='light' />
-        <AppContextProvider>
-          <RootApp />
-        </AppContextProvider>
-      </>
-    );
   }
+
+  return (
+    <>
+      <StatusBar style='light' />
+      <AppContextProvider>
+        <RootApp />
+      </AppContextProvider>
+    </>
+  );
 }

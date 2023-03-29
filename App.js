@@ -20,7 +20,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 
 import useAppContext from './store/AppContext';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
 import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
@@ -215,7 +215,6 @@ function AppNavigation() {
 
 function RootApp() {
   const { userIsAuthenticated } = useAppContext();
-
   const MyTheme = {
     ...DefaultTheme,
     colors: {

@@ -22,7 +22,7 @@ function ProgressChart() {
   const dataLength = repMaxTrackerValues.squat.length <= 1;
   const data2Length = repMaxTrackerValues.bench.length <= 1;
   const data3Length = repMaxTrackerValues.deadlift.length <= 1;
-  const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
+  // const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
 
   console.log(data);
 

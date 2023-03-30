@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/UserCredentials/LoginScreen';
 import SignUpScreen from './screens/UserCredentials/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
-import WorkoutsScreen from './screens/WorkOutsScreen';
+import WorkoutsScreen from './screens/WorkoutsScreen';
 import RepMaxCalculator from './screens/RepMaxCalculator';
 import ProgressChart from './screens/ProgressChart';
 import WorkoutSelection from './screens/WorkoutSelection';

@@ -23,13 +23,14 @@
     "immer": "^9.0.18",
     "latest": "^0.2.0",
     "react": "18.2.0",
-    "react-native": "0.71.4",
+    "react-native": "0.71.3",
     "react-native-dotenv": "^3.4.7",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
     "use-immer": "^0.8.1",
-    "victory-native": "^36.6.8"
+    "victory-native": "^36.6.8",
+    "react-native-gesture-handler": "~2.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

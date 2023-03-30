@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { AppContextProvider } from './store/AppContext';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';

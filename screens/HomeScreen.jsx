@@ -1,14 +1,15 @@
-import { StyleSheet, View } from 'react-native';
+import { Alert, Linking, StyleSheet, View, FlatList } from 'react-native';
 import React, { useEffect } from 'react';
-import StyledText from '../components/UI/text/StyledText';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import { auth } from '../firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
 import useAppContext from '../store/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ArticleCard from '../components/ArticleCard';
+import { ScrollView } from 'react-native';
 
 function HomeScreen({ navigation }) {
-  const { setUserIsAuthenticated, setCurrentWorkout } = useAppContext();
+  const { setUserIsAuthenticated, setCurrentWorkout, posts } = useAppContext();
 
   async function signOutHandler() {
     setCurrentWorkout([]);
@@ -20,6 +21,18 @@ function HomeScreen({ navigation }) {
       console.log(error.message);
     }
   }
+
+  async function openExternalLink(url) {
+    // Checks if link is supported for custom URL scheme.
+    const isSupported = await Linking.canOpenURL(url);
+
+    if (isSupported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`The url "${url}" is not valid.`);
+    }
+  }
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -31,9 +44,20 @@ function HomeScreen({ navigation }) {
   }, []);
 
   return (
-    <View style={styles.rootContainer}>
-      <StyledText>Building something great!</StyledText>
-    </View>
+    <ScrollView contentContainerStyle={styles.rootContainer}>
+      {posts?.map((post, index) => {
+        return (
+          <ArticleCard
+            title={post.title}
+            author={post.author}
+            date={post.date}
+            imageUrl={post.image}
+            onPress={() => openExternalLink(post.url)}
+            key={index}
+          />
+        );
+      })}
+    </ScrollView>
   );
 }
 

@@ -24,8 +24,6 @@ function ProgressChart() {
   const data3Length = repMaxTrackerValues.deadlift.length <= 1;
   // const [maxValue] = repMaxTrackerValues.deadlift.slice(-1);
 
-  console.log(data);
-
   if (dataLength || data2Length || data3Length) {
     return <MessageScreen message={'Not enough data yet!'} />;
   }

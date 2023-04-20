@@ -261,7 +261,7 @@ export default function App() {
   } else {
     setTimeout(() => {
       SplashScreen.hideAsync();
-    }, 2000);
+    }, 3000);
   }
 
   return (

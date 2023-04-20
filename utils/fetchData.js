@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Data fetching function
 const DATA_URL = `https://strongfy-c92fb-default-rtdb.europe-west1.firebasedatabase.app/powerlifting`;
 
 export async function getTrainingData(trainingPhase, daysAWeek, token) {

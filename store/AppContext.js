@@ -31,6 +31,7 @@ export function AppContextProvider({ children }) {
   const [userToken, setUserToken] = useState(null);
   const [currentWorkoutId, setCurrentWorkoutId] = useState('');
   const [currentWeekIndex, setCurrentWeekIndex] = useState(null);
+  const [posts, setPosts] = useState(null);
   const [repMaxTrackerValues, setRepMaxTrackerValues] = useState({
     squat: [
       {
@@ -237,7 +238,7 @@ export function AppContextProvider({ children }) {
   }
 
   ///////////////////////////////////////////////////////////
-  // Get 1RM values from DB to display in chart
+  // Updates 1RM values to DB
   async function update1RMTrackerValuesToDB() {
     const docRef = doc(
       db,
@@ -282,6 +283,29 @@ export function AppContextProvider({ children }) {
     getRepMaxValuesFromDB();
   }, [userIsAuthenticated]);
 
+  ///////////////////////////////////////////////////////////
+  // Get posts list from DB
+  useEffect(() => {
+    async function getPosts() {
+      const docRef = collection(db, 'posts');
+      const q = query(docRef, orderBy('timestamp', 'desc'));
+      const postsArr = [];
+
+      try {
+        const posts = await getDocs(q);
+        if (posts) {
+          posts.forEach((post) => {
+            postsArr.push(post.data());
+          });
+        }
+        setPosts(postsArr);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    getPosts();
+  }, [userIsAuthenticated]);
+
   const values = {
     filteredWorkouts,
     setFilteredWorkouts,
@@ -315,7 +339,7 @@ export function AppContextProvider({ children }) {
     update1RMTrackerValuesToDB,
     userToken,
     updateNumberOfCompletedWorkouts,
-    // splashScreen,
+    posts,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

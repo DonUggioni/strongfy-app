@@ -16,6 +16,7 @@ function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const WEBSITE_URL = 'https://www.barbell-hub.com/login';
 
   const emailIsValid = email.includes('@');
   const emptyValues =
@@ -36,7 +37,7 @@ function SignUpScreen({ navigation }) {
         );
 
         await sendEmailVerification(auth.currentUser, {
-          url: 'https://monumental-hamster-68270b.netlify.app/login',
+          url: WEBSITE_URL,
         });
 
         if (user) {

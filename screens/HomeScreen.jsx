@@ -1,26 +1,12 @@
-import { Alert, Linking, StyleSheet, View, FlatList } from 'react-native';
+import { Alert, Linking, StyleSheet, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import FlatButton from '../components/UI/buttons/FlatButton';
-import { auth } from '../firebase/firebaseConfig';
-import { signOut } from 'firebase/auth';
 import useAppContext from '../store/AppContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import ArticleCard from '../components/ArticleCard';
-import { ScrollView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function HomeScreen({ navigation }) {
   const { setUserIsAuthenticated, setCurrentWorkout, posts } = useAppContext();
-
-  async function signOutHandler() {
-    setCurrentWorkout([]);
-    try {
-      await signOut(auth);
-      await AsyncStorage.removeItem('@user_uid');
-      setUserIsAuthenticated(null);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
 
   async function openExternalLink(url) {
     // Checks if link is supported for custom URL scheme.
@@ -36,8 +22,15 @@ function HomeScreen({ navigation }) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <FlatButton style={styles.headerButton} onPress={signOutHandler}>
-          Logout
+        <FlatButton
+          style={styles.headerButton}
+          onPress={() => navigation.navigate('AccountSettings')}
+        >
+          <MaterialCommunityIcons
+            name='account-settings'
+            size={30}
+            color='white'
+          />
         </FlatButton>
       ),
     });

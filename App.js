@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStyles } from './constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/UserCredentials/LoginScreen';
+import AccountOptionsScreen from './screens/AccountOptionsScreen';
 import SignUpScreen from './screens/UserCredentials/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
 import WorkoutsScreen from './screens/WorkoutsScreen';
@@ -104,6 +105,32 @@ function TrainingOptionsStack() {
   );
 }
 
+function HomeStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.background,
+          elevation: 0,
+          shadowColor: GlobalStyles.colors.gray300,
+        },
+
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontFamily: 'open-sans-semi-bold',
+        },
+      }}
+    >
+      <Stack.Screen name='Articles' component={HomeScreen} />
+      <Stack.Screen
+        name='AccountSettings'
+        component={AccountOptionsScreen}
+        options={{ title: 'Account' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function AppNavigation() {
   return (
     <Tab.Navigator
@@ -128,12 +155,13 @@ function AppNavigation() {
         tabBarActiveTintColor: 'white',
         tabBarHideOnKeyboard: Platform.OS === 'android' ? true : false,
       }}
+      // style={{ flex: 1 }}
     >
       <Tab.Screen
         name='Home'
-        component={HomeScreen}
+        component={HomeStack}
         options={{
-          title: 'Home',
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <Ionicons
@@ -149,6 +177,7 @@ function AppNavigation() {
           },
         }}
       />
+
       <Tab.Screen
         name='Workouts'
         component={TrainingOptionsStack}

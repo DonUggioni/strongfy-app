@@ -37,7 +37,10 @@ function HomeScreen({ navigation }) {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.rootContainer}>
+    <ScrollView
+      style={styles.rootContainer}
+      contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}
+    >
       {posts?.map((post, index) => {
         return (
           <ArticleCard
@@ -59,8 +62,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   headerButton: {
     textDecorationLine: 'none',

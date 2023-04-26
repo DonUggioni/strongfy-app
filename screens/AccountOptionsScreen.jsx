@@ -27,6 +27,7 @@ function AccountOptionsScreen({ navigation }) {
       .then(
         Alert.alert('User deleted successfully.'),
         setUserIsAuthenticated(null),
+        AsyncStorage.removeItem('@user_uid'),
         navigation.navigate('Login')
       )
       .catch((err) => {

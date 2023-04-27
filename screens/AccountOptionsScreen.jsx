@@ -41,7 +41,10 @@ function AccountOptionsScreen({ navigation }) {
         <Button style={styles.logoutButton} onPress={() => signOutHandler()}>
           Sign Out
         </Button>
-        <View>
+        <View style={styles.buttonsContainer}>
+          <FlatButton onPress={() => navigation.navigate('Authentication')}>
+            Change Password
+          </FlatButton>
           <FlatButton onPress={() => deleteAccountHandler()}>
             Delete Account
           </FlatButton>
@@ -64,7 +67,11 @@ const styles = StyleSheet.create({
     gap: 16,
     justifyContent: 'center',
   },
+  buttonsContainer: {
+    gap: 10,
+  },
   logoutButton: {
     fontSize: 20,
+    marginBottom: 8,
   },
 });

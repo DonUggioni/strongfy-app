@@ -2,13 +2,17 @@ import React from 'react';
 import { Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 
-function Button({ children, type, onPress }) {
+function Button({ children, type, onPress, style }) {
   return (
     <Pressable
       style={({ pressed }) =>
         pressed
-          ? [styles.container, type === 'flat' && styles.flatPressed]
-          : [styles.container, type === 'full' ? styles.full : styles.flat]
+          ? [styles.container, type === 'flat' && styles.flatPressed, style]
+          : [
+              styles.container,
+              type === 'full' ? styles.full : styles.flat,
+              style,
+            ]
       }
       onPress={onPress}
     >

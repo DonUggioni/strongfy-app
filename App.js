@@ -24,6 +24,9 @@ import { useFonts } from 'expo-font';
 import useAppContext from './store/AppContext';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
+import ReAuthenticationScreen from './screens/ReAuthenticationScreen';
+import NewPasswordScreen from './screens/NewPasswordScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,6 +55,7 @@ function AuthenticationStack() {
     >
       <Stack.Screen name='Login' component={LoginScreen} />
       <Stack.Screen name='Signup' component={SignUpScreen} />
+      <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen} />
     </Stack.Navigator>
   );
 }
@@ -126,6 +130,12 @@ function HomeStack() {
         name='AccountSettings'
         component={AccountOptionsScreen}
         options={{ title: 'Account' }}
+      />
+      <Stack.Screen name='Authentication' component={ReAuthenticationScreen} />
+      <Stack.Screen
+        name='NewPassword'
+        component={NewPasswordScreen}
+        options={{ title: 'New Password' }}
       />
     </Stack.Navigator>
   );

@@ -125,6 +125,14 @@ function AuthContent({
               >
                 {isLogin ? 'No account yet?' : 'Already have an account?'}
               </FlatButton>
+              {isLogin && (
+                <FlatButton
+                  style={{ marginVertical: 6 }}
+                  onPress={() => navigation.navigate('ForgotPassword')}
+                >
+                  Forgot password
+                </FlatButton>
+              )}
             </View>
             {/* <Text style={styles.rightsText}>Terms and conditions</Text> */}
           </View>
@@ -147,7 +155,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     // width: '100%',
-    marginTop: '20%',
+    marginTop: '12%',
   },
   image: {
     width: '100%',

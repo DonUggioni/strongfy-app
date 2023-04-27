@@ -14,6 +14,7 @@ function LoginInput({
   iconName,
   secureTextEntry,
   keyboardType,
+  autoFocus,
 }) {
   const [isFocus, setIsFocus] = useState(false);
   return (
@@ -45,6 +46,7 @@ function LoginInput({
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
           textContentType='oneTimeCode'
+          autoFocus={autoFocus}
         />
       </View>
     </>

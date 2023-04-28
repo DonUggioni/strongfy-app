@@ -23,18 +23,36 @@ function AccountOptionsScreen({ navigation }) {
   }
 
   function deleteAccountHandler() {
-    deleteUser(auth.currentUser)
-      .then(
-        Alert.alert('User deleted successfully.'),
-        setUserIsAuthenticated(null),
-        AsyncStorage.removeItem('@user_uid'),
-        navigation.navigate('Login')
-      )
-      .catch((err) => {
-        console.log(err.message),
-          Alert.alert('Could not complete request, please try again.');
-      });
+    Alert.alert(
+      'Hold up!',
+      'Are you sure you want to delete your account? This action is irreversible!',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          style: 'default',
+          onPress: async () => {
+            try {
+              await deleteUser(auth.currentUser);
+              AsyncStorage.removeItem('@user_uid');
+              setUserIsAuthenticated(null);
+              Alert.alert('Success!', 'Account deleted successfully.');
+            } catch (error) {
+              console.log(err.code),
+                Alert.alert(
+                  'Error!',
+                  'Could not complete request, please try again.'
+                );
+            }
+          },
+        },
+      ]
+    );
   }
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>

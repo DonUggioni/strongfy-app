@@ -23,7 +23,7 @@ import { useFonts } from 'expo-font';
 
 import useAppContext from './store/AppContext';
 import { Platform } from 'react-native';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import ReAuthenticationScreen from './screens/ReAuthenticationScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
@@ -165,7 +165,6 @@ function AppNavigation() {
         tabBarActiveTintColor: 'white',
         tabBarHideOnKeyboard: Platform.OS === 'android' ? true : false,
       }}
-      // style={{ flex: 1 }}
     >
       <Tab.Screen
         name='Home'
@@ -263,25 +262,15 @@ function RootApp() {
     },
   };
 
-  function handleScreens() {
-    if (
-      userIsAuthenticated === null ||
-      userIsAuthenticated.emailVerified === false
-    ) {
-      return <AuthenticationStack />;
-    }
+  const screens =
+    ((userIsAuthenticated === null ||
+      userIsAuthenticated.emailVerified === false) && (
+      <AuthenticationStack />
+    )) ||
+    (userIsAuthenticated !== null &&
+      userIsAuthenticated.emailVerified === true && <AppNavigation />);
 
-    if (
-      userIsAuthenticated !== null &&
-      userIsAuthenticated.emailVerified === true
-    ) {
-      return <AppNavigation />;
-    }
-  }
-
-  return (
-    <NavigationContainer theme={MyTheme}>{handleScreens()}</NavigationContainer>
-  );
+  return <NavigationContainer theme={MyTheme}>{screens}</NavigationContainer>;
 }
 
 export default function App() {

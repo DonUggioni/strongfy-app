@@ -23,7 +23,7 @@ import { useFonts } from 'expo-font';
 
 import useAppContext from './store/AppContext';
 import { Platform } from 'react-native';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import ReAuthenticationScreen from './screens/ReAuthenticationScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';

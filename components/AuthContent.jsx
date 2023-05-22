@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -23,6 +23,7 @@ function AuthContent({
   onChangeUsername,
   onSubmit,
 }) {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
 
   function switchAuthModeHandler() {
@@ -52,7 +53,10 @@ function AuthContent({
         style={{ marginBottom: 18 }}
         iconName={'lock-closed-outline'}
         iconSize={24}
-        secureTextEntry={true}
+        secureTextEntry={!passwordVisible}
+        viewPasswordButton
+        seePasswordIcon={passwordVisible}
+        onPasswordVisible={() => setPasswordVisible(!passwordVisible)}
       />
     </>
   );
@@ -81,9 +85,12 @@ function AuthContent({
         label={'Password'}
         inputMode={'text'}
         onChangeText={onChangePassword}
-        secureTextEntry={true}
         iconName={'lock-closed-outline'}
         iconSize={24}
+        secureTextEntry={!passwordVisible}
+        viewPasswordButton
+        seePasswordIcon={passwordVisible}
+        onPasswordVisible={() => setPasswordVisible(!passwordVisible)}
       />
       <LoginInput
         placeHolder={'Confirm Password'}
@@ -91,9 +98,12 @@ function AuthContent({
         inputMode={'text'}
         onChangeText={onChangeConfirmPassword}
         style={{ marginBottom: 18 }}
-        secureTextEntry={true}
         iconName={'lock-closed-outline'}
         iconSize={24}
+        secureTextEntry={!passwordVisible}
+        viewPasswordButton
+        seePasswordIcon={passwordVisible}
+        onPasswordVisible={() => setPasswordVisible(!passwordVisible)}
       />
     </>
   );

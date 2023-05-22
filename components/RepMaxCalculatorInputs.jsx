@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'open-sans-semi-bold',
-    fontSize: 26,
+    fontSize: 22,
   },
   text: {
     textAlign: 'center',

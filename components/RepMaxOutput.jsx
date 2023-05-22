@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'left',
     fontFamily: 'open-sans-semi-bold',
-    fontSize: 20,
+    fontSize: 16,
   },
   weightText: {
     color: GlobalStyles.colors.accent500,
-    fontSize: 20,
+    fontSize: 16,
   },
   span: {
     color: GlobalStyles.colors.accent500,
-    fontSize: 14,
+    fontSize: 13,
   },
 });

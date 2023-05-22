@@ -31,10 +31,8 @@ export default ArticleCard;
 const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: GlobalStyles.colors.gray600,
-    padding: 6,
-    paddingTop: 6,
+    paddingVertical: 10,
     paddingHorizontal: 6,
-    paddingBottom: 0,
     borderRadius: GlobalStyles.borderRadius,
     alignItems: 'center',
     marginBottom: 24,
@@ -42,7 +40,8 @@ const styles = StyleSheet.create({
   image: {
     width: 310,
     height: 150,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
+    borderRadius: 3,
   },
   textContainer: {
     width: 320,

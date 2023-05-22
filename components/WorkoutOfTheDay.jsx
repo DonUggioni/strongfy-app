@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Keyboard, ScrollView } from 'react-native';
+import { Alert, Keyboard, ScrollView } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { View, StyleSheet } from 'react-native';
 import useAppContext from '../store/AppContext';
@@ -23,6 +23,7 @@ function WorkoutOfTheDay({ navigation }) {
   } = useAppContext();
   const [weight, setWeight] = useState(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [emptyFieldCheck, setEmptyFieldCheck] = useState([]);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
@@ -41,6 +42,7 @@ function WorkoutOfTheDay({ navigation }) {
 
   // Listens if keyboard is open or closed
   useEffect(() => {
+    const weightsArr = [];
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -54,11 +56,32 @@ function WorkoutOfTheDay({ navigation }) {
       }
     );
 
+    const currentExerciseWeights = workoutOfTheDay
+      .flatMap((workouts) => workouts.data)
+      .map((exer) => exer.weight);
+
+    // Gets total inputs for the current workout
+    currentExerciseWeights.forEach((weight) => weightsArr.push(weight));
+    setEmptyFieldCheck(weightsArr);
+
     return () => {
       keyboardDidHideListener.remove();
       keyboardDidShowListener.remove();
     };
   }, []);
+
+  // This function updates the emptyFieldCheck state that takes the total number of weight inputs for the current workout, and updates the weight for each input so I can check if all inputs are filled in before updating to the database.
+  function updateEmptyFields(index) {
+    const update = emptyFieldCheck.map((curr, i) => {
+      if (index === i) {
+        return (curr = weight);
+      } else {
+        return curr;
+      }
+    });
+
+    setEmptyFieldCheck(update);
+  }
 
   // Calculates the deload weights based off of the 3rd week weights
   function calcDeloadWeights(weight, index) {
@@ -80,6 +103,12 @@ function WorkoutOfTheDay({ navigation }) {
 
   // Handles Done button function calls
   function workoutDoneHandler() {
+    const emptyFields = emptyFieldCheck.every((weight) => weight !== '');
+
+    if (!emptyFields) {
+      return Alert.alert('Wait!', 'Make sure you have all weights filled in.');
+    }
+
     setCurrentWorkout((draft) => {
       draft[0].workouts[currentWeekIndex].workout[
         currentDayIndex
@@ -97,6 +126,8 @@ function WorkoutOfTheDay({ navigation }) {
     const exerciseIndex = workout.findIndex(
       (item) => item.exercise === currentExercise.exercise
     );
+
+    updateEmptyFields(exerciseIndex);
 
     const squat =
       currentExercise.exercise === 'squat' && currentExercise.rpe === 10;

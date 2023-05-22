@@ -10,8 +10,8 @@ export default StyledText;
 const styles = StyleSheet.create({
   text: {
     color: 'white',
-    marginVertical: 18,
-    fontSize: 18,
+    marginVertical: 16,
+    fontSize: 16,
     fontFamily: 'open-sans-regular',
   },
 });

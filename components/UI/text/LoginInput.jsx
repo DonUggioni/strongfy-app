@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, Pressable } from 'react-native';
 import { GlobalStyles } from '../../../constants/styles';
 import StyledText from './StyledText';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +15,9 @@ function LoginInput({
   secureTextEntry,
   keyboardType,
   autoFocus,
+  viewPasswordButton,
+  seePasswordIcon,
+  onPasswordVisible,
 }) {
   const [isFocus, setIsFocus] = useState(false);
   return (
@@ -48,6 +51,15 @@ function LoginInput({
           textContentType='oneTimeCode'
           autoFocus={autoFocus}
         />
+        {viewPasswordButton && (
+          <Pressable onPress={onPasswordVisible}>
+            <Ionicons
+              name={!seePasswordIcon ? 'eye-outline' : 'eye-off-outline'}
+              size={30}
+              color={GlobalStyles.colors.gray200}
+            />
+          </Pressable>
+        )}
       </View>
     </>
   );

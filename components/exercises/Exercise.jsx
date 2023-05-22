@@ -30,10 +30,10 @@ function Exercise({
 
   const primaryExercise = (
     <View style={styles.innerContainer}>
-      <Title style={styles.title}>{title} - </Title>
+      <Title style={styles.title}>{title}</Title>
       <View style={styles.setsContainer}>
         <StyledText>
-          {sets} x {reps} @ {rpe}RPE -
+          {sets} x {reps} @ {rpe}RPE
         </StyledText>
         {!weight && (
           <StyledInput
@@ -47,7 +47,7 @@ function Exercise({
         <StyledText style={styles.weightText}> {weight}kg</StyledText>
       </View>
 
-      <Title style={styles.title}>Backdown Sets - </Title>
+      <Title style={styles.title}>Backdown Sets</Title>
       <View style={styles.setsContainer}>
         <StyledText>
           {backdownSets} x {reps} @{' '}
@@ -59,10 +59,10 @@ function Exercise({
 
   const secondaryExercise = (
     <View style={styles.innerContainer}>
-      <Title style={styles.title}>{title} - </Title>
+      <Title style={styles.title}>{title}</Title>
       <View style={styles.setsContainer}>
         <StyledText>
-          {sets} x {reps} @ -
+          {sets} x {reps} @
         </StyledText>
         {!weight && (
           <StyledInput
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    // maxWidth: '90%',
   },
   weightText: {
     color: GlobalStyles.colors.accent500,

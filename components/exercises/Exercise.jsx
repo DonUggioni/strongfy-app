@@ -18,6 +18,7 @@ function Exercise({
   weight,
   backdownWeight,
   backdownSets,
+  lastSessionWeight,
 }) {
   const { backdownWeightCalc } = useAppContext();
 
@@ -54,6 +55,11 @@ function Exercise({
           {backdown && `${backdown.min}kg - ${backdown.max}kg`}
         </StyledText>
       </View>
+      {lastSessionWeight && (
+        <StyledText style={styles.lastSessionText}>
+          Last session - {lastSessionWeight}kg
+        </StyledText>
+      )}
     </View>
   );
 
@@ -61,9 +67,11 @@ function Exercise({
     <View style={styles.innerContainer}>
       <Title style={styles.title}>{title}</Title>
       <View style={styles.setsContainer}>
-        <StyledText>
-          {sets} x {reps} @
-        </StyledText>
+        <View>
+          <StyledText>
+            {sets} x {reps} @
+          </StyledText>
+        </View>
         {!weight && (
           <StyledInput
             keyboardType={'decimal-pad'}
@@ -75,6 +83,11 @@ function Exercise({
         )}
         <StyledText style={styles.weightText}> {weight}kg</StyledText>
       </View>
+      {lastSessionWeight && (
+        <StyledText style={styles.lastSessionText}>
+          Last session - {lastSessionWeight}kg
+        </StyledText>
+      )}
     </View>
   );
 
@@ -92,7 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.background,
   },
   innerContainer: {
-    padding: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
     borderBottomWidth: 2,
     borderBottomColor: GlobalStyles.colors.gray500,
   },
@@ -103,12 +117,16 @@ const styles = StyleSheet.create({
   setsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
   },
   weightText: {
     color: GlobalStyles.colors.accent500,
   },
   backdownSetsText: {
     marginVertical: 6,
+  },
+  lastSessionText: {
+    color: GlobalStyles.colors.primary300,
+    fontSize: 15,
+    opacity: 0.8,
   },
 });

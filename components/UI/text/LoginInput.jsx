@@ -54,7 +54,7 @@ function LoginInput({
         {viewPasswordButton && (
           <Pressable onPress={onPasswordVisible}>
             <Ionicons
-              name={!seePasswordIcon ? 'eye-outline' : 'eye-off-outline'}
+              name={!seePasswordIcon ? 'eye-off-outline' : 'eye-outline'}
               size={30}
               color={GlobalStyles.colors.gray200}
             />

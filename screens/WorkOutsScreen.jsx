@@ -21,9 +21,7 @@ function WorkoutsScreen({ navigation }) {
     navigation.setOptions({
       headerRight: () => (
         <FlatButton style={styles.headerButton} onPress={addButtonHandler}>
-          {/* <StyledText>Create New</StyledText> */}
           <Text>Create New</Text>
-          {/* <Ionicons name='add-outline' size={34} color='white' /> */}
         </FlatButton>
       ),
     });

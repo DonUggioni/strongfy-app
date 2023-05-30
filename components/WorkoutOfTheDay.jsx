@@ -157,6 +157,20 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }
 
+  function getLastSessionWeight(i) {
+    const data = currentWorkout?.flatMap((item) => item.workouts);
+
+    if (currentWeekIndex === 0 || currentWeekIndex === 3) {
+      return;
+    }
+
+    const weightData = data[currentWeekIndex - 1].workout?.flatMap(
+      (item) => item.data
+    );
+
+    return weightData[i].weight;
+  }
+
   // Handles Done button visibility
   function buttonVisible() {
     if (!isComplete && !keyboardVisible) {
@@ -181,7 +195,7 @@ function WorkoutOfTheDay({ navigation }) {
           {workout.map((item, index) => {
             return (
               <Exercise
-                key={index}
+                key={item.title}
                 exerciseName={item.exercise}
                 title={item.title}
                 sets={item.sets}
@@ -192,6 +206,7 @@ function WorkoutOfTheDay({ navigation }) {
                 weight={item.weight}
                 onBlur={() => updateWeight(item)}
                 onChangeText={(text) => setWeight(text)}
+                lastSessionWeight={getLastSessionWeight(index)}
               />
             );
           })}
@@ -209,7 +224,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   innerContainer: {
-    marginVertical: 24,
+    marginTop: 24,
   },
   title: {
     textAlign: 'left',
@@ -221,6 +236,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: 30,
     marginRight: 20,
+    marginBottom: 24,
   },
   listContainer: {
     width: '100%',

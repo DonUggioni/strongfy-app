@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import Selector from './selector/Selector';
 
-function SelectWeek({ week, onPress }) {
+function SelectWeek({ week, onPress, isComplete }) {
   return (
     <View style={styles.rootContainer}>
       <Selector
@@ -12,7 +12,7 @@ function SelectWeek({ week, onPress }) {
         iconSize={32}
         iconColor='white'
         onPress={onPress}
-        titleStyle={styles.title}
+        titleStyle={!isComplete ? styles.title : styles.titleCompleted}
       >
         {week}
       </Selector>
@@ -31,5 +31,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  titleCompleted: {
+    fontSize: 24,
+    color: GlobalStyles.colors.gray300,
   },
 });

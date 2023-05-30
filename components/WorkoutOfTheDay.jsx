@@ -70,7 +70,7 @@ function WorkoutOfTheDay({ navigation }) {
     };
   }, []);
 
-  // This function updates the emptyFieldCheck state that takes the total number of weight inputs for the current workout, and updates the weight for each input so I can check if all inputs are filled in before updating to the database.
+  // This function updates the emptyFieldCheck state, which takes in the total number of weight inputs for the current workout and updates the weight for each input so I can check if all inputs are filled in before updating to the database.
   function updateEmptyFields(index) {
     const update = emptyFieldCheck.map((curr, i) => {
       if (index === i) {
@@ -89,7 +89,7 @@ function WorkoutOfTheDay({ navigation }) {
 
     const minPerc = +weight / 2;
     const maxPerc = +weight / 3;
-    const backdown = {
+    const deload = {
       min: +weight - minPerc.toFixed(1),
       max: +weight - maxPerc.toFixed(1),
     };
@@ -97,7 +97,7 @@ function WorkoutOfTheDay({ navigation }) {
     setCurrentWorkout((draft) => {
       draft[0].workouts[3].workout[currentDayIndex].data[
         index
-      ].weight = `${backdown.min} - ${backdown.max}`;
+      ].weight = `${deload.min} - ${deload.max}`;
     });
   }
 

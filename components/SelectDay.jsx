@@ -24,10 +24,14 @@ function SelectDay({ navigation }) {
         return (
           <View style={styles.daysContainer} key={index}>
             <Selector
-              titleStyle={styles.subtitle}
+              titleStyle={
+                !item.isComplete ? styles.subtitle : styles.isCompleted
+              }
               iconName='chevron-forward-outline'
               iconSize={30}
-              iconColor='white'
+              iconColor={
+                !item.isComplete ? 'white' : GlobalStyles.colors.gray300
+              }
               onPress={() => selectDayHandler(item)}
             >
               {item.day}
@@ -67,6 +71,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   isCompleted: {
-    opacity: 0.8,
+    fontSize: 20,
+    color: GlobalStyles.colors.gray300,
   },
 });

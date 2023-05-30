@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useImmer } from 'use-immer';
 import {
   setDoc,
@@ -15,7 +16,7 @@ import {
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase/firebaseConfig';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const AppContext = createContext(null);
 
 export function AppContextProvider({ children }) {

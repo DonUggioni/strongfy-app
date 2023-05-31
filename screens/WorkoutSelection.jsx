@@ -9,12 +9,12 @@ import { db } from '../firebase/firebaseConfig';
 function WorkoutSelection({ navigation }) {
   const {
     filteredWorkouts,
-    previewWorkoutHandler,
     setWorkoutPreviewTitle,
     setCurrentWorkout,
     userIsAuthenticated,
     addCurrentWorkoutToDataBase,
     getCurrentWorkoutId,
+    setWorkoutPreviewData,
   } = useAppContext();
 
   useEffect(() => {
@@ -30,12 +30,10 @@ function WorkoutSelection({ navigation }) {
     });
   }, []);
 
-  const id = filteredWorkouts
-    .flatMap((item) => item.workouts)
-    .flatMap((item) => item.id);
+  function previewHandler(item, i) {
+    const preview = [filteredWorkouts[i]];
 
-  function previewHandler(item) {
-    previewWorkoutHandler(id[0]);
+    setWorkoutPreviewData(preview);
     setWorkoutPreviewTitle(item.title);
     navigation.navigate('PreviewModal');
   }
@@ -55,11 +53,11 @@ function WorkoutSelection({ navigation }) {
     <View style={styles.rootContainer}>
       <FlatList
         data={filteredWorkouts}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <SelectWorkout
             name={item.title}
             onSelect={() => selectWorkoutHandler(item)}
-            onShowPreview={() => previewHandler(item)}
+            onShowPreview={() => previewHandler(item, index)}
           />
         )}
         keyExtractor={(item) => item.id}

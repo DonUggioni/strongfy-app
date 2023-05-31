@@ -19,8 +19,12 @@ function PreviewModal({ navigation }) {
     getCurrentWorkoutId,
   } = useAppContext();
 
-  const workout = workoutPreviewData.flatMap((item) => item.workout);
   const [relatedId] = workoutPreviewData.flatMap((item) => item.relatesTo);
+
+  const previewData = workoutPreviewData
+    .flatMap((item) => item.workouts)
+    .filter((item) => item.week === 1)
+    .flatMap((item) => item.workout);
 
   function DayOfWeek({ day }) {
     return <Title style={styles.workoutDay}>{day}</Title>;
@@ -49,7 +53,7 @@ function PreviewModal({ navigation }) {
         </Button>
       </View>
       <SectionList
-        sections={workout}
+        sections={previewData}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => (
           <Exercise

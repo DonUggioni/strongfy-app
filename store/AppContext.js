@@ -59,14 +59,7 @@ export function AppContextProvider({ children }) {
     );
     setFilteredWorkouts(filtered);
   }
-  ///////////////////////////////////////////////////////////
-  // Function being used in WorkoutSelection, to preview entire training week
-  function previewWorkoutHandler(id) {
-    const filtered = filteredWorkouts
-      .flatMap((item) => item.workouts)
-      .filter((item) => item.id === id);
-    setWorkoutPreviewData(filtered);
-  }
+
   ///////////////////////////////////////////////////////////
   // Function being used in "WorkoutOfTheDay" to calculate backdownsets weight
   function calcBackdown(num, exerciseName) {
@@ -311,7 +304,6 @@ export function AppContextProvider({ children }) {
     filteredWorkouts,
     setFilteredWorkouts,
     filterWorkouts,
-    previewWorkoutHandler,
     workoutPreviewData,
     workoutPreviewTitle,
     setWorkoutPreviewTitle,
@@ -341,6 +333,7 @@ export function AppContextProvider({ children }) {
     userToken,
     updateNumberOfCompletedWorkouts,
     posts,
+    setWorkoutPreviewData,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import useAppContext from '../store/AppContext';
 import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
+import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
 
 function WorkoutOfTheDay({ navigation }) {
   const {
@@ -42,7 +43,6 @@ function WorkoutOfTheDay({ navigation }) {
 
   // Listens if keyboard is open or closed
   useEffect(() => {
-    const weightsArr = [];
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -60,6 +60,7 @@ function WorkoutOfTheDay({ navigation }) {
       .flatMap((workouts) => workouts.data)
       .map((exer) => exer.weight);
 
+    const weightsArr = [];
     // Gets total inputs for the current workout
     currentExerciseWeights.forEach((weight) => weightsArr.push(weight));
     setEmptyFieldCheck(weightsArr);
@@ -122,11 +123,7 @@ function WorkoutOfTheDay({ navigation }) {
     navigation.navigate('WorkoutsScreen');
   }
 
-  function updateWeight(currentExercise) {
-    const exerciseIndex = workout.findIndex(
-      (item) => item.exercise === currentExercise.exercise
-    );
-
+  function updateWeight(currentExercise, exerciseIndex) {
     updateEmptyFields(exerciseIndex);
 
     const squat =
@@ -157,18 +154,18 @@ function WorkoutOfTheDay({ navigation }) {
     });
   }
 
-  function getLastSessionWeight(i) {
+  function getLastSessionWeight(exerciseIndex) {
     const data = currentWorkout?.flatMap((item) => item.workouts);
 
     if (currentWeekIndex === 0 || currentWeekIndex === 3) {
       return;
     }
 
-    const weightData = data[currentWeekIndex - 1].workout?.flatMap(
-      (item) => item.data
-    );
+    const weightData =
+      data[currentWeekIndex - 1]?.workout[currentDayIndex]?.data[exerciseIndex]
+        .weight;
 
-    return weightData[i].weight;
+    return weightData;
   }
 
   // Handles Done button visibility
@@ -204,7 +201,7 @@ function WorkoutOfTheDay({ navigation }) {
                 backdownSets={item.backdownSets}
                 backdownWeight={item.backdownWeight}
                 weight={item.weight}
-                onBlur={() => updateWeight(item)}
+                onBlur={() => updateWeight(item, index)}
                 onChangeText={(text) => setWeight(text)}
                 lastSessionWeight={getLastSessionWeight(index)}
               />

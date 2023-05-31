@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NoWorkouts from '../components/NoWorkouts';
 import FlatButton from '../components/UI/buttons/FlatButton';
-import { Ionicons } from '@expo/vector-icons';
 import SelectWeek from '../components/SelectWeek';
 import useAppContext from '../store/AppContext';
-import StyledText from '../components/UI/text/StyledText';
 
 function WorkoutsScreen({ navigation }) {
   const { currentWorkout, setWorkoutOfTheWeek, setCurrentWeekIndex } =

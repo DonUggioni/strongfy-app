@@ -5,7 +5,6 @@ import { View, StyleSheet } from 'react-native';
 import useAppContext from '../store/AppContext';
 import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
-import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
 
 function WorkoutOfTheDay({ navigation }) {
   const {

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Barbell Hub",
     "slug": "strongfy-app",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "orientation": "portrait",
     "icon": "./assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
@@ -16,15 +16,13 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/ebf6447c-d177-42c5-9302-07280ebbbebc"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "package": "com.barbell.hub",
-      "versionCode": 7,
+      "versionCode": 8,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1e1e1e"

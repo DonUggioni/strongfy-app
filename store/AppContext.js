@@ -172,6 +172,7 @@ export function AppContextProvider({ children }) {
     );
     try {
       await setDoc(dataQuery, ...currentWorkout);
+      console.log('Updated training data.');
     } catch (error) {
       console.log(error.message);
     }
@@ -246,7 +247,7 @@ export function AppContextProvider({ children }) {
       await setDoc(docRef, {
         ...repMaxTrackerValues,
       });
-      console.log('Updated');
+      console.log('Updated rep max tracker');
     } catch (error) {
       console.log(error.message);
     }

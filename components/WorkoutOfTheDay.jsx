@@ -103,9 +103,9 @@ function WorkoutOfTheDay({ navigation }) {
 
   // Handles Done button function calls
   function workoutDoneHandler() {
-    const emptyFields = emptyFieldCheck.every((weight) => weight !== '');
+    const noEmptyFields = emptyFieldCheck.every((weight) => weight !== '');
 
-    if (!emptyFields) {
+    if (!noEmptyFields) {
       return Alert.alert('Wait!', 'Make sure you have all weights filled in.');
     }
 
@@ -114,16 +114,40 @@ function WorkoutOfTheDay({ navigation }) {
         currentDayIndex
       ].isComplete = true;
     });
-    update1RMTrackerValuesToDB();
-    updateWorkoutDataInFirestore();
+
     setBackdownWeightCalc(null);
-    updateNumberOfCompletedWorkouts();
+    setTimeout(() => {
+      update1RMTrackerValuesToDB();
+      updateWorkoutDataInFirestore();
+      updateNumberOfCompletedWorkouts();
+    }, 2000);
 
     navigation.navigate('WorkoutsScreen');
   }
 
+  // This functions checks if all inputs are filled in, if they are it sets the workout as completed so when user click the done button it updates correctly to Firebase
+  function markWorkoutAsComplete() {
+    const noEmptyFields = emptyFieldCheck.every((weight) => weight !== '');
+
+    if (!noEmptyFields) {
+      setCurrentWorkout((draft) => {
+        draft[0].workouts[currentWeekIndex].workout[
+          currentDayIndex
+        ].isComplete = true;
+      });
+    } else {
+      setCurrentWorkout((draft) => {
+        draft[0].workouts[currentWeekIndex].workout[
+          currentDayIndex
+        ].isComplete = false;
+      });
+    }
+  }
+
+  // This function updates the weights the user inputs.
   function updateWeight(currentExercise, exerciseIndex) {
     updateEmptyFields(exerciseIndex);
+    markWorkoutAsComplete();
 
     const squat =
       currentExercise.exercise === 'squat' && currentExercise.rpe === 10;

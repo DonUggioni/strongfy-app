@@ -23,7 +23,7 @@ function WorkoutOfTheDay({ navigation }) {
   } = useAppContext();
   const [weight, setWeight] = useState(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [emptyFieldCheck, setEmptyFieldCheck] = useState([]);
+  const [emptyFieldCheck, setEmptyFieldCheck] = useState(['']);
 
   const workout = workoutOfTheDay?.flatMap((item) => item.data);
   const [day] = workoutOfTheDay?.flatMap((item) => item.day);
@@ -38,7 +38,23 @@ function WorkoutOfTheDay({ navigation }) {
     navigation.setOptions({
       title: day,
     });
-  }, []);
+
+    const noEmptyFields = !!emptyFieldCheck.every((weight) => weight !== '');
+
+    console.log('useEffect', noEmptyFields);
+    console.log(emptyFieldCheck);
+
+    if (noEmptyFields) {
+      setCurrentWorkout((draft) => {
+        draft[0].workouts[currentWeekIndex].workout[
+          currentDayIndex
+        ].isComplete = true;
+      });
+      console.log('Its true');
+    } else {
+      return;
+    }
+  }, [emptyFieldCheck]);
 
   // Listens if keyboard is open or closed
   useEffect(() => {
@@ -109,12 +125,6 @@ function WorkoutOfTheDay({ navigation }) {
       return Alert.alert('Wait!', 'Make sure you have all weights filled in.');
     }
 
-    setCurrentWorkout((draft) => {
-      draft[0].workouts[currentWeekIndex].workout[
-        currentDayIndex
-      ].isComplete = true;
-    });
-
     setBackdownWeightCalc(null);
     setTimeout(() => {
       update1RMTrackerValuesToDB();
@@ -128,6 +138,8 @@ function WorkoutOfTheDay({ navigation }) {
   // This functions checks if all inputs are filled in, if they are it sets the workout as completed so when user click the done button it updates correctly to Firebase
   function markWorkoutAsComplete() {
     const noEmptyFields = emptyFieldCheck.every((weight) => weight !== '');
+
+    console.log('function', noEmptyFields);
 
     if (!noEmptyFields) {
       setCurrentWorkout((draft) => {

@@ -4,17 +4,12 @@ import PercentageOutput from '../components/PercentageOutput';
 import StyledText from '../components/UI/text/StyledText';
 import StyledInput from '../components/UI/text/StyledInput';
 import Title from '../components/UI/text/Title';
+import calculatePercentage from '../utils/calcPercentage';
 
 const percentages = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50];
 
 const PercentageCalculator = () => {
   const [weight, setWeight] = useState(0);
-
-  console.log(typeof weight);
-
-  function calculatePercentage(value, percentage) {
-    return (Number(value) * percentage) / 100;
-  }
 
   return (
     <View style={styles.rootContainer}>

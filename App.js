@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { GlobalStyles } from './constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/UserCredentials/LoginScreen';
@@ -27,9 +28,11 @@ import { useEffect } from 'react';
 import ReAuthenticationScreen from './screens/ReAuthenticationScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import PercentageCalculator from './screens/PercentageCalculator';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const customFonts = {
   'open-sans-regular': require('./assets/fonts/OpenSans/OpenSans-Regular.ttf'),
@@ -106,6 +109,42 @@ function TrainingOptionsStack() {
         options={{ presentation: 'modal', title: false }}
       />
     </Stack.Navigator>
+  );
+}
+
+function CalculatorDrawer() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.background,
+          elevation: 0,
+          shadowColor: GlobalStyles.colors.gray300,
+        },
+        headerTintColor: 'white',
+        drawerContentStyle: {
+          backgroundColor: GlobalStyles.colors.gray600,
+          paddingTop: 16,
+        },
+        drawerActiveTintColor: 'white',
+        drawerInactiveTintColor: GlobalStyles.colors.gray300,
+      }}
+    >
+      <Drawer.Screen
+        name='RepMaxCalculator'
+        component={RepMaxCalculator}
+        options={{
+          title: 'Rep Max Calculator',
+        }}
+      />
+      <Drawer.Screen
+        name='PercentageCalculator'
+        component={PercentageCalculator}
+        options={{
+          title: 'Percentage Calculator',
+        }}
+      />
+    </Drawer.Navigator>
   );
 }
 
@@ -209,10 +248,10 @@ function AppNavigation() {
         }}
       />
       <Tab.Screen
-        name='RepMaxCalculator'
-        component={RepMaxCalculator}
+        name='Calculators'
+        component={CalculatorDrawer}
         options={{
-          title: 'Max Rep Calculator',
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <Ionicons

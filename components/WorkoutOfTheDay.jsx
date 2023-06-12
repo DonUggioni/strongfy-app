@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import useAppContext from '../store/AppContext';
 import Exercise from './exercises/Exercise';
 import Button from './UI/buttons/Button';
+import calculatePercentage from '../utils/calcPercentage';
 
 function WorkoutOfTheDay({ navigation }) {
   const {
@@ -41,16 +42,12 @@ function WorkoutOfTheDay({ navigation }) {
 
     const noEmptyFields = !!emptyFieldCheck.every((weight) => weight !== '');
 
-    console.log('useEffect', noEmptyFields);
-    console.log(emptyFieldCheck);
-
     if (noEmptyFields) {
       setCurrentWorkout((draft) => {
         draft[0].workouts[currentWeekIndex].workout[
           currentDayIndex
         ].isComplete = true;
       });
-      console.log('Its true');
     } else {
       return;
     }
@@ -103,11 +100,11 @@ function WorkoutOfTheDay({ navigation }) {
   function calcDeloadWeights(weight, index) {
     if (weekNumber !== 3) return;
 
-    const minPerc = +weight / 2;
-    const maxPerc = +weight / 3;
+    const minPerc = calculatePercentage(weight, 50);
+    const maxPerc = calculatePercentage(weight, 60);
     const deload = {
-      min: +weight - minPerc.toFixed(1),
-      max: +weight - maxPerc.toFixed(1),
+      min: minPerc.toFixed(1),
+      max: maxPerc.toFixed(1),
     };
 
     setCurrentWorkout((draft) => {

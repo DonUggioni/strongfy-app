@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import {
   VictoryLine,
   VictoryChart,
@@ -11,10 +11,14 @@ import Title from '../components/UI/text/Title';
 import useAppContext from '../store/AppContext';
 import MessageScreen from '../components/MessageScreen';
 import LegendLine from '../components/UI/LegendLine';
+import StyledText from '../components/UI/text/StyledText';
 
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
 
+  if (Platform.OS === 'web') {
+    return <StyledText>Chart not available for web version yet.</StyledText>;
+  }
   const data = repMaxTrackerValues.squat.slice(1);
   const data2 = repMaxTrackerValues.bench.slice(1);
   const data3 = repMaxTrackerValues.deadlift.slice(1);

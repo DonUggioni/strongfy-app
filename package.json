@@ -33,7 +33,10 @@
     "react-native-svg": "13.4.0",
     "use-immer": "^0.8.1",
     "victory-native": "^36.6.8",
-    "expo-updates": "~0.16.4"
+    "expo-updates": "~0.16.4",
+    "react-dom": "18.2.0",
+    "react-native-web": "~0.18.10",
+    "@expo/webpack-config": "^18.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

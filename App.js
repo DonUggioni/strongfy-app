@@ -29,6 +29,7 @@ import ReAuthenticationScreen from './screens/ReAuthenticationScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import PercentageCalculator from './screens/PercentageCalculator';
+import RootAppContainer from './components/RootAppContainer';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -200,7 +201,9 @@ function AppNavigation() {
         headerTitleStyle: {
           fontFamily: 'open-sans-semi-bold',
         },
-
+        tabBarItemStyle: {
+          flexDirection: Platform.OS === 'web' ? 'column' : '',
+        },
         tabBarActiveTintColor: 'white',
         tabBarHideOnKeyboard: Platform.OS === 'android' ? true : false,
       }}
@@ -330,12 +333,17 @@ export default function App() {
       SplashScreen.hideAsync();
     }, 3000);
   }
-
   return (
     <>
       <StatusBar style='light' />
       <AppContextProvider>
-        <RootApp />
+        {Platform.OS === 'web' ? (
+          <RootAppContainer>
+            <RootApp />
+          </RootAppContainer>
+        ) : (
+          <RootApp />
+        )}
       </AppContextProvider>
     </>
   );

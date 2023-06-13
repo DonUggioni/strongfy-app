@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert, Platform } from 'react-native';
 import { auth } from '../firebase/firebaseConfig';
 import { signOut, deleteUser } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,7 +7,6 @@ import useAppContext from '../store/AppContext';
 import { StyleSheet, View } from 'react-native';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import Button from '../components/UI/buttons/Button';
-import { Alert } from 'react-native';
 
 function AccountOptionsScreen({ navigation }) {
   const { setUserIsAuthenticated, setCurrentWorkout } = useAppContext();
@@ -59,14 +59,16 @@ function AccountOptionsScreen({ navigation }) {
         <Button style={styles.logoutButton} onPress={() => signOutHandler()}>
           Sign Out
         </Button>
-        <View style={styles.buttonsContainer}>
-          <FlatButton onPress={() => navigation.navigate('Authentication')}>
-            Change Password
-          </FlatButton>
-          <FlatButton onPress={() => deleteAccountHandler()}>
-            Delete Account
-          </FlatButton>
-        </View>
+        {Platform.OS !== 'web' && (
+          <View style={styles.buttonsContainer}>
+            <FlatButton onPress={() => navigation.navigate('Authentication')}>
+              Change Password
+            </FlatButton>
+            <FlatButton onPress={() => deleteAccountHandler()}>
+              Delete Account
+            </FlatButton>
+          </View>
+        )}
       </View>
     </View>
   );

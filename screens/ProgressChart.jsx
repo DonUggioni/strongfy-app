@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Platform, Dimensions } from 'react-native';
 import {
   VictoryLine,
   VictoryChart,
@@ -11,14 +11,11 @@ import Title from '../components/UI/text/Title';
 import useAppContext from '../store/AppContext';
 import MessageScreen from '../components/MessageScreen';
 import LegendLine from '../components/UI/LegendLine';
-import StyledText from '../components/UI/text/StyledText';
 
 function ProgressChart() {
   const { repMaxTrackerValues } = useAppContext();
+  const [chartWidth, setChartWidth] = useState(Dimensions.get('window').width);
 
-  if (Platform.OS === 'web') {
-    return <StyledText>Chart not available for web version yet.</StyledText>;
-  }
   const data = repMaxTrackerValues.squat.slice(1);
   const data2 = repMaxTrackerValues.bench.slice(1);
   const data3 = repMaxTrackerValues.deadlift.slice(1);
@@ -32,32 +29,25 @@ function ProgressChart() {
     return <MessageScreen message={'Not enough data yet!'} />;
   }
 
-  // const dataTest1 = [
-  //   { quarter: 1, value: 120 },
-  //   { quarter: 2, value: 123 },
-  //   { quarter: 3, value: 127 },
-  //   { quarter: 4, value: 127 },
-  // ];
-  // const dataTest2 = [
-  //   { quarter: 1, value: 100 },
-  //   { quarter: 2, value: 103 },
-  //   { quarter: 3, value: 102 },
-  //   { quarter: 4, value: 105 },
-  // ];
-  // const dataTest3 = [
-  //   { quarter: 1, value: 140 },
-  //   { quarter: 2, value: 145 },
-  //   { quarter: 3, value: 146 },
-  //   { quarter: 4, value: 150 },
-  // ];
+  useEffect(() => {
+    const handleDimensionsChange = ({ window }) => {
+      setChartWidth(window.width);
+    };
+
+    Dimensions.addEventListener('change', handleDimensionsChange);
+
+    return () => {
+      Dimensions.removeEventListener('change', handleDimensionsChange);
+    };
+  }, []);
 
   return (
     <View style={styles.rootContainer}>
       <Title style={styles.title}>1RM Tracker</Title>
       <View style={styles.chartContainer}>
         <VictoryChart
-          width={380}
-          height={400}
+          width={Platform.OS === 'web' ? chartWidth - 400 : 380}
+          height={Platform.OS === 'web' ? 500 : 400}
           theme={VictoryTheme.material}
           domain={{ y: [0, 500] }}
         >
@@ -144,6 +134,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '100%',
-    marginTop: -23,
+    marginTop: Platform.OS === 'web' ? -40 : -23,
   },
 });

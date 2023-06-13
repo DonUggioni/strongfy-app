@@ -202,7 +202,7 @@ function AppNavigation() {
           fontFamily: 'open-sans-semi-bold',
         },
         tabBarItemStyle: {
-          flexDirection: Platform.OS === 'web' ? 'column' : '',
+          flexDirection: Platform.OS === 'web' ? 'column' : 'column',
         },
         tabBarActiveTintColor: 'white',
         tabBarHideOnKeyboard: Platform.OS === 'android' ? true : false,

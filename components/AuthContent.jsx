@@ -14,6 +14,7 @@ import LoginInput from './UI/text/LoginInput';
 import Button from './UI/buttons/Button';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Keyboard } from 'react-native';
+import StyledText from './UI/text/StyledText';
 
 function AuthContent({
   isLogin,
@@ -135,7 +136,7 @@ function AuthContent({
               >
                 {isLogin ? 'No account yet?' : 'Already have an account?'}
               </FlatButton>
-              {isLogin && (
+              {isLogin && Platform.OS !== 'web' && (
                 <FlatButton
                   style={{ marginVertical: 6 }}
                   onPress={() => navigation.navigate('ForgotPassword')}
@@ -145,6 +146,25 @@ function AuthContent({
               )}
             </View>
             {/* <Text style={styles.rightsText}>Terms and conditions</Text> */}
+            {Platform.OS === 'web' && (
+              <View style={styles.demoTextContainer}>
+                <StyledText style={styles.demoText}>
+                  For demo, use these credentials:
+                </StyledText>
+                <StyledText style={styles.demoText}>
+                  Email: nosignupforme@gmail.com
+                </StyledText>
+                <StyledText style={styles.demoText}>
+                  Password: justlooking
+                </StyledText>
+                <StyledText style={styles.demoText}>
+                  Data for the demo app is deleted weekly. To navigate the
+                  inputs, use the TAB key. Some account related features are not
+                  available in the demo version. Also, keep in mind that the app
+                  has not been fully optimized for larger screens.
+                </StyledText>
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
@@ -189,5 +209,14 @@ const styles = StyleSheet.create({
   },
   flatButton: {
     marginTop: 16,
+  },
+  demoTextContainer: {
+    // alignItems: 'center',
+    width: 380,
+    marginTop: 24,
+    marginLeft: 24,
+  },
+  demoText: {
+    marginVertical: 6,
   },
 });

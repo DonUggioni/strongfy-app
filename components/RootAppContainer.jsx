@@ -1,4 +1,4 @@
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { GlobalStyles } from '../constants/styles';
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: GlobalStyles.colors.gray600,
+    backgroundColor: GlobalStyles.colors.gray500,
   },
   innerContainer: {
     width: '50%',

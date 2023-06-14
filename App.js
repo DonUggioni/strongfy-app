@@ -1,4 +1,6 @@
 import 'react-native-gesture-handler';
+import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { AppContextProvider } from './store/AppContext';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -23,8 +25,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 
 import useAppContext from './store/AppContext';
-import { Platform } from 'react-native';
-import { useEffect } from 'react';
 import ReAuthenticationScreen from './screens/ReAuthenticationScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
@@ -312,7 +312,15 @@ function RootApp() {
     (userIsAuthenticated !== null &&
       userIsAuthenticated.emailVerified === true && <AppNavigation />);
 
-  return <NavigationContainer theme={MyTheme}>{screens}</NavigationContainer>;
+  return (
+    <NavigationContainer theme={MyTheme}>
+      {Platform.OS !== 'web' ? (
+        screens
+      ) : (
+        <RootAppContainer>{screens}</RootAppContainer>
+      )}
+    </NavigationContainer>
+  );
 }
 
 export default function App() {
@@ -337,13 +345,7 @@ export default function App() {
     <>
       <StatusBar style='light' />
       <AppContextProvider>
-        {Platform.OS === 'web' ? (
-          <RootAppContainer>
-            <RootApp />
-          </RootAppContainer>
-        ) : (
-          <RootApp />
-        )}
+        <RootApp />
       </AppContextProvider>
     </>
   );

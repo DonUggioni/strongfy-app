@@ -1,12 +1,12 @@
-import { Alert, Linking, StyleSheet, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
+import { Alert, Linking, StyleSheet, ScrollView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import FlatButton from '../components/UI/buttons/FlatButton';
 import useAppContext from '../store/AppContext';
 import ArticleCard from '../components/ArticleCard';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function HomeScreen({ navigation }) {
-  const { setUserIsAuthenticated, setCurrentWorkout, posts } = useAppContext();
+  const { posts } = useAppContext();
 
   async function openExternalLink(url) {
     // Checks if link is supported for custom URL scheme.

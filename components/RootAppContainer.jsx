@@ -6,7 +6,7 @@ function RootAppContainer({ children }) {
   const [width, setWidth] = useState(Dimensions.get('window').width);
 
   const widthStyle = width > 625 ? '50%' : '100%';
-  console.log(width);
+
   useEffect(() => {
     const handleDimensionsChange = ({ window }) => {
       setWidth(window.width);

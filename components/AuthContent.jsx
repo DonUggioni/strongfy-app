@@ -115,7 +115,9 @@ function AuthContent({
       style={styles.rootContainer}
     >
       <ScrollView>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback
+          onPress={Platform.OS !== 'web' ? Keyboard.dismiss : ''}
+        >
           <View style={styles.innerContainer}>
             <View style={styles.imageContainer}>
               <Image
